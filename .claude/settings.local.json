@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__vrsebuilder-tools__load_story",
+      "Bash(node *)",
+      "mcp__vrsebuilder-tools__get_story_context",
+      "mcp__vrsebuilder-tools__get_chain_context",
+      "mcp__vrsebuilder-tools__get_moment_json",
+      "mcp__vrsebuilder-tools__verify_story",
+      "mcp__vrsebuilder-tools__add_session_note",
+      "mcp__vrsebuilder-tools__apply_diffs",
+      "mcp__vrsebuilder-tools__save_story",
+      "mcp__vrsebuilder-tools__load_scene_awareness",
+      "mcp__vrsebuilder-tools__get_object_map",
+      "mcp__vrsebuilder-tools__get_action_catalog",
+      "mcp__vrsebuilder-tools__load_sop",
+      "mcp__vrsebuilder-tools__create_story",
+      "mcp__vrsebuilder-tools__get_trigger_action_catalog",
+      "Bash(python3 *)",
+      "mcp__vrsebuilder-tools__generate_sfx",
+      "mcp__unity__unity_list_instances",
+      "mcp__unity__unity_select_instance",
+      "mcp__unity__unity_scene_info",
+      "mcp__unity__unity_scene_hierarchy",
+      "mcp__unity__unity_scene_stats",
+      "mcp__unity__unity_vrse_status",
+      "mcp__unity__unity_vrse_query_objects_list",
+      "mcp__unity__unity_editor_state",
+      "mcp__unity__unity_search_by_component",
+      "mcp__unity__unity_search_by_name",
+      "PowerShell(node \"C:\\\\autovrse\\\\jsonClaw\\\\dev\\\\_tmp_q2.js\")",
+      "mcp__unity__unity_gameobject_info",
+      "Bash(where.exe node *)",
+      "Bash(Select-Object -First 2)",
+      "Bash(jobs -l)",
+      "Bash(kill %1)",
+      "Bash(wait)",
+      "Bash(dir C:\\\\autovrse\\\\jsonClaw\\\\stories)",
+      "mcp__vrsebuilder-tools__rename_object",
+      "Bash(dir C:\\\\autovrse\\\\jsonClaw\\\\dev)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "vrsebuilder-tools"
+  ]
+}

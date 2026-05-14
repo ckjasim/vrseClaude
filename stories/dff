@@ -1,0 +1,336 @@
+## Overview
+
+This guide walks you through setting up **VRseBuilder MCP** on:
+
+- **OpenCode Terminal UI (Mandatory)**
+- OpenCode Desktop UI (Optional) (Userfriendly + Little buggy and slow)
+- OpenChamber (Optional) (Userfriendly)
+- **Unity (VRseBuilder Unity MCP plugin) (Mandatory)**
+
+---
+
+## Desktop setup (OpenCode)
+
+### 1) Install OpenCode
+
+1. Download and run: [opencode-setup.exe](https://autovrse-my.sharepoint.com/:u:/g/personal/venkat_swaraj_autovrse_in/IQBnrsu3XKzrRogRNKX7pa2tAUkANYTsWgV9zFNZjj1kb94?e=5tTKW6)
+2. After setup completes, you should see something like this:
+    
+    ![image.png](attachment:8457d29a-3481-481c-9dee-03387b462454:image.png)
+    
+3. OpenCode should open automatically:
+    
+    ![image.png](attachment:9bd9b2ab-5a2c-44bc-9be6-202725387207:image.png)
+    
+
+### 2) Verify status
+
+1. In OpenCode, run:
+    - `/status`
+    
+    ![image.png](attachment:c01f4688-7515-464e-aec0-1c1957dadc75:image.png)
+    
+2. You should see **Unity** listed:
+    
+    ![image.png](attachment:69d3a099-9a0d-43fa-a4ca-bd52b7a40b40:image.png)
+    
+
+### 3) Connect OpenRouter
+
+1. Run:
+    - `/connect`
+    - Type `openrouter` and press Enter
+    
+    ![image.png](attachment:d163af9d-1895-4bf5-969d-f8d02c51356e:image.png)
+    
+2. Paste your token and press Enter:
+    
+    If you are not able to paste the key. Then close the terminal and open cmd and type opencode and press enter. Repeat above step. If you are not comfortable with terminal use opencode desktop. See below for opencode desktop setup.
+    
+    ![image.png](attachment:524e69a7-67cb-4330-86d9-51039cecdf1a:image.png)
+    
+
+### 4) Set the model
+
+1. Run:
+    - `/model`
+2. Choose:
+    
+    Please use Flash or sonnet. They will be 
+    
+    - `Gemini 3 Flash Preview` - OpenRouter
+    
+    ![image.png](attachment:d70edb04-d03a-446e-880e-ef24aeda6d3c:image.png)
+    
+
+> Tip: You can also try **OpenCode Desktop** if you don’t like the terminal UI.
+> 
+
+> Tip: Try **OpenChamber** if you want to use from mobile as well. Its more stable compared to Opencode Desktop
+> 
+
+### Opencode Desktop
+
+Opencode Desktop is buggy and slow. Terminal UI is recommended.
+
+Use the below link to download and install.
+
+https://opencode.ai/download/stable/windows-x64-nsis
+
+If above link is not working. Go to below link and download.
+
+https://opencode.ai/download
+
+After installing open it.
+
+Presse the settings icon.
+
+![image.png](attachment:60116948-53ea-4aeb-b6a2-1373b9eb3668:image.png)
+
+Press the Connect provide button.
+
+![image.png](attachment:e4031053-cd81-48a6-8a2b-f1bd1ab9a857:image.png)
+
+Select openrouter
+
+![image.png](attachment:35890f1b-c8eb-4c97-bb69-e9a2b8911258:image.png)
+
+Paste the Openrouter API key and click continue
+
+![image.png](attachment:f07186c5-a519-41d3-ab9c-8926b866caf0:image.png)
+
+Select Gemini 3 Flash Preview or Claude Sonnet 4.6
+
+![image.png](attachment:09f5ac82-a18a-4777-9639-9cb9f3876609:image.png)
+
+If you are not able to interact with Unity. Check
+
+![image.png](attachment:a435e62d-059c-4121-b53a-63864eeb7fca:image.png)
+
+If it is not green. Restart Opencode desktop.
+
+### OpenChamber
+
+Make sure complete Opencode setup
+
+[OpenChamber_1.9.5_x64-setup.exe](https://autovrse-my.sharepoint.com/:u:/g/personal/venkat_swaraj_autovrse_in/IQCY_j2Oc3a_Q64AOmrwyILwAcJnCuOO4EpyeyMSST7j6b4?e=1kpigt)
+
+1. Download and install and above exe.
+2. Open Openchamber. It will look below screenshot
+    
+    ![image.png](attachment:7ef23cc4-9f4e-4a21-9282-139e28e55287:image.png)
+    
+    → Use Button in green rectangle to add your unity project
+    
+    → Use button in red rectangle to create a new chat
+    
+    → Use the button in blue rectangle to change model. (Use Gemini 3 flash or Sonnet from Openrouter)
+    
+3. Select Gemini 3 Flash Model
+    
+    ![image.png](attachment:6858b642-53dd-419c-bfc0-0cafcf4084fa:image.png)
+    
+4. To Check MCP server is available or not. Press Local and go to MCP tab. You should see Unity enabled. If you don’t see anything press refresh.
+    
+    ![image.png](attachment:01b80111-f7ad-480a-8f4d-0b055b1cc37c:image.png)
+    
+- Remote Tunnel Support (Advanced Usecases)
+    1. Go to settings. (See bottom-left corner)
+    2. Go to Remote Tunnel and press start tunner
+        
+        ![image.png](attachment:0e9f3bea-ae4b-4484-a874-e283d366faed:image.png)
+        
+    3. Use the QR or the Connect link to access the session.
+        
+        ![image.png](attachment:608980cf-d5b1-41d3-bc30-17faf521ddb6:image.png)
+        
+
+## Cursor
+
+```json
+  "mcpServers": {
+    "unity": {
+      "command": "npx",
+      "args": ["-y",
+               "--registry=https://npm.autovrse.app",
+               "unity-mcp-server"],
+      "env": {
+        "UNITY_HUB_PATH": "C:\\Program Files\\Unity Hub\\Unity Hub.exe",
+        "UNITY_BRIDGE_PORT": "7890"
+      }
+    }
+  }
+}
+```
+
+---
+
+## Unity setup
+
+### 1) Configure AutoVRse NPM registry in Unity
+
+1. Open Package Manager
+
+![image.png](attachment:2793f68d-1e94-4c6f-b717-c5f62b59eafa:image.png)
+
+1. Press three dots and Project Settings
+    
+    ![image.png](attachment:238ee9eb-8369-4486-b208-89b0b347e3c5:image.png)
+    
+2. Type Name, URL, Scope as shown in the screenshot and press save
+    
+    Name: AutoVRse
+    
+    URL: https://npm.autovrse.app
+    
+    scope: com.autovrse
+    
+    ![image.png](attachment:7109c46d-f57e-4157-bcc7-bde2d7190a15:image.png)
+    
+3. Open My Registries
+    
+    ![image.png](attachment:bbc3db1b-2bb0-4e17-9a46-8d9b34cf6301:image.png)
+    
+
+### 2) Install VRseBuilder Unity MCP plugin 0.0.2
+
+![image.png](attachment:b6559847-ae2f-4f4c-a71d-20bac862b609:image.png)
+
+If you are in older versions of VRseBuilder ≤ 0.6.2  . You will get script compilation errors.
+
+1. Replace the content of NodeTemplatesData.cs with below
+    - Nodetemplatedata.cs
+        
+        ```jsx
+        using System.Collections.Generic;
+        using UnityEngine;
+        
+        namespace VRseBuilder.Tools.Editor
+        {
+            /*
+                Node -> Name, TargetObject, Options, Data
+                Options -> [Opt1, Opt2, Opt3]
+                Opt1 -> Data (Param-1, Param-2, Param-3)
+                Opt2 -> Data (Param-1, Param-2, Param-3)
+                Opt3 -> Data (Param-1, Param-2, Param-3)
+                Data -> [Param-1, Param-2, Param-3]
+                Param-1 -> Key, Value, Type, DefaultValue
+            */
+        
+            [CreateAssetMenu(fileName = "NodeTemplatesData", menuName = "Tools/VRseBuilder/SO/NodeTemplatesData")]
+            public class NodeTemplatesData : ScriptableObject
+            {
+                [System.Serializable]
+                public class ParameterData
+                {
+                    public string Key;
+                    public string Type;
+                    public string DefaultValue;
+                    public string Description;
+                    public ParameterData() { }
+                    public ParameterData(string key, string type, string defaultValue, string description = "")
+                    {
+                        Key = key;
+                        Type = type;
+                        DefaultValue = defaultValue;
+                        Description = description;
+                    }
+                }
+        
+                [System.Serializable]
+                public class NestedParameterData
+                {
+                    public string Key;
+                    public string Description;
+                    public List<ParameterData> Parameters = new List<ParameterData>();
+                }
+        
+                [System.Serializable]
+                public class OptionData
+                {
+                    public string Name;
+                    public string Description;
+                    public List<ParameterData> Parameters = new List<ParameterData>();
+                    public List<NestedParameterData> NestedParameters = new List<NestedParameterData>();
+                }
+        
+                [System.Serializable]
+                public class NodeData
+                {
+                    public string Name;
+                    [Tooltip("Unique ID from backend (set after sync)")]
+                    public string BackendId;
+                    [Tooltip("Type: 'custom' or 'core'")]
+                    public string Type = "core";
+                    public string Description;
+                    public GameObject TargetObject;
+                    public List<OptionData> Options = new List<OptionData>();
+                }
+                public void OnValidate()
+                {
+                    _nodeTemplates.Clear();
+                    _nodeTemplates.AddRange(actionTemplates);
+                    _nodeTemplates.AddRange(triggerTemplates);
+                }
+        
+                private List<NodeData> _nodeTemplates = new();
+                public List<NodeData> AllNodeTemplates => _nodeTemplates;
+                public List<NodeData> actionTemplates = new();
+                public List<NodeData> triggerTemplates = new();
+        
+                // Field types for parameter type dropdown
+                [Header("Field Type Configuration")]
+                public List<string> fieldTypes = new List<string>
+                {
+                    "bool",
+                    "int",
+                    "float",
+                    "string",
+                    "stringMultiLine",
+                    "intList",
+                    "enumList",
+                    "objectReference",
+                };
+        
+                // Node types (for dropdown)
+                public static readonly string[] NodeTypes = { "custom", "core" };
+        
+                public List<ParameterData> DefaultParameters { get; } = new List<ParameterData>()
+                {
+                    new ParameterData("targetRoleSetId", "int", "0")
+                };
+        
+                public NodeData GetNodeTemplate(string nodeName)
+                {
+                    var nodeData = actionTemplates.Find(n => n.Name == nodeName);
+                    return nodeData ?? triggerTemplates.Find(n => n.Name == nodeName);
+                }
+        
+                public bool HasNodeTemplate(string nodeName)
+                {
+                    return _nodeTemplates.Exists(n => n.Name == nodeName);
+                }
+        
+                public void AddNodeTemplate(NodeData nodeData)
+                {
+                    _nodeTemplates.Add(nodeData);
+                }
+        
+                public void AddActionTemplate(NodeData actionData)
+                {
+                    actionTemplates.Add(actionData);
+                }
+        
+                public void AddTriggerTemplate(NodeData triggerData)
+                {
+                    triggerTemplates.Add(triggerData);
+                }
+        
+                public void RemoveNodeTemplate(string nodeName)
+                {
+                    _nodeTemplates.RemoveAll(n => n.Name == nodeName);
+                }
+            }
+        }
+        
+        ```

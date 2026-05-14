@@ -1,0 +1,17 @@
+{
+  "storyId": "sfx-b1",
+  "createdAt": "2026-05-06T11:48:22.916Z",
+  "changelog": [],
+  "notes": [
+    {
+      "ts": "2026-05-06T11:48:22.916Z",
+      "text": "generate_sfx: 0 generated, 4 errors. File: C:\\autovrse\\jsonClaw\\stories\\_sfx-batch-1.json"
+    },
+    {
+      "ts": "2026-05-06T11:48:30.312Z",
+      "text": "generate_sfx: 0 generated, 4 errors. File: C:\\autovrse\\jsonClaw\\stories\\_sfx-batch-1.json"
+    }
+  ],
+  "sopContext": null,
+  "pendingPlan": null
+}

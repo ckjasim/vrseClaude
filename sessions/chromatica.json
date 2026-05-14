@@ -1,0 +1,372 @@
+{
+  "storyId": "chromatica",
+  "createdAt": "2026-04-27T07:07:57.417Z",
+  "changelog": [
+    {
+      "ts": "2026-04-28T11:30:41.053Z",
+      "diffsApplied": 1,
+      "changeLog": "M1: Moved GO_Crystal_01 MetaLayerAction highlight from onStart (post-VO, too late) to onAwake so the crystal glows immediately when the moment loads"
+    },
+    {
+      "ts": "2026-04-28T11:34:50.352Z",
+      "diffsApplied": 1,
+      "changeLog": "M1: Made onStart VO non-blocking so onRight triggers (and ghost mesh socket) register immediately when moment starts, not after narration finishes"
+    },
+    {
+      "ts": "2026-04-28T13:07:45.455Z",
+      "diffsApplied": 4,
+      "changeLog": "M0: Removed crystal despawn from onAwake so it's visible from frame 1. Replaced onStart with 3x slow flicker cycles (0.7s ON/OFF) for crystal + all 3 bones before Fade VO.\nM1: Crystal flickers 2x slowly (0.7s each cycle) before Fade taunts the player. Crystal settles grey before VO then highlighted again by onAwake MetaLayerAction.\nM2: All 3 bones flicker together 2x (0.7s cycles) at moment entry before Fade threatens, then outlines activate as guidance before VO.\nM3: Island-by-island color cascade on prism touch: Island_1 → 1.5s → Island_2 → 1.5s → Island_3 → 1.0s → RadialTransitionManager (full world). CameraFade and crystal emission happen last."
+    }
+  ],
+  "notes": [
+    {
+      "ts": "2026-04-27T07:07:57.417Z",
+      "text": "Added Chapter 3: Echoes of Life (M9, M10, M11). verify_story shows 2 violations — both are pre-existing EMPTY_QUERY issues in M0 (The Fading Pulse) onStart actions, not introduced by this edit. Chapter 3 all clear."
+    },
+    {
+      "ts": "2026-04-28T10:46:40.128Z",
+      "text": "Story created: \"Chromatica: A Journey to Restore Color\" — 12/12 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-04-28T10:47:13.013Z",
+      "text": "Story created from Chromatica-Scene-Analysis.txt. 3 chapters, 12 moments. verify_story passed with zero violations. Scene awareness loaded."
+    },
+    {
+      "ts": "2026-04-28T11:08:06.730Z",
+      "text": "Story created: \"Chromatica: A Journey to Restore Color\" — 12/12 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-04-28T11:08:35.664Z",
+      "text": "Generated full story from Chromatica-Scene-Analysis.txt. 3 chapters, 12 moments, 0 violations. Scene awareness loaded. All query names verified against scene doc. Merkle root: a6d82332b1ba31bf0082adbf27549867005c248598bec2c7aa5627791d4986cf"
+    },
+    {
+      "ts": "2026-04-28T12:53:37.495Z",
+      "text": "Story created: \"Chromatica: The Fade's Grasp\" — 4/4 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\chromatica-new.json"
+    },
+    {
+      "ts": "2026-04-28T12:54:35.095Z",
+      "text": "Generated \"Chromatica: The Fade's Grasp\" — 1 chapter \"What's Mine\", 4 moments. Villain-narrator arc: The Fade speaks with cold contempt → rage → broken desperation → cold retreating threat. All 4 moments verified (0 violations). Saved to chromatica-new.json. Key visual effects: crystal heartbeat blinks (AlphaDesaturateAction), bone sequential flash (RadialStateAction), island color flash+rip back on crystal place, xylophone bone outline escalation (orange → magenta → cyan), prism frantic pulse with loop audio, CameraFade on finale, Colour_Bloom_Flourish on prism activation. Haptics escalate with each bone hit. RadialTransitionManager NOT used (reserved for future chapters). The Fade retreats with cold threat at end of moment 3 — sets up Chapter 2."
+    },
+    {
+      "ts": "2026-05-06T10:58:59.453Z",
+      "text": "SFX generation: 0 generated, 0 errors"
+    },
+    {
+      "ts": "2026-05-06T10:58:59.463Z",
+      "text": "Story created: \"Chromatica: Restoring the Light\" — 10/10 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-06T11:01:04.207Z",
+      "text": "generate_sfx: 0 generated, 0 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-06T11:01:18.244Z",
+      "text": "Story created: Chromatica: Restoring the Light. 3 chapters, 10 moments. Fixed post-generation: TargetArrow1->Arrows, Island2Environment->Island_2, CountDownTimer actions removed from M4. All verified clean. Saved to stories/chromatica.json."
+    },
+    {
+      "ts": "2026-05-06T11:46:59.277Z",
+      "text": "generate_sfx: 0 generated, 46 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-06T11:47:18.628Z",
+      "text": "generate_sfx: 0 generated, 46 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-06T11:56:17.902Z",
+      "text": "generate_sfx: 13 generated, 33 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-06T11:56:39.558Z",
+      "text": "generate_sfx: 14 generated, 19 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-06T11:56:55.032Z",
+      "text": "generate_sfx: 14 generated, 5 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-06T11:57:18.278Z",
+      "text": "generate_sfx: 5 generated, 0 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-07T07:00:55.600Z",
+      "text": "SFX generation: 22 generated, 19 errors"
+    },
+    {
+      "ts": "2026-05-07T07:00:55.610Z",
+      "text": "Story created: \"Chromatica — Restore the Color\" — 12/12 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-07T07:01:21.514Z",
+      "text": "generate_sfx: 11 generated, 8 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-07T07:01:36.056Z",
+      "text": "generate_sfx: 7 generated, 1 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica.json"
+    },
+    {
+      "ts": "2026-05-07T07:02:17.923Z",
+      "text": "Created Chromatica story from scene awareness. 3 chapters (one per island), 12 moments, mystical quest framing. Verify_story passed with 0 violations. SFX: 40/41 generated (1 malformed StopAndSkip placeholder without audioClipName is harmless — it's a stop-audio action, not a play action). Prism 2 target transform (GO_Prism_2_transform) is referenced inside ObjectAnimationAction Data field, which is why it doesn't surface in the top-level SCENE_OBJECTS list — this is correct structure."
+    }
+  ],
+  "sopContext": {
+    "objectives": [
+      "Navigate through three interconnected islands in sequential order",
+      "Complete crystal placement tutorial on Island 1",
+      "Solve the xylophone musical puzzle by striking bones in sequence",
+      "Activate and transport prisms to target transforms",
+      "Complete wheel alignment puzzle on Island 2",
+      "Collect and place five purple flowers into offering bowl placepoints",
+      "Gather and place four crystal shards into well placepoints in order",
+      "Restore color to the grey world by linking all three prisms via laser system",
+      "Follow UI panel instructions at each puzzle location"
+    ],
+    "procedures": [
+      "Spawn on Island 1 near GO_Crystal_01 placepoint facing the book area",
+      "Grab GO_Crystal_01 with hand/controller",
+      "Place GO_Crystal_01 into GO_Crystal_01 placepoint (socket snap)",
+      "Grab GO_Xylophone_Stick",
+      "Strike GO_Xylophone_Bone_A, GO_Xylophone_Bone_B, and GO_Xylophone_Bone_C with stick to trigger sounds",
+      "Touch GO_Prism_01 to activate and send to GO_Prism_1_transform on Tower 1",
+      "Cross bridge to Island 2",
+      "Grab GO_Wheel_A handle/edge and release to rotate gears (Gear_Set_1 through Gear_Set_5)",
+      "Grab GO_Offering_Bowl",
+      "Collect PRO_Flower_Purple_01 through PRO_Flower_Purple_05 scattered along path",
+      "Place each flower into its corresponding placepoint (Flower_1_pp through Flower_5_pp) on top of the bowl",
+      "Touch GO_Prism_02 to activate and send to GO_Prism_2_transform on Tower 2",
+      "Cross bridge to Island 3",
+      "Grab PRO_Crystal_Shard_01 through PRO_Crystal_Shard_04 near the well",
+      "Place each shard into its corresponding placepoint in order (PRO_Crystal_Shard_01 placepoint through PRO_Crystal_Shard_04 placepoint)",
+      "Touch GO_Prism_03 to activate and send to GO_Prism_3_transform on Tower 3",
+      "Spawn Laser query when all three prisms are placed on towers",
+      "Observe laser connecting all three prisms and restoring color to the world"
+    ],
+    "equipment": [
+      "GO_SocketBook_Base",
+      "GO_SocketBook_Base_Mesh",
+      "GO_Crystal_01",
+      "GO_Crystal_01 placepoint",
+      "GO_Xylophone_Bone_A",
+      "GO_Xylophone_Bone_B",
+      "GO_Xylophone_Bone_C",
+      "GO_Xylophone_Stick",
+      "GO_Bone_B_Collider",
+      "GO_Bone_C_Collider",
+      "GO_Prism_01",
+      "GO_Prism_02",
+      "GO_Prism_03",
+      "GO_Prism_1_transform",
+      "GO_Prism_2_transform",
+      "GO_Prism_3_transform",
+      "GO_Wheel_A",
+      "Gear_Set_1",
+      "Gear_Set_2",
+      "Gear_Set_3",
+      "Gear_Set_4",
+      "Gear_Set_5",
+      "GO_Offering_Bowl",
+      "PRO_Flower_Purple_01",
+      "PRO_Flower_Purple_02",
+      "PRO_Flower_Purple_03",
+      "PRO_Flower_Purple_04",
+      "PRO_Flower_Purple_05",
+      "Flower_1_pp",
+      "Flower_2_pp",
+      "Flower_3_pp",
+      "Flower_4_pp",
+      "Flower_5_pp",
+      "PRO_Crystal_Shard_01",
+      "PRO_Crystal_Shard_02",
+      "PRO_Crystal_Shard_03",
+      "PRO_Crystal_Shard_04",
+      "PRO_Crystal_Shard_01 placepoint",
+      "PRO_Crystal_Shard_02 placepoint",
+      "PRO_Crystal_Shard_03 placepoint",
+      "PRO_Crystal_Shard_04 placepoint",
+      "Laser",
+      "Island_1",
+      "Island_2",
+      "Island_3",
+      "Arrows",
+      "Alpha_Desturate",
+      "RadialTransitionManager",
+      "Mechanical_Flower_1",
+      "Mechanical_Flower_2",
+      "Mechanical_Flower_3",
+      "Mechanical_Flower_4",
+      "Mechanical_Flower_5",
+      "Cherry_Blossom_v1",
+      "Flower_garland",
+      "IntroUI",
+      "UI 1",
+      "UI 2",
+      "UI 3",
+      "UI 4",
+      "UI 5",
+      "UI 6",
+      "UI 7",
+      "UI 8"
+    ],
+    "constraints": "Movement is bounded to individual island landmasses - players cannot leave Island 1 until progressing to Island 2, and cannot leave Island 2 until progressing to Island 3. All interactable objects are spawnable and despawnable via story. Objects in the DECOR/NON-INTERACTABLE section must NEVER have triggers assigned to them and may only be targeted by spawn, despawn, or visual change actions - never ask the player to touch, grab, or interact with these objects. Only GO_Wheel_A is interactable in the wheel group - it works with grab and release interaction to give rotation effect. Flowers (PRO_Flower_Purple_01 through 05) once picked can only be placed in flower placepoints positioned on top of the offering bowl, not directly into the bowl itself. Crystal shards must be placed into well placepoints in order with respect to each sequence. Prism object animations must be added immediately after user touches the prism so they reach their target transforms. The Laser query must only be spawned when all three prisms are placed on top of towers. UI panels support only a single media type (Text OR Image OR Video) and can only be spawned or despawned with no interactions allowed. All UI panels have a default state of Despawned."
+  },
+  "pendingPlan": {
+    "storyName": "Chromatica — Restore the Color",
+    "chapters": [
+      {
+        "name": "Island 1 — The Awakening",
+        "moments": [
+          {
+            "name": "Welcome to the Grey World",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player spawns facing GO_SocketBook_Base",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Place the First Crystal",
+            "userAction": "Grab GO_Crystal_01 and place into GO_Crystal_01 placepoint",
+            "objectsInvolved": [
+              "GO_Crystal_01",
+              "GO_Crystal_01 placepoint"
+            ],
+            "successHint": "Crystal_Snap SFX plays, Island_1 gains partial color",
+            "spatialContext": "Crystal and placepoint near spawn point, placepoint marked with ghost mesh",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Strike the Xylophone Bones",
+            "userAction": "Grab GO_Xylophone_Stick and strike GO_Xylophone_Bone_A, GO_Xylophone_Bone_B, GO_Xylophone_Bone_C",
+            "objectsInvolved": [
+              "GO_Xylophone_Stick",
+              "GO_Xylophone_Bone_A",
+              "GO_Xylophone_Bone_B",
+              "GO_Xylophone_Bone_C"
+            ],
+            "successHint": "Each bone plays its unique xylophone SFX and becomes colored",
+            "spatialContext": "Xylophone structure at mid-height on Island 1, stick spawns near bones",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Activate the First Prism",
+            "userAction": "Touch GO_Prism_01",
+            "objectsInvolved": [
+              "GO_Prism_01",
+              "GO_Prism_1_transform"
+            ],
+            "successHint": "Prism animates to Tower 1, Beam_Link_01 SFX plays, bridge to Island 2 opens",
+            "spatialContext": "Prism spawns near xylophone, Tower 1 visible in background",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Island 2 — The Mechanism",
+        "moments": [
+          {
+            "name": "Cross to the Mechanical Island",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player crosses bridge from Island 1 to Island 2",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Turn the Wheel",
+            "userAction": "Grab GO_Wheel_A and release to rotate",
+            "objectsInvolved": [
+              "GO_Wheel_A",
+              "Gear_Set_1",
+              "Gear_Set_2",
+              "Gear_Set_3",
+              "Gear_Set_4",
+              "Gear_Set_5"
+            ],
+            "successHint": "Gear animations play with wheel SFX, Island_2 gains color",
+            "spatialContext": "Wheel positioned at waist height near island center, gears visible behind it",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Collect and Place the Flowers",
+            "userAction": "Collect PRO_Flower_Purple_01 through PRO_Flower_Purple_05 and place in Flower_1_pp through Flower_5_pp on GO_Offering_Bowl",
+            "objectsInvolved": [
+              "PRO_Flower_Purple_01",
+              "PRO_Flower_Purple_02",
+              "PRO_Flower_Purple_03",
+              "PRO_Flower_Purple_04",
+              "PRO_Flower_Purple_05",
+              "GO_Offering_Bowl",
+              "Flower_1_pp",
+              "Flower_2_pp",
+              "Flower_3_pp",
+              "Flower_4_pp",
+              "Flower_5_pp"
+            ],
+            "successHint": "flower_place SFX per placement, task_complete SFX when all five placed",
+            "spatialContext": "Flowers scattered along path, offering bowl on pedestal with visible placepoints on top",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Activate the Second Prism",
+            "userAction": "Touch GO_Prism_02",
+            "objectsInvolved": [
+              "GO_Prism_02",
+              "GO_Prism_2_transform"
+            ],
+            "successHint": "Prism animates to Tower 2, Beam_Link SFX plays, Flower_garland colors in, bridge to Island 3 opens",
+            "spatialContext": "Prism spawns near offering bowl, Tower 2 visible across island",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Island 3 — The Restoration",
+        "moments": [
+          {
+            "name": "Enter the Final Island",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player crosses bridge to Island 3, the well visible ahead",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Place the Crystal Shards in Order",
+            "userAction": "Grab PRO_Crystal_Shard_01 through PRO_Crystal_Shard_04 and place in PRO_Crystal_Shard_01 placepoint through PRO_Crystal_Shard_04 placepoint in sequence",
+            "objectsInvolved": [
+              "PRO_Crystal_Shard_01",
+              "PRO_Crystal_Shard_02",
+              "PRO_Crystal_Shard_03",
+              "PRO_Crystal_Shard_04",
+              "PRO_Crystal_Shard_01 placepoint",
+              "PRO_Crystal_Shard_02 placepoint",
+              "PRO_Crystal_Shard_03 placepoint",
+              "PRO_Crystal_Shard_04 placepoint"
+            ],
+            "successHint": "Water_Drop_1/2/3/4 SFX per shard placement, Island_3 gains color after all placed",
+            "spatialContext": "Crystal shards near well pickup area, placepoints arranged around well rim in visible order",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Activate the Final Prism",
+            "userAction": "Touch GO_Prism_03",
+            "objectsInvolved": [
+              "GO_Prism_03",
+              "GO_Prism_3_transform"
+            ],
+            "successHint": "Prism animates to Tower 3, Beam_Link_01 SFX plays",
+            "spatialContext": "Prism spawns near well after shards complete, Tower 3 visible on island",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "The World Reborn",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Laser spawns connecting all three towers, full world color restoration via RadialTransitionManager",
+            "onRightMode": "InOrder"
+          }
+        ]
+      }
+    ]
+  }
+}

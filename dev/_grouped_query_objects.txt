@@ -1,0 +1,213 @@
+TOTAL OBJECTS: 174 unique (raw count 208)
+BUCKETS: 11
+
+== BUCKET SUMMARY ==
+   4  QueryObjects/#h1 Story Objects/#h2 Default Query objects
+  18  QueryObjects/#h1 Story Objects/#h2 Interactables/#h3 Grabbable
+   8  QueryObjects/#h1 Story Objects/#h2 Interactables/#h3 Placepoint
+  34  QueryObjects/#h1 Story Objects/#h2 Interactables/#h3 Touchable
+  31  QueryObjects/#h1 Story Objects/#h2 Non Interactables/#h3 Animate Transforms
+  14  QueryObjects/#h1 Story Objects/#h2 Non Interactables/#h3 Animation
+  54  QueryObjects/#h1 Story Objects/#h2 Non Interactables/#h3 Props
+   4  QueryObjects/#h1 Story Objects/#h2 Non Interactables/#h3 Spawnpoints
+   2  QueryObjects/#h1 Story Objects/#h2 Table_Objects (1)
+   4  QueryObjects/#h1 Story Objects/#h2 UI
+   1  QueryObjects/#h1 Story Objects/#h2 Vrse System
+
+== DETAILED LISTING ==
+
+### QueryObjects/#h1 Story Objects/#h2 Default Query objects  (4 objects)
+  [N] CountDownTimer  |  go=CountDownTimer  |  comps=-
+  [N] Haptics  |  go=Haptics  |  comps=-
+  [N] SFXPlayer  |  go=SFXPlayer  |  comps=-
+  [N] VOPlayer  |  go=VOPlayer  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 Interactables/#h3 Grabbable  (18 objects)
+  [N] ClampPivot1  |  go=ClampPivot1  |  comps=-
+  [N] ClampPivot2  |  go=ClampPivot2  |  comps=-
+  [N] Clamps_1  |  go=Clamps_1  |  comps=-
+  [N] Clamps_2  |  go=Clamps_2  |  comps=-
+  [N] Dancing Roller  |  go=Dancing Roller  |  comps=Grabbable,Grabbable,Grabbable
+  [N] Feeder Pipe  |  go=Feeder Pipe  |  comps=Grabbable,Grabbable,Grabbable
+  [N] Shift Feeder Base  |  go=Shift Feeder Base  |  comps=Grabbable,Grabbable,Grabbable
+  [N] Shift Feeder Base Cover  |  go=Shift Feeder Base Cover  |  comps=Grabbable,Grabbable,Grabbable
+  [N] Shift Feeder Feeding Chute  |  go=Shift Feeder Feeding Chute  |  comps=Grabbable,Grabbable,Grabbable
+  [N] Shift Feeder Shaking Tray  |  go=Shift Feeder Shaking Tray  |  comps=Grabbable,Grabbable,Grabbable
+  [N] Shift Feeder Tube Assembly  |  go=Shift Feeder Tube Assembly  |  comps=Grabbable,Grabbable,Grabbable
+  [N] ShiftFeederBaseCombined  |  go=ShiftFeederBaseCombined  |  comps=Grabbable,Grabbable,Grabbable
+  [N] ShiftFeederBaseCoverPlacePoint  |  go=ShiftFeederBaseCoverPlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] ShiftFeederTubesPlacePoint  |  go=ShiftFeederTubesPlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] Skimming Assembly  |  go=Skimming Assembly  |  comps=Grabbable,Grabbable,Grabbable
+  [N] Tablet Discharge Chute  |  go=Tablet Discharge Chute  |  comps=Grabbable,Grabbable,Grabbable
+  [N] Trolley_Cart 1A  |  go=Trolley_Cart 1A  |  comps=-
+  [N] Trolley_Cart_3A  |  go=Trolley_Cart_3A  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 Interactables/#h3 Placepoint  (8 objects)
+  [N] DanicingRollerPlacePoint  |  go=DanicingRollerPlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] FeederPipesPlacePoint  |  go=FeederPipesPlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] ShakingGratePlacePoint  |  go=ShakingGratePlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] ShiftFeederBaseCombinedPlacePoint  |  go=ShiftFeederBaseCombinedPlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] ShiftFeederBottomPlacePoint  |  go=ShiftFeederBottomPlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] ShiftFeederUpperCoverPlacePoint  |  go=ShiftFeederUpperCoverPlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] ShiftFeederUpperPlacePoint  |  go=ShiftFeederUpperPlacePoint  |  comps=PlacePoint,PlacePoint
+  [N] SkimmingAssemblyPlacePoint  |  go=SkimmingAssemblyPlacePoint  |  comps=PlacePoint,PlacePoint
+
+### QueryObjects/#h1 Story Objects/#h2 Interactables/#h3 Touchable  (34 objects)
+  [N] AdapterRoller  |  go=AdapterRoller  |  comps=-
+  [N] Cooling Roller  |  go=Cooling Roller  |  comps=-
+  [N] CoolingRoller  |  go=CoolingRoller  |  comps=-
+  [N] Counter Sealing Roller  |  go=Counter Sealing Roller  |  comps=-
+  [N] DustCollector_Plate02  |  go=DustCollector_Plate02  |  comps=-
+  [N] DyePlates_1 (Lower)  |  go=DyePlates_1 (Lower)  |  comps=-
+  [N] DyePlates_2 (Upper)  |  go=DyePlates_2 (Upper)  |  comps=-
+  [N] Feeder_Assembly_FrontPlate  |  go=Feeder_Assembly_FrontPlate  |  comps=-
+  [N] FeederAssembly_Plate02  |  go=FeederAssembly_Plate02  |  comps=-
+  [N] GlassPlate  |  go=GlassPlate  |  comps=-
+  [N] GuideTrack01  |  go=GuideTrack01  |  comps=-
+  [N] GuideTrack02  |  go=GuideTrack02  |  comps=-
+  [N] Hopper Assembly  |  go=Hopper Assembly  |  comps=-
+  [N] Hopper Base  |  go=Hopper Base  |  comps=-
+  [N] HopperTop_Chute_DetachedTouch  |  go=HopperTop_Chute_DetachedTouch  |  comps=-
+  [N] IndexingClampUpper  |  go=IndexingClampUpper  |  comps=-
+  [N] IndexRoller  |  go=IndexRoller  |  comps=-
+  [N] IShaped_Plate02  |  go=IShaped_Plate02  |  comps=-
+  [N] Metal_SideHolder_02_I  |  go=Metal_SideHolder_02_I  |  comps=-
+  [N] PickupTool  |  go=PickupTool  |  comps=-
+  [N] Pos4Obj  |  go=Pos4Obj  |  comps=-
+  [N] Pos5Obj  |  go=Pos5Obj  |  comps=-
+  [N] PunchingDye  |  go=PunchingDye  |  comps=-
+  [N] PunchingTool01  |  go=PunchingTool01  |  comps=-
+  [N] PunchingTool02  |  go=PunchingTool02  |  comps=-
+  [N] Ring Roller Assembly  |  go=Ring Roller Assembly  |  comps=-
+  [N] SkippingTool  |  go=SkippingTool  |  comps=-
+  [N] Sliding_Plate_01  |  go=Sliding_Plate_01  |  comps=-
+  [N] SpringRoller  |  go=SpringRoller  |  comps=-
+  [N] Sweep Brush  |  go=Sweep Brush  |  comps=-
+  [N] Trol1  |  go=Trol1  |  comps=-
+  [N] Trolley_Cart_2B  |  go=Trolley_Cart_2B  |  comps=-
+  [N] Trolley_Rack  |  go=Trolley_Rack  |  comps=-
+  [N] Vibrator_Plate  |  go=Vibrator_Plate  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 Non Interactables/#h3 Animate Transforms  (31 objects)
+  [N] AdapterRollerPos  |  go=AdapterRollerPos  |  comps=-
+  [N] ChutePos  |  go=ChutePos  |  comps=-
+  [N] ClampRot1  |  go=ClampRot1  |  comps=-
+  [N] ClampRot2  |  go=ClampRot2  |  comps=-
+  [N] CoolingRollerPos  |  go=CoolingRollerPos  |  comps=-
+  [N] CounterSealingPos  |  go=CounterSealingPos  |  comps=-
+  [N] EXPPos  |  go=EXPPos  |  comps=-
+  [N] FeederPipesPos  |  go=FeederPipesPos  |  comps=-
+  [N] GuideTrack1Pos  |  go=GuideTrack1Pos  |  comps=-
+  [N] GuideTrack2Pos  |  go=GuideTrack2Pos  |  comps=-
+  [N] HopperBasePos  |  go=HopperBasePos  |  comps=-
+  [N] HopperPos  |  go=HopperPos  |  comps=-
+  [N] IndexingClampLowerPos  |  go=IndexingClampLowerPos  |  comps=-
+  [N] IndexingClampUpperPos  |  go=IndexingClampUpperPos  |  comps=-
+  [N] IndexingGuidePos  |  go=IndexingGuidePos  |  comps=-
+  [N] IndexRollerPos  |  go=IndexRollerPos  |  comps=-
+  [N] LowerDiePos  |  go=LowerDiePos  |  comps=-
+  [N] PerforationPos  |  go=PerforationPos  |  comps=-
+  [N] PickUpToolPos  |  go=PickUpToolPos  |  comps=-
+  [N] PunchingDyePos  |  go=PunchingDyePos  |  comps=-
+  [N] PunchingToolPos  |  go=PunchingToolPos  |  comps=-
+  [N] RingRollerAssemblyPos  |  go=RingRollerAssemblyPos  |  comps=-
+  [N] RingRollerPos  |  go=RingRollerPos  |  comps=-
+  [N] SkippingToolPos  |  go=SkippingToolPos  |  comps=-
+  [N] SweepBrushPos  |  go=SweepBrushPos  |  comps=-
+  [N] SwwpBrushPosNew  |  go=SwwpBrushPosNew  |  comps=-
+  [N] TrolleyPos1  |  go=TrolleyPos1  |  comps=-
+  [N] TrolleyPos2  |  go=TrolleyPos2  |  comps=-
+  [N] TrollyPos4  |  go=TrollyPos4  |  comps=-
+  [N] TrollyPos5  |  go=TrollyPos5  |  comps=-
+  [N] UpperDiePos  |  go=UpperDiePos  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 Non Interactables/#h3 Animation  (14 objects)
+  [N] TipPivotTW  |  go=TipPivotTW  |  comps=-
+  [N] TipPivotTW2  |  go=TipPivotTW2  |  comps=-
+  [N] TipPivotTW3  |  go=TipPivotTW3  |  comps=-
+  [N] TipPivotW  |  go=TipPivotW  |  comps=-
+  [N] TipPivotW10  |  go=TipPivotW10  |  comps=-
+  [N] TipPivotW11  |  go=TipPivotW11  |  comps=-
+  [N] TipPivotW2  |  go=TipPivotW2  |  comps=-
+  [N] TipPivotW3  |  go=TipPivotW3  |  comps=-
+  [N] TipPivotW4  |  go=TipPivotW4  |  comps=-
+  [N] TipPivotW5  |  go=TipPivotW5  |  comps=-
+  [N] TipPivotW6  |  go=TipPivotW6  |  comps=-
+  [N] TipPivotW7  |  go=TipPivotW7  |  comps=-
+  [N] TipPivotW8  |  go=TipPivotW8  |  comps=-
+  [N] TipPivotW9  |  go=TipPivotW9  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 Non Interactables/#h3 Props  (54 objects)
+  [N] AdapterRoller (1)  |  go=AdapterRoller (1)  |  comps=-
+  [N] AdapterRollerGhost  |  go=AdapterRollerGhost  |  comps=-
+  [N] Arrow  |  go=Arrow  |  comps=-
+  [N] CoolingRoller  |  go=CoolingRoller  |  comps=-
+  [N] CoolingRoller  |  go=CoolingRoller  |  comps=-
+  [N] CoolingRoller  |  go=CoolingRoller  |  comps=-
+  [N] CoolingRoller  |  go=CoolingRoller  |  comps=-
+  [N] CoolingRoller (1)  |  go=CoolingRoller (1)  |  comps=-
+  [N] CoolingRollerGhost  |  go=CoolingRollerGhost  |  comps=-
+  [N] CounterSealingRoller  |  go=CounterSealingRoller  |  comps=-
+  [N] CounterSealingRoller (1)  |  go=CounterSealingRoller (1)  |  comps=-
+  [N] CounterSealingRollerGhost  |  go=CounterSealingRollerGhost  |  comps=-
+  [N] CounterSealingRollerHandlePos  |  go=CounterSealingRollerHandlePos  |  comps=-
+  [N] Cylinder.036  |  go=Cylinder.036  |  comps=-
+  [N] DancingRoller_01  |  go=DancingRoller_01  |  comps=-
+  [N] Doors  |  go=Doors  |  comps=-
+  [N] DustCollector_Plate01  |  go=DustCollector_Plate01  |  comps=BaseItem,BaseItem
+  [N] Fake  |  go=Fake  |  comps=-
+  [N] Feeder_Pipes  |  go=Feeder_Pipes  |  comps=-
+  [N] FeederAssembly_Plate01  |  go=FeederAssembly_Plate01  |  comps=BaseItem,BaseItem
+  [N] GuideTrack01 (1)  |  go=GuideTrack01 (1)  |  comps=-
+  [N] GuideTrack02 (1)  |  go=GuideTrack02 (1)  |  comps=-
+  [N] Hopper_Assembly_OnTable  |  go=Hopper_Assembly_OnTable  |  comps=-
+  [N] HopperBaseBolts  |  go=HopperBaseBolts  |  comps=-
+  [N] HopperBolts  |  go=HopperBolts  |  comps=-
+  [N] HopperTop_Chute_Detached  |  go=HopperTop_Chute_Detached  |  comps=-
+  [N] IndexRoller (1)  |  go=IndexRoller (1)  |  comps=-
+  [N] IndexRollerGhost  |  go=IndexRollerGhost  |  comps=-
+  [N] LowerDieBolt  |  go=LowerDieBolt  |  comps=-
+  [N] MenuSceneSwitcher  |  go=MenuSceneSwitcher  |  comps=-
+  [N] PerforatingBolt  |  go=PerforatingBolt  |  comps=-
+  [N] PickupTool (1)  |  go=PickupTool (1)  |  comps=-
+  [N] PickUpToolBolt  |  go=PickUpToolBolt  |  comps=-
+  [N] PickupToolGhost  |  go=PickupToolGhost  |  comps=-
+  [N] Plane.088  |  go=Plane.088  |  comps=-
+  [N] PunchingDye (1)  |  go=PunchingDye (1)  |  comps=-
+  [N] PunchingDyeGhost  |  go=PunchingDyeGhost  |  comps=-
+  [N] PunchingGuideBolt  |  go=PunchingGuideBolt  |  comps=-
+  [N] PunchingTool01 (1)  |  go=PunchingTool01 (1)  |  comps=-
+  [N] PunchingTool01Ghost  |  go=PunchingTool01Ghost  |  comps=-
+  [N] PunchingTool02 (1)  |  go=PunchingTool02 (1)  |  comps=-
+  [N] PunchingTool02Ghost  |  go=PunchingTool02Ghost  |  comps=-
+  [N] PunchingToolBolt  |  go=PunchingToolBolt  |  comps=-
+  [N] Screw_I  |  go=Screw_I  |  comps=-
+  [N] SideTray  |  go=SideTray  |  comps=BaseItem,BaseItem
+  [N] SkimmingAssembly (1)  |  go=SkimmingAssembly (1)  |  comps=Grabbable,Grabbable,Grabbable
+  [N] SkippingTool (1)  |  go=SkippingTool (1)  |  comps=-
+  [N] SkippingToolBolt  |  go=SkippingToolBolt  |  comps=-
+  [N] SkippingToolGhost  |  go=SkippingToolGhost  |  comps=-
+  [N] TabletStopperBolts  |  go=TabletStopperBolts  |  comps=-
+  [N] Trolley_CartFake  |  go=Trolley_CartFake  |  comps=-
+  [N] UpperDieBolt  |  go=UpperDieBolt  |  comps=-
+  [N] Vibrator_Plate.001  |  go=Vibrator_Plate.001  |  comps=BaseItem,BaseItem
+  [N] Vibratory_tray_assembly_OnTable  |  go=Vibratory_tray_assembly_OnTable  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 Non Interactables/#h3 Spawnpoints  (4 objects)
+  [N] TPos23  |  go=TPos23  |  comps=-
+  [N] TPos4  |  go=TPos4  |  comps=-
+  [N] TPos5  |  go=TPos5  |  comps=-
+  [N] TRPos  |  go=TRPos  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 Table_Objects (1)  (2 objects)
+  [N] Metal_Pallet_rack  |  go=Metal_Pallet_rack  |  comps=-
+  [N] Vibratory_tray_assembly_OnTable_Delete later  |  go=Vibratory_tray_assembly_OnTable_Delete later  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 UI  (4 objects)
+  [N] ButtonUI  |  go=ButtonUI  |  comps=-
+  [N] Feeder_ImagePanel_UI  |  go=Feeder_ImagePanel_UI  |  comps=-
+  [N] Matcon_ImagePanel_UI  |  go=Matcon_ImagePanel_UI  |  comps=-
+  [N] TouchButton  |  go=TouchButton  |  comps=-
+
+### QueryObjects/#h1 Story Objects/#h2 Vrse System  (1 objects)
+  [N] EXPERIENCE PANEL_NEW  |  go=EXPERIENCE PANEL_NEW  |  comps=-

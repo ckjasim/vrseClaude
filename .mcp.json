@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "vrsebuilder-tools": {
+      "command": "cmd",
+      "args": ["/c", "node", "mcp-server/index.js"],
+      "env": {
+        "PINECONE_API_KEY": "${PINECONE_API_KEY}",
+        "PINECONE_INDEX_NAME": "${PINECONE_INDEX_NAME}"
+      }
+    },
+    "unity": {
+      "command": "npx",
+      "args": ["-y", "--registry=https://npm.autovrse.app", "unity-mcp-server"],
+      "env": {
+        "UNITY_HUB_PATH": "C:\\Program Files\\Unity Hub\\Unity Hub.exe",
+        "UNITY_BRIDGE_PORT": "7890"
+      }
+    }
+  }
+}

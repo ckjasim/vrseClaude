@@ -1,0 +1,2093 @@
+{
+  "name": "Chromatica — Restore the Color",
+  "chapters": [
+    {
+      "name": "Island 1 — The Awakening",
+      "moments": [
+        {
+          "name": "Welcome to the Grey World",
+          "description": "Player awakens in a desaturated world and receives initial orientation about their quest to restore color.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Player",
+                "Name": "Player",
+                "Option": "LockMovement",
+                "Data": "{}"
+              },
+              {
+                "Query": "Player",
+                "Name": "Player",
+                "Option": "LockRotation",
+                "Data": "{}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Welcome, traveler. You stand in a world drained of its vibrancy, where color itself has faded into memory. Once, this realm thrived with brilliant hues—now, only shades of grey remain. You have been chosen to restore what was lost. The journey begins here, on the first island, where ancient mysteries await your discovery.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientGreyWorld\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/841dd4bb-f377-436a-8a85-77d3a5644242.mp3\",\"audioRange\":15,\"setVolume\":0.3,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Player",
+                "Name": "Player",
+                "Option": "UnlockMovement",
+                "Data": "{}"
+              },
+              {
+                "Query": "Player",
+                "Name": "Player",
+                "Option": "UnlockRotation",
+                "Data": "{}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Look around you. Feel the weight of this silence. Your task is clear: awaken the prisms, solve their puzzles, and watch as color flows back into existence. Let us begin your awakening.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The first step is taken. Now, let us discover what secrets this island holds.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "A desaturated grey landscape with a lone figure standing in the center, surrounded by colorless environment and mysterious ancient structures in the distance under a monochrome sky."
+        },
+        {
+          "name": "Place the First Crystal",
+          "description": "Player grabs the crystal and places it into its designated placepoint to begin restoring color to the island.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "GO_Crystal_01",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Crystal_01 placepoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Crystal_01",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"You see a glowing crystal nearby. Pick it up and place it into the marked holder to begin restoring color to this world.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Crystal_01",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":true,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "GO_Crystal_01 placepoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"Crystal_Snap\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/683a6e62-bf9b-438d-8114-856ff92d177a.mp3\",\"waitForCompletion\":false,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.3,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "GO_Crystal_01",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "RadialTransitionManager",
+                    "Name": "RadialStateAction",
+                    "Option": "IncrementStep",
+                    "Data": "{\"stepValue\":0.25,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Excellent! The crystal is in place. You can see color beginning to return to the island. Let's continue.\",\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "trigger": {
+                "Query": "GO_Crystal_01 placepoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"Error_Buzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/daef9cbf-6942-4a6a-a017-58339ee543ea.mp3\",\"waitForCompletion\":false,\"setVolume\":0.5}"
+                },
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That doesn't fit here. Look for the correct holder for the crystal.\",\"waitForCompletion\":true}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, you need to grab the glowing crystal and place it into the marked holder.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Crystal_01 placepoint",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.5}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Pick up the crystal with your hand controller, then bring it to the glowing holder and release it to place it inside.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Crystal_01",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Well done! The first step is complete. Color is starting to return.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "A monochrome mystical island with a glowing cyan crystal hovering near a luminescent placepoint holder, player reaching to grab the crystal, partial color bleeding into surrounding flora."
+        },
+        {
+          "name": "Strike the Xylophone Bones",
+          "description": "Player grabs the xylophone stick and strikes three bones in order to restore their color through musical interaction.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "GO_Xylophone_Stick",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Xylophone_Bone_A",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Xylophone_Bone_B",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Xylophone_Bone_C",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Xylophone_Bone_A",
+                "Name": "AlphaDesaturateAction",
+                "Option": "Desaturate",
+                "Data": "{}"
+              },
+              {
+                "Query": "GO_Xylophone_Bone_B",
+                "Name": "AlphaDesaturateAction",
+                "Option": "Desaturate",
+                "Data": "{}"
+              },
+              {
+                "Query": "GO_Xylophone_Bone_C",
+                "Name": "AlphaDesaturateAction",
+                "Option": "Desaturate",
+                "Data": "{}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Look at these ancient bones arranged like a xylophone. Pick up the stick nearby and strike each bone to awaken their melody and restore their color.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Xylophone_Stick",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"AmbientXylophoneArea\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/2b84f864-e639-4e84-aa4d-d72208001766.mp3\",\"waitForCompletion\":false,\"audioRange\":8,\"setVolume\":0.3}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "GO_Xylophone_Bone_A",
+                  "Name": "CollisionTrigger",
+                  "Option": "Enter",
+                  "Data": "{\"targetCollisionGameObject\":\"GO_Xylophone_Stick\",\"isTrigger\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"XylophoneBoneA\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/076a7ed5-5416-42b9-8221-0363aa0b8132.mp3\",\"waitForCompletion\":true,\"audioRange\":10,\"setVolume\":0.8}"
+                  },
+                  {
+                    "Query": "GO_Xylophone_Bone_A",
+                    "Name": "AlphaDesaturateAction",
+                    "Option": "Saturate",
+                    "Data": "{}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "GO_Xylophone_Bone_A",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "GO_Xylophone_Bone_B",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "GO_Xylophone_Bone_B",
+                  "Name": "CollisionTrigger",
+                  "Option": "Enter",
+                  "Data": "{\"targetCollisionGameObject\":\"GO_Xylophone_Stick\",\"isTrigger\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"XylophoneBoneB\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/907e4366-a520-4c29-9a7d-4f468926c382.mp3\",\"waitForCompletion\":true,\"audioRange\":10,\"setVolume\":0.8}"
+                  },
+                  {
+                    "Query": "GO_Xylophone_Bone_B",
+                    "Name": "AlphaDesaturateAction",
+                    "Option": "Saturate",
+                    "Data": "{}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "GO_Xylophone_Bone_B",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "GO_Xylophone_Bone_C",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "GO_Xylophone_Bone_C",
+                  "Name": "CollisionTrigger",
+                  "Option": "Enter",
+                  "Data": "{\"targetCollisionGameObject\":\"GO_Xylophone_Stick\",\"isTrigger\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"XylophoneBoneC\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/38827d8c-a9a4-44ad-9d5d-03d34fae5d11.mp3\",\"waitForCompletion\":true,\"audioRange\":10,\"setVolume\":0.8}"
+                  },
+                  {
+                    "Query": "GO_Xylophone_Bone_C",
+                    "Name": "AlphaDesaturateAction",
+                    "Option": "Saturate",
+                    "Data": "{}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.5,\"hapticDuration\":0.3,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "GO_Xylophone_Bone_C",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"XylophoneComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/29870f9d-b5d3-4d41-834f-794e9787da94.mp3\",\"waitForCompletion\":true,\"audioRange\":15,\"setVolume\":0.7}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "Query": "VOPlayer",
+              "Name": "VoiceOver",
+              "Option": "Play",
+              "Data": "{\"text\":\"Not quite right. Try striking the highlighted bone with the stick.\",\"waitForCompletion\":true}"
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Use the xylophone stick to strike each glowing bone in sequence.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Pick up the stick near you and tap it against the highlighted bone on the xylophone structure.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Xylophone_Stick",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Beautiful! The bones sing with color and melody. The island awakens to your touch.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Xylophone_Stick",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "A mystical island setting with three large ancient bones arranged horizontally as a xylophone, player holding a wooden stick and striking the middle bone which glows with colorful light and musical energy."
+        },
+        {
+          "name": "Activate the First Prism",
+          "description": "Touch the first prism to activate it and send it to the tower.",
+          "momentIndex": 3,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "GO_Prism_01",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Prism_1_transform",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now, reach out and touch the prism. Your connection will activate it and send it to the tower.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_01",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "GO_Prism_01",
+                  "Name": "HandTouchTrigger",
+                  "Option": "Touch",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "GO_Prism_01",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"PrismActivate\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/a82e5288-7465-496e-a8bd-b828ee9e72df.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.3,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "GO_Prism_01",
+                    "Name": "ObjectAnimationAction",
+                    "Option": "PositionRotationScale",
+                    "Data": "{\"targetTransform\":\"GO_Prism_1_transform\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"BeamLink01\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/5e7705b8-14d0-463e-a3c6-c29f634da479.mp3\",\"audioRange\":12,\"setVolume\":0.8,\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Touch the glowing prism with your hand to activate it.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Reach out and place your hand on the prism. Your touch will awaken its power.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_01",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FFFFFF\",\"outlineWidth\":4.0}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent! The first prism is now channeling color to the tower. The path to the next island is opening.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"BridgeOpen\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/a5b9af14-18b2-4802-bc5f-b1b68a7dfa20.mp3\",\"audioRange\":15,\"setVolume\":0.75,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Player reaching toward a glowing crystalline prism near a musical xylophone structure, with a tall stone tower visible in the background and a shimmering bridge beginning to materialize."
+        }
+      ]
+    },
+    {
+      "name": "Island 2 — The Mechanism",
+      "moments": [
+        {
+          "name": "Cross to the Mechanical Island",
+          "description": "Player transitions from Island 1 to Island 2 while receiving orientation about the mechanical challenges ahead.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": []
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"You've crossed into the Mechanical Island, where gears and mechanisms hold the next piece of Chromatica's restoration. The air hums with dormant machinery waiting to be awakened. Your task here will require precision and understanding of how these ancient systems connect.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"MechanicalAmbience\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/1a469f43-d101-4cf9-84f5-bb3c4b4fd0c6.mp3\",\"audioRange\":15,\"setVolume\":0.4,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let's explore what mechanisms await your touch.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Player standing on a stone bridge connecting two floating islands, facing a mechanical island filled with bronze gears, wheels, and ancient machinery covered in verdigris, surrounded by a desaturated gray landscape with hints of mechanical elements waiting to be activated"
+        },
+        {
+          "name": "Turn the Wheel",
+          "description": "Player rotates the wheel to activate the gear mechanism and restore color to Island 2.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "GO_Wheel_A",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Gear_Set_1",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Gear_Set_2",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Gear_Set_3",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Gear_Set_4",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Gear_Set_5",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientIsland2\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/ae1454c3-c00a-4fcd-8143-2d48e58cb772.mp3\",\"audioRange\":8,\"setVolume\":0.3,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"This wheel controls the gears. Grab it and give it a turn to activate the mechanism.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Wheel_A",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+              },
+              {
+                "Query": "GO_Wheel_A",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":true,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "GO_Wheel_A",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Grab",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "GO_Wheel_A",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"WheelGrab\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/d1224ece-805c-423b-b923-5eb81bb2567a.mp3\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.3,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "GO_Wheel_A",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Release",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"WheelTurn\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/0ab716d2-8fe7-4bfc-a597-1116eb3173a6.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "Gear_Set_1",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"Gear_Rotate\",\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Gear_Set_2",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"Gear_Rotate\",\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Gear_Set_3",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"Gear_Rotate\",\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Gear_Set_4",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"Gear_Rotate\",\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Gear_Set_5",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"Gear_Rotate\",\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Island_2",
+                    "Name": "RadialStateAction",
+                    "Option": "SetSaturation",
+                    "Data": "{\"saturationValue\":1.0}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.5,\"hapticDuration\":0.5,\"waitForCompletion\":false}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Grab the wheel with your hand and rotate it to engage the gears.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Wheel_A",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.5}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The wheel right in front of you. Reach out, grab it firmly, and give it a turn.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Wheel_A",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Perfect! The gears are turning and the mechanism is working. Color is flowing back into this island.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Wheel_A",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"ColorRestoreChime\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/ed58f884-38f6-4619-b33d-efa191f3f671.mp3\",\"audioRange\":10,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "A mechanical island with a large bronze wheel at waist height surrounded by five sets of interlocking brass gears, player reaching to rotate the wheel as gears begin to turn and color spreads across the metallic surfaces"
+        },
+        {
+          "name": "Collect and Place the Flowers",
+          "description": "Gather five purple flowers scattered along the path and place them into the offering bowl on the pedestal.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "PRO_Flower_Purple_01",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_02",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_03",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_04",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_05",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Offering_Bowl",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Flower_1_pp",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Flower_2_pp",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Flower_3_pp",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Flower_4_pp",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Flower_5_pp",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Five purple flowers are scattered along this path. Collect them and place each one in the offering bowl on the pedestal to unlock the next prism.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Offering_Bowl",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_01",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_02",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_03",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_04",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "PRO_Flower_Purple_05",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "Any",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "Flower_1_pp",
+                  "Name": "PlacePointTrigger",
+                  "Option": "Place",
+                  "Data": "{\"grabbableName\":\"PRO_Flower_Purple_01\",\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FlowerPlace\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/791efbd4-7049-4cee-9a61-2f770c6b3db0.mp3\",\"audioRange\":5,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "PRO_Flower_Purple_01",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.3,\"hapticDuration\":0.2}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "Flower_2_pp",
+                  "Name": "PlacePointTrigger",
+                  "Option": "Place",
+                  "Data": "{\"grabbableName\":\"PRO_Flower_Purple_02\",\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FlowerPlace\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/acac417c-9a69-4dd6-b126-fad08950470e.mp3\",\"audioRange\":5,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "PRO_Flower_Purple_02",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.3,\"hapticDuration\":0.2}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "Flower_3_pp",
+                  "Name": "PlacePointTrigger",
+                  "Option": "Place",
+                  "Data": "{\"grabbableName\":\"PRO_Flower_Purple_03\",\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FlowerPlace\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/944cd413-9471-4167-8461-e453095740df.mp3\",\"audioRange\":5,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "PRO_Flower_Purple_03",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.3,\"hapticDuration\":0.2}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "Flower_4_pp",
+                  "Name": "PlacePointTrigger",
+                  "Option": "Place",
+                  "Data": "{\"grabbableName\":\"PRO_Flower_Purple_04\",\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FlowerPlace\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/d0e8ea48-eeed-410e-a1bf-01102e42eadc.mp3\",\"audioRange\":5,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "PRO_Flower_Purple_04",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.3,\"hapticDuration\":0.2}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "Flower_5_pp",
+                  "Name": "PlacePointTrigger",
+                  "Option": "Place",
+                  "Data": "{\"grabbableName\":\"PRO_Flower_Purple_05\",\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FlowerPlace\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/1e867be3-3606-49ba-ac5a-7d960e1fd02f.mp3\",\"audioRange\":5,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "PRO_Flower_Purple_05",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.3,\"hapticDuration\":0.2}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":true,\"audioClipName\":\"TaskComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/51223e51-9f49-47bc-a7cb-c86bf93e7329.mp3\",\"audioRange\":8,\"setVolume\":0.8}"
+                  },
+                  {
+                    "Query": "GO_Offering_Bowl",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Look around the path — there are five purple flowers waiting to be collected and placed in the offering bowl.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Each flower must be picked up and placed into one of the glowing spots on top of the offering bowl. Find all five to continue.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Offering_Bowl",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.0}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Perfect! The offering is complete. The mechanism responds to your gift, and a new path opens before you.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "A stone offering bowl sits on a weathered pedestal with five glowing circular placepoints on top, while purple flowers are scattered along a winding path through a mystical landscape."
+        },
+        {
+          "name": "Activate the Second Prism",
+          "description": "Player touches the second prism to activate it and restore color to the second island.",
+          "momentIndex": 3,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "GO_Prism_02",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_02",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":true}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent work. The second prism awaits near the offering bowl. Touch it to restore color to this island.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_02",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FFFFFF\",\"outlineWidth\":3.0}}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "GO_Prism_02",
+                  "Name": "HandTouchTrigger",
+                  "Option": "Touch",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "GO_Prism_02",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"PrismActivate\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/a031a27f-b0e8-4522-a860-efedc52c5fa0.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.3,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "GO_Prism_02",
+                    "Name": "ObjectAnimationAction",
+                    "Option": "PositionRotationScale",
+                    "Data": "{\"targetTransform\":\"GO_Prism_2_transform\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"BeamLink\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/58a9be7e-6167-4640-bfbe-557941be85a5.mp3\",\"audioRange\":15,\"setVolume\":0.8,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "RadialTransitionManager",
+                    "Name": "RadialStateAction",
+                    "Option": "IncrementStep",
+                    "Data": "{\"stepValue\":0.33,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"The second tower awakens. Color flows through the island like a river of light.\",\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The prism near the offering bowl holds the key. Touch it to continue.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_02",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Reach out and touch the glowing prism to activate it.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_02",
+                "Name": "TargetGuidanceArrowAction",
+                "Option": "Enable",
+                "Data": "{\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Two islands restored. One journey remains. The final prism awaits across the bridge.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_02",
+                "Name": "TargetGuidanceArrowAction",
+                "Option": "Disable",
+                "Data": "{\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Player reaching toward a glowing cyan prism near an ornate offering bowl on a mystical island, with a beam of light connecting to a distant tower as color begins spreading through the environment"
+        }
+      ]
+    },
+    {
+      "name": "Island 3 — The Restoration",
+      "moments": [
+        {
+          "name": "Enter the Final Island",
+          "description": "Player arrives at Island 3 and receives orientation about the final restoration task.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientIsland3\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/f80d7757-3244-411f-9aa2-7a1b8208b503.mp3\",\"audioRange\":15,\"setVolume\":0.4,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Prism_03",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Offering_Bowl",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_01",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_02",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_03",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_04",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"You have reached the final island. Before you stands the ancient well, its depths holding the last prism that will restore color to Chromatica. But first, you must prove your understanding of harmony by assembling the crystal shards in the correct sequence.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"WellEcho\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/5d0f9ed2-4115-4b64-b4b5-d6294daf9d08.mp3\",\"audioRange\":20,\"setVolume\":0.5,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Prism_03",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Look carefully at the crystal shards scattered around the island. Each one resonates with a unique frequency. Your task is to place them in the offering bowl in ascending order, from the lowest pitch to the highest. Only then will the prism awaken.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The crystal shards await your wisdom. Begin when you are ready.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_03",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Player stands on the mystical third island with an ancient stone well at its center, a dormant prism visible within, surrounded by four glowing crystal shards scattered across moss-covered ruins under twilight sky"
+        },
+        {
+          "name": "Place the Crystal Shards in Order",
+          "description": "Player places four crystal shards sequentially around the well rim to restore the island's color.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "PRO_Crystal_Shard_01",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_02",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_03",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_04",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_01 placepoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_02 placepoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_03 placepoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_04 placepoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_01 placepoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_02 placepoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_03 placepoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_04 placepoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Four crystal shards lie scattered near the well. Place them in order around the rim to complete the restoration.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "PRO_Crystal_Shard_01",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "PRO_Crystal_Shard_01 placepoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"Water_Drop_1\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/6bfd4f17-2b38-4c47-84ce-9832834d6641.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.3,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_01 placepoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_01",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"First shard placed. Continue with the second.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_02",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_02 placepoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "PRO_Crystal_Shard_02 placepoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"Water_Drop_2\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/bd6456e4-e1fb-4c9d-ab7f-a9f511c9396d.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.3,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_02 placepoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_02",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Second shard in place. The pattern becomes clear.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_03",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_03 placepoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "PRO_Crystal_Shard_03 placepoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"Water_Drop_3\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/44b5363b-420f-4771-8ade-213282a56331.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.3,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_03 placepoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_03",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Three shards set. One remains to complete the restoration.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_04",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_04 placepoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "PRO_Crystal_Shard_04 placepoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"Water_Drop_4\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/0ac9aab1-32ac-487b-9465-d3e02151b770.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.5,\"hapticDuration\":0.4,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_04 placepoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "PRO_Crystal_Shard_04",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"Island_3_Restoration\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/52cc8efd-990c-4412-a2bb-3b17706a8a96.mp3\",\"audioRange\":15,\"setVolume\":0.8,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "RadialTransitionManager",
+                    "Name": "RadialStateAction",
+                    "Option": "SetSaturation",
+                    "Data": "{\"saturationValue\":1.0}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "trigger": {
+                "Query": "PRO_Crystal_Shard_01 placepoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"Error_Buzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/ada3f714-adea-464f-9400-adfa633dd78c.mp3\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                },
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That shard doesn't belong there. Look for the correct position.\",\"waitForCompletion\":true}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "PRO_Crystal_Shard_02 placepoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"Error_Buzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/fd09d296-f0ef-4cdc-9283-71579de9abb7.mp3\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                },
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"Not quite right. Try a different shard for this position.\",\"waitForCompletion\":true}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "PRO_Crystal_Shard_03 placepoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"Error_Buzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/175e571e-f16c-45a3-8a72-c4b3d2c2334b.mp3\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                },
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's the wrong shard. Check the sequence carefully.\",\"waitForCompletion\":true}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "PRO_Crystal_Shard_04 placepoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"Error_Buzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/b08d8f65-7c43-4ef1-9356-22c04c20e3c7.mp3\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                },
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"Incorrect placement. This shard belongs elsewhere.\",\"waitForCompletion\":true}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Focus on the highlighted shard and its matching placement point. The sequence matters.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Place each crystal shard in order: first, second, third, then fourth. Follow the highlighted guidance.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"All four shards are in place. The island pulses with restored energy as color returns to every corner.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"Success_Chime\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/593e28df-635b-4a8e-8577-7f504fc511b7.mp3\",\"audioRange\":10,\"setVolume\":0.6,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Player standing near a mystical well with four crystal shards glowing softly on nearby pedestals, with four outlined placement points arranged around the well's rim in a clear sequential pattern, while the monochrome island landscape waits for color restoration"
+        },
+        {
+          "name": "Activate the Final Prism",
+          "description": "Player touches the final prism to trigger its animation to Tower 3, establishing the third beam link.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "GO_Prism_03",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_3_transform",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "GO_Prism_03",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"One final prism remains. Touch it to complete the restoration of Chromatica.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "GO_Prism_03",
+                  "Name": "HandTouchTrigger",
+                  "Option": "Touch",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "GO_Prism_03",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"PrismActivate\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/c844bee9-4bfc-4156-a9db-e6456c80bea1.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.3,\"hapticDuration\":0.4,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "GO_Prism_03",
+                    "Name": "ObjectAnimationAction",
+                    "Option": "PositionRotationScale",
+                    "Data": "{\"targetTransform\":\"GO_Prism_3_transform\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"BeamLink01\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/04ab305d-7d7d-4c8a-86cb-e506ec781782.mp3\",\"audioRange\":12,\"setVolume\":0.8,\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Touch the glowing prism to activate it.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Place your hand on the third prism near the well.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GO_Prism_03",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FFFFFF\",\"outlineWidth\":4.0}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent! The third beam is now active. All three towers are connected.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Player reaching toward a glowing cyan prism hovering near a stone well on the third island, with Tower 3 visible in background and mystical energy radiating from the prism"
+        },
+        {
+          "name": "The World Reborn",
+          "description": "Full world color restoration as lasers connect all three towers, celebrating the completion of Chromatica's restoration.",
+          "momentIndex": 3,
+          "onAwake": {
+            "actions": []
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Look! The towers are connecting... the ancient network of light is awakening! Watch as color floods back into every corner of Chromatica!\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"LaserActivation\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/6a3aea2b-5656-41f7-b3cd-69050a9b6fa4.mp3\",\"audioRange\":50,\"setVolume\":0.6,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "RadialTransitionManager",
+                "Name": "RadialStateAction",
+                "Option": "SetSaturation",
+                "Data": "{\"saturationValue\":1.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":3.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"You've done it! The prisms are aligned, the frequencies harmonized, and the crystals united. Chromatica lives again in full color and light. You are a true guardian of this world.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"VictoryCelebration\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/chromatica/sfx/a0f2d52f-5937-4baa-8e61-10a3be66122a.mp3\",\"audioRange\":50,\"setVolume\":0.7,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Your journey through Chromatica is complete. The world is restored, vibrant and whole once more. Thank you for bringing light back to our realm.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "StopAndSkip",
+                "Data": "{\"waitForCompletion\":false,\"audioUrl\":\"https://GENERATE_THIS.com\"}"
+              }
+            ]
+          },
+          "sceneDescription": "A fully restored vibrant world of Chromatica with brilliant lasers connecting three ancient towers across the landscape, radiating colors through crystalline prisms as the environment transitions from monochrome to full saturation"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "storyId": "camp8",
+  "createdAt": "2026-04-28T07:37:45.877Z",
+  "changelog": [
+    {
+      "ts": "2026-04-28T07:37:45.877Z",
+      "diffsApplied": 2,
+      "changeLog": "M0: Remove ToastMessage action referencing non-scene Toast object\nM5: Replace GO_Wheel_B (not in scene) with Gear_Set_1–5 animations per scene awareness doc"
+    }
+  ],
+  "notes": []
+}

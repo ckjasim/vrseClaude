@@ -1,0 +1,13 @@
+{
+  "storyId": "chromatica-new",
+  "createdAt": "2026-05-06T11:47:05.497Z",
+  "changelog": [],
+  "notes": [
+    {
+      "ts": "2026-05-06T11:47:05.497Z",
+      "text": "generate_sfx: 0 generated, 11 errors. File: C:\\autovrse\\jsonClaw\\stories\\chromatica-new.json"
+    }
+  ],
+  "sopContext": null,
+  "pendingPlan": null
+}

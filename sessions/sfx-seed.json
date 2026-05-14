@@ -1,0 +1,13 @@
+{
+  "storyId": "sfx-seed",
+  "createdAt": "2026-05-06T11:48:00.512Z",
+  "changelog": [],
+  "notes": [
+    {
+      "ts": "2026-05-06T11:48:00.512Z",
+      "text": "generate_sfx: 0 generated, 45 errors. File: C:\\autovrse\\jsonClaw\\stories\\_sfx-seed.json"
+    }
+  ],
+  "sopContext": null,
+  "pendingPlan": null
+}

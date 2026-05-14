@@ -1,0 +1,227 @@
+{
+  "storyId": "assembly_training",
+  "createdAt": "2026-05-08T11:25:45.494Z",
+  "changelog": [],
+  "notes": [
+    {
+      "ts": "2026-05-08T11:28:48.575Z",
+      "text": "SFX generation: 14 generated, 29 errors"
+    },
+    {
+      "ts": "2026-05-08T11:28:48.590Z",
+      "text": "Story created: \"Pharmaceutical Shift Feeder Assembly Training\" — 15/15 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\Assembly_Training.json"
+    },
+    {
+      "ts": "2026-05-08T11:31:03.839Z",
+      "text": "generate_sfx: 14 generated, 15 errors. File: C:\\autovrse\\jsonClaw\\stories\\Assembly_Training.json"
+    },
+    {
+      "ts": "2026-05-08T11:31:14.082Z",
+      "text": "generate_sfx: 12 generated, 3 errors. File: C:\\autovrse\\jsonClaw\\stories\\Assembly_Training.json"
+    },
+    {
+      "ts": "2026-05-08T11:32:10.505Z",
+      "text": "Assembly_Training.json built from Unity scene discovery. 4 chapters, 15 moments. Scene objects verified against live Unity Assembly_Training scene (174 query objects). Cleaned 24 invented Query refs (Cooling Roller (with space)→Cooling Roller, Trolley_Cart→Trolley_Cart 1A, Player/ToastMessage/TargetArrow/ToastPanel→VOPlayer) and stripped audioUrl from 3 SFX StopAndSkip actions. All 26 SFX placeholders resolved (14+12 via generate_sfx). verify_story clean."
+    },
+    {
+      "ts": "2026-05-14T10:47:46.141Z",
+      "text": "Round 2 fixes applied: (1) Hoisted 21 unique Objects/Spawn to M0 onAwake — Trolley_Cart 1A + all 11 grabbables + 9 placepoints — so nothing pops in mid-story. (2) Lowered AmbientFactoryHum volume 0.3→0.15, audioRange 10→12, kept as sole ambient. (3) Stripped 13 ornamental SFX (IntroChime/InstructionChime/TrolleyArrival/InspectionConfirm/ChapterComplete/VerificationSuccess/AmbientWorkshop) plus 3 SFXPlayer/StopAndSkip actions that were killing the ambient. (4) Rewrote M7 (Shaking Tray) to no-interaction auto-place: VO → TimerAction 2s → ObjectAnimationAction PositionRotation to ShakingGratePlacePoint (lerp 2.5s) → VibrationDampingSettle SFX → confirm VO. verify_story clean."
+    },
+    {
+      "ts": "2026-05-14T11:54:56.035Z",
+      "text": "Round 3: Per user clarification (\"tray = shift feeder\"), all Shift Feeder * moments (M3 Base, M4 Cover, M5 Combined, M6 Tubes, M7 Shaking Tray, M8 Feeding Chute) are now no-interaction auto-place. Each: onAwake sets isGrabbable=false + clears highlights; onStart runs VO → TimerAction 2s → ObjectAnimationAction PositionRotation to its placepoint (lerp 2.5s) → SFX feedback → confirm VO; onRight/onWrong/onFirstWarning/onLastWarning empty; onEnd transition VO. M9-M11 (Feeder Pipe, Dancing Roller, Skimming Assembly) and M13 (Clamps) remain grab+placepoint interactive. verify_story clean."
+    },
+    {
+      "ts": "2026-05-14T13:31:47.130Z",
+      "text": "Round 4: Fixed three issues. (1) Removed duplicate AmbientFactoryHum PlayLoop at M12 onStart - only the M0 ambient now plays. (2) Removed Objects/Despawn for Trolley_Cart 1A at M2 onAwake - trolley stays visible across the run. (3) M9 Feeder Pipe placepoint visibility: dropped the onAwake hide-everything SetActive on FeederPipesPlacePoint, added explicit Highlighter Edit (system highlighter material) and TargetGuidanceArrowAction Enable in onStart, plus Disable arrow on CorrectPlace. M10/M11/M13 use the same hide-then-Edit pattern and look fine - the M9 placepoint scene object likely lacks a clean renderer for outline shading, so we added guidance arrow + highlighter as renderer-independent visual cues."
+    },
+    {
+      "ts": "2026-05-14T13:57:53.594Z",
+      "text": "Round 5 (final): Whole story is now passive narration + animation. Converted M9 Feeder Pipe, M10 Dancing Roller, M11 Skimming Assembly, M13 Secure Clamps (two-clamp ObjectAnimationAction Rotation to ClampRot1/ClampRot2), and the two touch-tour moments M1 Fixed Component Inspection + M12 Verification Tour (now pure VO narration with timer pauses). All 15 moments report [AUTO] (zero onRight triggerActionSets, zero onWrong). verify_story clean. Object catalog dropped to 24 (Hopper Assembly / IndexRoller / Cooling Roller / Sweep Brush / DyePlates_2 / Haptics no longer referenced since touch interactions removed)."
+    }
+  ],
+  "sopContext": null,
+  "pendingPlan": {
+    "storyName": "Pharmaceutical Shift Feeder Assembly Training",
+    "chapters": [
+      {
+        "name": "Welcome & Orientation",
+        "moments": [
+          {
+            "name": "Introduction & Training Overview",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player standing at EXPERIENCE PANEL_NEW, viewing intro screen",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Fixed Component Inspection",
+            "userAction": "Touch Hopper Assembly, IndexRoller, and Cooling Roller (with space) to inspect pre-installed components",
+            "objectsInvolved": [
+              "Hopper Assembly",
+              "IndexRoller",
+              "Cooling Roller (with space)"
+            ],
+            "successHint": "Each component highlights briefly on touch; VO confirms component name and function",
+            "spatialContext": "Fixed components mounted on tablet-press chassis, positioned at chest-to-waist height around the work area",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Parts Trolley Arrival",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Trolley_Cart 1A arrives to the left of player; camera focuses on parts trolley",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Shift Feeder Base Build-Up",
+        "moments": [
+          {
+            "name": "Install Shift Feeder Base",
+            "userAction": "Grab Shift Feeder Base from trolley and place onto ShiftFeederBottomPlacePoint",
+            "objectsInvolved": [
+              "Shift Feeder Base",
+              "ShiftFeederBottomPlacePoint"
+            ],
+            "successHint": "Snap-in sound plays; ghost mesh disappears; VO confirms base is secured",
+            "spatialContext": "PlacePoint is at base of tablet-press chassis, waist height, center front",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Attach Shift Feeder Base Cover",
+            "userAction": "Grab Shift Feeder Base Cover from trolley and place onto ShiftFeederUpperCoverPlacePoint",
+            "objectsInvolved": [
+              "Shift Feeder Base Cover",
+              "ShiftFeederUpperCoverPlacePoint"
+            ],
+            "successHint": "Cover locks with metallic click; VO praises alignment",
+            "spatialContext": "Cover PlacePoint is directly above the installed base, chest height",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Mount ShiftFeederBaseCombined",
+            "userAction": "Grab ShiftFeederBaseCombined from trolley and place onto ShiftFeederBaseCombinedPlacePoint",
+            "objectsInvolved": [
+              "ShiftFeederBaseCombined",
+              "ShiftFeederBaseCombinedPlacePoint"
+            ],
+            "successHint": "Unified assembly snaps into place; success SFX; VO confirms combined unit seated correctly",
+            "spatialContext": "Combined PlacePoint integrates the base assembly, center of chassis at waist-to-chest height",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Install Shift Feeder Tube Assembly",
+            "userAction": "Grab Shift Feeder Tube Assembly from trolley and place onto ShiftFeederTubesPlacePoint",
+            "objectsInvolved": [
+              "Shift Feeder Tube Assembly",
+              "ShiftFeederTubesPlacePoint"
+            ],
+            "successHint": "Tubes lock into guide channels; VO confirms tube routing correct",
+            "spatialContext": "Tubes PlacePoint connects to side of base assembly, angled upward, chest height",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Feeder, Tray, Roller Assembly",
+        "moments": [
+          {
+            "name": "Position Shift Feeder Shaking Tray",
+            "userAction": "Grab Shift Feeder Shaking Tray from trolley and place onto ShakingGratePlacePoint",
+            "objectsInvolved": [
+              "Shift Feeder Shaking Tray",
+              "ShakingGratePlacePoint"
+            ],
+            "successHint": "Tray settles with vibration damping sound; VO confirms shaking mechanism ready",
+            "spatialContext": "Grate PlacePoint is upper-mid section of feeder, slightly forward, chest height",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Attach Shift Feeder Feeding Chute",
+            "userAction": "Grab Shift Feeder Feeding Chute from trolley and place onto ShiftFeederUpperPlacePoint",
+            "objectsInvolved": [
+              "Shift Feeder Feeding Chute",
+              "ShiftFeederUpperPlacePoint"
+            ],
+            "successHint": "Chute aligns with hopper; VO confirms feed path established",
+            "spatialContext": "Upper PlacePoint is at top of shift feeder assembly, above eye level, angled toward hopper",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Connect Feeder Pipe",
+            "userAction": "Grab Feeder Pipe from trolley and place onto FeederPipesPlacePoint",
+            "objectsInvolved": [
+              "Feeder Pipe",
+              "FeederPipesPlacePoint"
+            ],
+            "successHint": "Pipe connection clicks; VO confirms pneumatic or material feed line connected",
+            "spatialContext": "Pipes PlacePoint connects lateral to feeder chute, shoulder height, right side",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Install Dancing Roller",
+            "userAction": "Grab Dancing Roller from trolley and place onto DanicingRollerPlacePoint",
+            "objectsInvolved": [
+              "Dancing Roller",
+              "DanicingRollerPlacePoint"
+            ],
+            "successHint": "Roller seats into bearing mounts; VO confirms roller free to rotate",
+            "spatialContext": "Danicing (spelling intentional) PlacePoint is mid-front of feeder, waist-to-chest height",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Mount Skimming Assembly",
+            "userAction": "Grab Skimming Assembly from trolley and place onto SkimmingAssemblyPlacePoint",
+            "objectsInvolved": [
+              "Skimming Assembly",
+              "SkimmingAssemblyPlacePoint"
+            ],
+            "successHint": "Skimming blade locks into guide rails; VO confirms assembly complete, ready for verification",
+            "spatialContext": "Skimming PlacePoint is upper-front edge of feeder, chest height, above shaking tray",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Final Fit & Verification",
+        "moments": [
+          {
+            "name": "Verification Tour",
+            "userAction": "Touch Cooling Roller (with space), Sweep Brush, and DyePlates_2 (Upper) to verify final assembly integrity",
+            "objectsInvolved": [
+              "Cooling Roller (with space)",
+              "Sweep Brush",
+              "DyePlates_2 (Upper)"
+            ],
+            "successHint": "Each touch highlights component with green outline; VO confirms component operational and correctly seated",
+            "spatialContext": "Components are distributed around the completed assembly — Cooling Roller rear-left, Sweep Brush front-center, DyePlates upper-right",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Secure Clamps",
+            "userAction": "Grab and engage Clamps_1 and Clamps_2 to lock the shift feeder assembly onto the tablet-press chassis",
+            "objectsInvolved": [
+              "Clamps_1",
+              "Clamps_2"
+            ],
+            "successHint": "Each clamp produces a locking ratchet sound; haptic feedback on engagement; VO confirms assembly mechanically secured",
+            "spatialContext": "Clamps_1 positioned lower-left of assembly, Clamps_2 lower-right, both at waist height, accessible from front",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Completion Summary",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player returns to EXPERIENCE PANEL_NEW; completion SFX plays; VO recaps assembly steps and congratulates successful completion",
+            "onRightMode": "InOrder"
+          }
+        ]
+      }
+    ]
+  }
+}

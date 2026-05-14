@@ -1,0 +1,1308 @@
+{
+  "name": "Pharmaceutical Shift Feeder Assembly Training",
+  "chapters": [
+    {
+      "name": "Welcome & Orientation",
+      "moments": [
+        {
+          "name": "Introduction & Training Overview",
+          "description": "Player receives welcome and training overview for pharmaceutical shift feeder assembly.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Trolley_Cart 1A",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Base",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "ShiftFeederBottomPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Base Cover",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "ShiftFeederUpperCoverPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "ShiftFeederBaseCombined",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "ShiftFeederBaseCombinedPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Tube Assembly",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "ShiftFeederTubesPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Shaking Tray",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "ShakingGratePlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Feeding Chute",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "ShiftFeederUpperPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Feeder Pipe",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FeederPipesPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Dancing Roller",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "DanicingRollerPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Skimming Assembly",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SkimmingAssemblyPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Clamps_1",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Clamps_2",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientFactoryHum\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/a78f4cb9-7f97-4d41-b715-75aa4f398ceb.mp3\",\"audioRange\":12,\"setVolume\":0.15,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Welcome to the Pharmaceutical Shift Feeder Assembly Training. In this immersive VR experience, you will learn the complete assembly process of a shift feeder system, step by step. This equipment is critical for precise material handling in pharmaceutical production environments. Let's begin your training journey.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Throughout this training, you will assemble multiple components including the base assembly, tube assembly, feeding mechanisms, and precision rollers. Follow the visual cues and voice instructions carefully. You can take your time at each step to ensure proper understanding.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent. Now that you understand the training objectives, let's proceed to the assembly area and begin with the first component.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "Player",
+                "Option": "CameraFade",
+                "Data": "{\"fadeType\":\"FadeInOut\",\"fadeDuration\":0.75,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Professional pharmaceutical training environment with player standing at an introductory display panel, clean industrial setting with soft lighting and medical equipment visible in background."
+        },
+        {
+          "name": "Fixed Component Inspection",
+          "description": "Narrative overview of the three fixed components — Hopper Assembly, Index Roller, and Cooling Roller — without player interaction.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": []
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Before we begin assembly, let's introduce the three fixed components already mounted on this tablet press.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":0.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The Hopper Assembly stores and feeds raw tablets into the shift feeder system for downstream processing.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":0.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The Index Roller meters and regulates tablet flow through the system, ensuring consistent feed rates.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":0.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The Cooling Roller maintains optimal tablet temperature during processing to prevent coating damage.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now that you understand the fixed components, let's move on to the assembly process.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Pharmaceutical manufacturing environment with tablet press chassis at waist height, showing mounted Hopper Assembly, Index Roller, and Cooling Roller with green outlines, worker's hands reaching to inspect components"
+        },
+        {
+          "name": "Parts Trolley Arrival",
+          "description": "Trolley cart arrives with all necessary parts for the shift feeder assembly process.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": []
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Here comes your parts trolley with all the components needed for today's assembly. Let's take a moment to familiarize ourselves with the parts layout before we begin.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Good. Now that the parts trolley is in position, we're ready to begin the assembly process.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial training environment with a wheeled parts trolley arriving from the left side, loaded with pharmaceutical shift feeder components, positioned beside a standing trainee in VR headset"
+        }
+      ]
+    },
+    {
+      "name": "Shift Feeder Base Build-Up",
+      "moments": [
+        {
+          "name": "Install Shift Feeder Base",
+          "description": "Shift Feeder Base automatically animates into position on ShiftFeederBottomPlacePoint. No player interaction is required.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Shift Feeder Base",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Shift Feeder Base",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "ShiftFeederBottomPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now we'll begin building the shift feeder base assembly. Watch as the Shift Feeder Base automatically moves into position on the chassis mounting point.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Base",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"ShiftFeederBottomPlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"SnapInClick\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/cedbc34f-ab5a-4f64-9b7c-4b50e67ee1bd.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The Shift Feeder Base is now secured. This forms the foundation for the rest of the assembly.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent. The base is installed. Next, the base cover will be attached.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial tablet press workshop with shift feeder base component highlighted on trolley, player reaching toward mounting point at waist-height chassis base with guidance arrow pointing to placement zone"
+        },
+        {
+          "name": "Attach Shift Feeder Base Cover",
+          "description": "Shift Feeder Base Cover automatically animates into position on ShiftFeederUpperCoverPlacePoint. No player interaction is required.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Shift Feeder Base Cover",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Shift Feeder Base Cover",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "ShiftFeederUpperCoverPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Next, the Shift Feeder Base Cover will animate into place directly above the installed base.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Base Cover",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"ShiftFeederUpperCoverPlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"MetallicClick\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/0131d7df-139d-46fc-9cd3-2fa82070218b.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The base cover is now locked in place above the base.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Good. The cover is installed. We'll continue with the combined base assembly.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial pharmaceutical workshop with shift feeder base assembly station at chest height, trainee holding metal base cover component and aligning it with green-highlighted mounting point above the installed base, technical training environment with parts trolley visible in background"
+        },
+        {
+          "name": "Mount ShiftFeederBaseCombined",
+          "description": "ShiftFeederBaseCombined automatically animates into position on ShiftFeederBaseCombinedPlacePoint. No player interaction is required.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "ShiftFeederBaseCombined",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "ShiftFeederBaseCombined",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "ShiftFeederBaseCombinedPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now watch as the combined base assembly moves into position at the center of the chassis.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "ShiftFeederBaseCombined",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"ShiftFeederBaseCombinedPlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"BaseCombinedSnap\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/71fc698a-c063-419e-8eff-52eabef2c292.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The combined base assembly is now securely seated.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent. The combined base is integrated. Next, the tube assembly will be installed.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial training environment showing a learner mounting a unified metallic base assembly onto a highlighted yellow PlacePoint at the center of a pharmaceutical shift feeder chassis at waist-to-chest height, with a trolley containing components visible nearby in a clean manufacturing floor setting."
+        },
+        {
+          "name": "Install Shift Feeder Tube Assembly",
+          "description": "Shift Feeder Tube Assembly automatically animates into position on ShiftFeederTubesPlacePoint. No player interaction is required.",
+          "momentIndex": 3,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Shift Feeder Tube Assembly",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Shift Feeder Tube Assembly",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "ShiftFeederTubesPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now watch the Shift Feeder Tube Assembly move into position along the side of the base.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Tube Assembly",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"ShiftFeederTubesPlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"TubeAssemblyLock\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/a8098142-3afe-4b9f-abaa-cb11ce0141a0.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The Shift Feeder Tube Assembly is now properly installed.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent work. The base build-up phase is complete. We'll continue with the next assembly stage.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial pharmaceutical assembly workspace at chest height showing a worker's hands positioning a tubular assembly component into guide channels on the side of a metallic shift feeder base unit, with mechanical components and a parts trolley visible in the background"
+        }
+      ]
+    },
+    {
+      "name": "Feeder, Tray, Roller Assembly",
+      "moments": [
+        {
+          "name": "Position Shift Feeder Shaking Tray",
+          "description": "The Shift Feeder Shaking Tray automatically animates into position on the ShakingGratePlacePoint after a short delay. No player interaction is required.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Shift Feeder Shaking Tray",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Shift Feeder Shaking Tray",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "ShakingGratePlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now watch as the Shift Feeder Shaking Tray automatically moves into position. This component will animate itself onto the grate mount.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Shaking Tray",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"ShakingGratePlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"VibrationDampingSettle\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/43c7b018-d363-47fa-941d-202d50a8be6c.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The Shift Feeder Shaking Tray is now in position. The shaking mechanism is ready for operation.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"With the shaking tray placed, we can now move on to attaching the feeding chute.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial workshop environment with pharmaceutical shift feeder assembly at chest height, worker's hands positioning a metallic shaking tray onto an upper grate mount point, with component trolley visible in background"
+        },
+        {
+          "name": "Attach Shift Feeder Feeding Chute",
+          "description": "Shift Feeder Feeding Chute automatically animates into position on ShiftFeederUpperPlacePoint. No player interaction is required.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Shift Feeder Feeding Chute",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Shift Feeder Feeding Chute",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "ShiftFeederUpperPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now the Shift Feeder Feeding Chute will animate into position above the shift feeder assembly, establishing the feed path from the hopper.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Shift Feeder Feeding Chute",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"ShiftFeederUpperPlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"ChuteAttach\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/54118b3f-ef82-45f3-8a49-e3144853bc31.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The feeding chute is securely attached and the feed path is established.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The feeding chute is in place. Let's continue with the next component.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial pharmaceutical assembly station with shift feeder mechanism in foreground, green-outlined feeding chute component being positioned above the assembly toward golden place point, hands reaching upward to install angled chute, technical training environment"
+        },
+        {
+          "name": "Connect Feeder Pipe",
+          "description": "Feeder Pipe automatically animates into position on FeederPipesPlacePoint. No player interaction is required.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Feeder Pipe",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Feeder Pipe",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "FeederPipesPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now watch as the Feeder Pipe automatically connects to the connection point on the right side of the feeder chute, establishing the pneumatic feed line for material transfer.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Feeder Pipe",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"FeederPipesPlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"PipeConnectionClick\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/b4573fff-5b70-42ed-8fca-9d22aa750721.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The feeder pipe is now securely connected and the pneumatic feed line is established.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The feeder pipe connection is complete. Let's continue to the next component.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial pharmaceutical assembly station showing a trainee connecting a metal feeder pipe to a connection point on the right side of a shift feeder chute at shoulder height, establishing pneumatic feed line in a clean room environment with visible assembly components"
+        },
+        {
+          "name": "Install Dancing Roller",
+          "description": "Dancing Roller automatically animates into position on DanicingRollerPlacePoint. No player interaction is required.",
+          "momentIndex": 3,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Dancing Roller",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Dancing Roller",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "DanicingRollerPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now the Dancing Roller will move into position on the bearing mounts at the front of the feeder assembly.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Dancing Roller",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"DanicingRollerPlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"RollerPlacement\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/89a18499-d42d-4577-ad64-20a7280fdc98.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The Dancing Roller is now installed and seated into the bearing mounts.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The Dancing Roller is in place. Let's continue with the next assembly step.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial pharmaceutical feeder assembly workstation with trainee installing a cylindrical Dancing Roller into bearing mounts at waist-chest height on the front center of the feeder, components highlighted with green and yellow outlines"
+        },
+        {
+          "name": "Mount Skimming Assembly",
+          "description": "Skimming Assembly automatically animates into position on SkimmingAssemblyPlacePoint. No player interaction is required.",
+          "momentIndex": 4,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Skimming Assembly",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Skimming Assembly",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "SkimmingAssemblyPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now watch as the Skimming Assembly mounts onto the guide rails at the upper-front edge of the feeder. This component removes excess material from the top of the feeding stream.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":2.0,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Skimming Assembly",
+                "Name": "ObjectAnimationAction",
+                "Option": "PositionRotation",
+                "Data": "{\"targetTransform\":\"SkimmingAssemblyPlacePoint\",\"lerpDuration\":2.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"SkimmingAssemblyLock\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/f576e850-27ea-4267-b901-9477d05d79d3.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The skimming assembly is now locked into the guide rails. The feeder, tray, and roller assembly is complete.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Outstanding. With the skimming assembly in place, we've completed this section. Next, we'll move on to the final assembly steps.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial pharmaceutical manufacturing floor with shift feeder assembly station at chest height, worker mounting metallic skimming blade assembly onto upper-front guide rails above the shaking tray, technical lighting highlighting the precision mounting point"
+        }
+      ]
+    },
+    {
+      "name": "Final Fit & Verification",
+      "moments": [
+        {
+          "name": "Verification Tour",
+          "description": "Narrative verification of three critical components — Cooling Roller, Sweep Brush, and Dye Plates — without player interaction.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": []
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent. With the shift feeder assembled, let's perform a final verification of three critical components.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":0.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Cooling Roller verified. Component is operational and correctly seated.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":0.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Sweep Brush verified. Component is operational and correctly seated.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":0.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Dye Plates verified. Component is operational and correctly seated.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"All three critical components verified. The shift feeder assembly is confirmed operational and ready for final testing.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial pharmaceutical assembly station with completed shift feeder equipment, user reaching to touch three highlighted verification points — cooling roller rear-left, sweep brush front-center, and upper dye plates right, each glowing with yellow verification outlines in factory lighting"
+        },
+        {
+          "name": "Secure Clamps",
+          "description": "Clamps_1 and Clamps_2 automatically rotate into their locked positions to secure the shift feeder onto the chassis. No player interaction is required.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Clamps_1",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Clamps_2",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Clamps_1",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "Clamps_2",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now watch as both clamps automatically rotate into their locked positions, securing the shift feeder onto the chassis.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":1.5,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Clamps_1",
+                "Name": "ObjectAnimationAction",
+                "Option": "Rotation",
+                "Data": "{\"targetTransform\":\"ClampRot1\",\"lerpDuration\":1.8,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"ClampRatchetLock\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/71c1410b-123d-40a8-9dd8-daaac061f120.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"First clamp engaged. Now the second clamp.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Clamps_2",
+                "Name": "ObjectAnimationAction",
+                "Option": "Rotation",
+                "Data": "{\"targetTransform\":\"ClampRot2\",\"lerpDuration\":1.8,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"ClampRatchetLock\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/71c1410b-123d-40a8-9dd8-daaac061f120.mp3\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Both clamps are now engaged. The shift feeder assembly is mechanically secured to the tablet-press chassis.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The shift feeder is now locked securely onto the chassis. Ready for the final verification step.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial tablet-press chassis with a fully assembled shift feeder mounted on top; two metallic securing clamps positioned at lower-left and lower-right of assembly at waist height; operator hands engaging clamp levers with highlighted outlines in warm orange light."
+        },
+        {
+          "name": "Completion Summary",
+          "description": "Final congratulatory narration recapping the complete shift feeder assembly process.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": []
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "Player",
+                "Option": "Teleport",
+                "Data": "{\"targetTransform\":\"EXPERIENCE PANEL_NEW\",\"shouldFade\":true,\"fadeDuration\":0.75,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"CompletionSuccess\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/assembly_training/sfx/3c8a7e6f-86e3-4d49-933e-cc1e1d0a8e99.mp3\",\"audioRange\":5,\"setVolume\":0.6}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent work! You have successfully completed the pharmaceutical shift feeder assembly. Let's recap what you've accomplished. First, you installed the cooling roller and index roller onto the hopper assembly, ensuring proper alignment. Next, you secured the shift feeder base and its cover, creating the foundation of the system. Then, you attached the tube assembly and shaking tray, which are critical for material flow control. After that, you installed the feeding chute to guide materials efficiently. You added the feeder pipe and dancing roller for dynamic feeding control. Finally, you placed the skimming assembly and sweep brush to ensure clean material handling. You also secured all components with the clamps and dye plates. This shift feeder is now fully assembled and ready for pharmaceutical material handling operations. Congratulations on mastering this complex assembly process!\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Thank you for completing this training. You are now prepared to perform shift feeder assembly in real-world pharmaceutical manufacturing environments.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Pharmaceutical training environment with completed shift feeder assembly visible on workstation, player standing at experience panel receiving congratulatory feedback, bright clean manufacturing facility setting with professional VR training interface."
+        }
+      ]
+    }
+  ]
+}

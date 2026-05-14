@@ -1,0 +1,219 @@
+{
+  "storyId": "fire-hsd-yard",
+  "createdAt": "2026-04-28T10:25:35.091Z",
+  "changelog": [],
+  "notes": [
+    {
+      "ts": "2026-04-28T10:27:14.880Z",
+      "text": "Story created: \"Workplace Fire Safety Training\" — 15/15 moments generated. Written to C:/autovrse/jsonClaw/stories/fire-hsd-yard.json"
+    }
+  ],
+  "sopContext": {
+    "objectives": [
+      "Identify fire hazards in the workplace",
+      "Properly operate a fire extinguisher",
+      "Execute emergency evacuation procedures",
+      "Understand fire safety protocols"
+    ],
+    "procedures": [
+      "Pull the safety pin from the fire extinguisher",
+      "Aim the nozzle at the base of the fire",
+      "Squeeze the handle to release the extinguishing agent",
+      "Sweep the nozzle from side to side at the base of the fire",
+      "Evacuate the area if the fire cannot be controlled",
+      "Call emergency services (911)",
+      "Proceed to the designated assembly point"
+    ],
+    "equipment": [
+      "fire extinguisher",
+      "safety pin",
+      "nozzle"
+    ],
+    "constraints": "Always maintain a safe distance from the fire. Never attempt to fight a fire that is spreading rapidly or blocking your exit route. Evacuate immediately if the fire extinguisher is empty or ineffective. Only trained personnel should attempt to extinguish fires. Emergency services must be contacted for all fire incidents regardless of size."
+  },
+  "pendingPlan": {
+    "storyName": "Workplace Fire Safety Training",
+    "chapters": [
+      {
+        "name": "Fire Hazard Identification",
+        "moments": [
+          {
+            "name": "Identify Blocked Exit",
+            "userAction": "Look at and identify the blocked emergency exit",
+            "objectsInvolved": [
+              "BlockedExit",
+              "ObstructionObjects"
+            ],
+            "successHint": "Visual highlight appears with voice-over: 'Correct. Blocked exits are a critical fire hazard.'",
+            "spatialContext": "Exit door with boxes stacked in front, located 3m ahead at eye level",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Identify Electrical Hazard",
+            "userAction": "Look at and identify the overloaded power strip",
+            "objectsInvolved": [
+              "PowerStrip",
+              "ElectricalCords"
+            ],
+            "successHint": "Icon appears above hazard with voice-over: 'Yes. Overloaded circuits can cause electrical fires.'",
+            "spatialContext": "Power strip on floor beneath desk, 2m to the right at ground level",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Identify Flammable Storage",
+            "userAction": "Look at and identify improperly stored flammable materials",
+            "objectsInvolved": [
+              "FlammableContainer",
+              "StorageArea"
+            ],
+            "successHint": "Warning symbol displays with voice-over: 'Correct. Flammable materials must be stored in approved containers away from heat sources.'",
+            "spatialContext": "Red containers near heat source, 4m ahead at waist height",
+            "onRightMode": "Any"
+          }
+        ]
+      },
+      {
+        "name": "Fire Extinguisher Operation",
+        "moments": [
+          {
+            "name": "Approach Fire Extinguisher",
+            "userAction": "Walk to and grab the fire extinguisher from wall mount",
+            "objectsInvolved": [
+              "FireExtinguisher",
+              "WallMount"
+            ],
+            "successHint": "Extinguisher releases from mount with audio cue and voice-over: 'Good. Always know where extinguishers are located.'",
+            "spatialContext": "Red fire extinguisher mounted on wall 1.5m high, 2m to your left",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Pull Safety Pin",
+            "userAction": "Grab and pull the safety pin from the fire extinguisher",
+            "objectsInvolved": [
+              "FireExtinguisher",
+              "SafetyPin"
+            ],
+            "successHint": "Pin releases with metallic sound and voice-over: 'Step 1 complete: Pull the pin.'",
+            "spatialContext": "Yellow pin at top of extinguisher handle, grab with free hand",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Aim at Fire Base",
+            "userAction": "Point the nozzle at the base of the simulated fire",
+            "objectsInvolved": [
+              "Nozzle",
+              "FireBase"
+            ],
+            "successHint": "Targeting reticle appears green with voice-over: 'Correct aim. Always target the base of the fire, not the flames.'",
+            "spatialContext": "Fire is 3m ahead at ground level, aim nozzle downward at base",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Squeeze Handle",
+            "userAction": "Squeeze the handle to release extinguishing agent",
+            "objectsInvolved": [
+              "FireExtinguisher",
+              "Handle"
+            ],
+            "successHint": "White discharge spray appears with pressure sound and voice-over: 'Good. Maintain steady pressure.'",
+            "spatialContext": "Squeeze trigger on handle while maintaining aim at fire base",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Sweep Side to Side",
+            "userAction": "Move the nozzle from side to side across the base of the fire",
+            "objectsInvolved": [
+              "Nozzle",
+              "FireBase"
+            ],
+            "successHint": "Fire diminishes progressively with voice-over: 'Excellent sweeping technique. Cover the entire base area.'",
+            "spatialContext": "Sweep nozzle horizontally 1m left to right while maintaining base aim",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Confirm Fire Extinguished",
+            "userAction": "Observe the fully extinguished fire",
+            "objectsInvolved": [
+              "FireBase",
+              "SmokeEffect"
+            ],
+            "successHint": "Fire disappears completely, smoke clears, voice-over: 'Fire successfully extinguished. Well done.'",
+            "spatialContext": "Fire area now clear with minimal smoke, 3m ahead at ground level",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Emergency Evacuation",
+        "moments": [
+          {
+            "name": "Assess Uncontrolled Fire",
+            "userAction": "Look at the large spreading fire that cannot be controlled",
+            "objectsInvolved": [
+              "LargeFire",
+              "SpreadingFlames"
+            ],
+            "successHint": "Warning alarm intensifies with voice-over: 'This fire is too large. Evacuation is required immediately.'",
+            "spatialContext": "Large fire spreading across wall, 5m ahead blocking one exit path",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Call Emergency Services",
+            "userAction": "Grab the emergency phone and activate 911 call",
+            "objectsInvolved": [
+              "EmergencyPhone",
+              "CallButton"
+            ],
+            "successHint": "Phone connects with dial tone then emergency operator voice: '911, what is your emergency?'",
+            "spatialContext": "Red emergency phone on wall 1.5m high, 2m to the right",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Report Fire Emergency",
+            "userAction": "Speak or press to report the fire location and situation",
+            "objectsInvolved": [
+              "EmergencyPhone",
+              "ReportButton"
+            ],
+            "successHint": "Voice-over confirms: 'Emergency services dispatched. Evacuate immediately.'",
+            "spatialContext": "Speak into phone or press report button to transmit emergency information",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Locate Safe Exit Route",
+            "userAction": "Look at and identify the unblocked emergency exit with illuminated sign",
+            "objectsInvolved": [
+              "EmergencyExit",
+              "ExitSign"
+            ],
+            "successHint": "Exit sign glows brighter with voice-over: 'Correct exit identified. This route is clear.'",
+            "spatialContext": "Green exit sign illuminated above door, 4m behind you to the left",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Evacuate Through Exit",
+            "userAction": "Walk to and push through the emergency exit door",
+            "objectsInvolved": [
+              "EmergencyExit",
+              "ExitDoor"
+            ],
+            "successHint": "Door opens with alarm sound, exterior light visible, voice-over: 'Good. Never use elevators during fire emergencies.'",
+            "spatialContext": "Push bar on door at waist height, door opens outward to exterior",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Proceed to Assembly Point",
+            "userAction": "Walk to the designated assembly point marker in the parking area",
+            "objectsInvolved": [
+              "AssemblyPoint",
+              "AssemblyMarker"
+            ],
+            "successHint": "Assembly point highlights with voice-over: 'You have reached the assembly point. Wait here for headcount and further instructions.'",
+            "spatialContext": "Green assembly point sign in parking lot, 15m from building entrance in open area",
+            "onRightMode": "InOrder"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "storyId": "story-44",
+  "createdAt": "2026-04-22T14:17:35.938Z",
+  "changelog": [
+    {
+      "ts": "2026-04-22T14:27:05.913Z",
+      "diffsApplied": 6,
+      "changeLog": "M0: Add Highlighter+Outline on GO_Wheel_A at onStart, clear at onEnd\nM4: Add Outline to existing Highlighter MetaLayerAction on GO_Crystal_01\nM5: Add Highlighter+Outline on all 5 flowers and offering bowl in onAwake, clear all in onEnd\nM6: Add Highlighter+Outline on GO_Prism_02 at onStart, clear immediately on touch\nM7: Add Highlighter+Outline on all 4 crystal shards in onAwake, clear in onEnd\nM8: Add Highlighter+Outline on GO_Prism_03 at onStart, clear on touch"
+    }
+  ],
+  "notes": [
+    {
+      "ts": "2026-04-22T14:17:35.938Z",
+      "text": "Swapped Chapter 0 first moment (The First Spark) with Chapter 1 first moment (The Turning of the Gears). Both had momentIndex: 0, no re-sequencing needed. verify_story passed with zero violations."
+    }
+  ]
+}
