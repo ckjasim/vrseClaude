@@ -9,8 +9,8 @@
       }
     },
     "unity": {
-      "command": "npx",
-      "args": ["-y", "--registry=https://npm.autovrse.app", "unity-mcp-server"],
+      "command": "node",
+      "args": ["C:\\autovrse\\vrsebuildersdk-unity-mcp-server\\src\\index.js"],
       "env": {
         "UNITY_HUB_PATH": "C:\\Program Files\\Unity Hub\\Unity Hub.exe",
         "UNITY_BRIDGE_PORT": "7890"
@@ -18,3 +18,4 @@
     }
   }
 }
+

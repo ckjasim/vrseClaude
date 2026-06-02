@@ -37,7 +37,9 @@
       "Bash(wait)",
       "Bash(dir C:\\\\autovrse\\\\jsonClaw\\\\stories)",
       "mcp__vrsebuilder-tools__rename_object",
-      "Bash(dir C:\\\\autovrse\\\\jsonClaw\\\\dev)"
+      "Bash(dir C:\\\\autovrse\\\\jsonClaw\\\\dev)",
+      "mcp__vrsebuilder-tools__resolve_scene_objects",
+      "mcp__unity__unity_execute_code"
     ]
   },
   "enableAllProjectMcpServers": true,

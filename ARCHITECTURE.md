@@ -28,7 +28,7 @@ The agent decides *when* to use Pinecone, *when* to call merkle check, *when* to
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                     MCP SERVER  (mcp-server/index.js)                       │
 │  Transport: stdio via .mcp.json                                             │
-│  Registers 18 tools via @modelcontextprotocol/sdk                           │
+│  Registers 20 tools via @modelcontextprotocol/sdk                           │
 │  Shares domain modules: core/, services/, pipeline/, integrity/             │
 └──────────────────────────────┬──────────────────────────────────────────────┘
                                │
@@ -44,7 +44,7 @@ The agent decides *when* to use Pinecone, *when* to call merkle check, *when* to
 │  · Always verify_story after significant changes                            │
 │  · Save session notes with add_session_note                                 │
 │                                                                             │
-│  Tools available: all 18 MCP tools + exec / write / read                   │
+│  Tools available: all 20 MCP tools + exec / write / read                   │
 └──────┬─────────────────────────────────┬────────────────────────────────────┘
        │ spawns subagents                │ calls tools directly
        ▼                                 ▼
@@ -96,28 +96,30 @@ tools are live in the Claude Code agent's tool loop
 
 ---
 
-## All 18 Tools
+## All 20 Tools
 
-| Tool | What it does | What it touches |
-|------|-------------|-----------------|
-| `load_story` | Reads story JSON, builds all indexes | workspaceContext, sessionStore, Pinecone |
-| `load_scene_awareness` | Reads a text file describing the scene | workspaceContext (sceneAwareness) |
-| `search_moments` | Semantic vector search over moments | Pinecone |
-| `get_moment_json` | Returns full JSON of one moment | workspaceContext |
-| `get_chain_context` | Returns prev/next moment state | workspaceContext |
-| `get_object_map` | Lists every moment that references an object | workspaceContext |
-| `get_action_catalog` | Lists all valid Query names in the story | workspaceContext |
-| `get_trigger_action_catalog` | Fetches valid action/trigger types from Infinity Workshop API | actionsService (cached) |
-| `get_story_context` | Returns story header + session summary + merkle root | workspaceContext, sessionStore |
-| `get_relevant_moments` | Token-budget-aware moment fetch | contextReducer.clip() |
-| `apply_diffs` | Atomic field-level edit with rollback | pipeline/executor |
-| `rename_object` | Renames a Query name across all moments | diffService + executor |
-| `verify_story` | Runs all integrity checks | pipeline/verifier |
-| `add_session_note` | Records an agent observation | sessionStore |
-| `save_story` | Writes in-memory story JSON to disk | fs.writeFileSync |
-| `load_sop` | Reads a SOP/training doc, extracts structured context via LLM | workspaceContext (sopContext), sessionStore |
-| `create_story` | Creates a new story from scratch — confirm:false plans, confirm:true generates all moments in parallel | creationService, workspaceContext, sessionStore |
-| `generate_moments` | Generates new moments for an existing loaded story in parallel — returns raw moment array for agent to splice | creationService, workspaceContext, sessionStore |
+| # | Tool | What it does | What it touches |
+|---|------|-------------|-----------------|
+| 1 | `load_story` | Reads story JSON, builds all indexes | workspaceContext, sessionStore, Pinecone |
+| 2 | `load_scene_awareness` | Reads a text file describing the scene | workspaceContext (sceneAwareness) |
+| 3 | `search_moments` | Semantic vector search over moments | Pinecone |
+| 4 | `get_moment_json` | Returns full JSON of one moment | workspaceContext |
+| 5 | `get_chain_context` | Returns prev/next moment state | workspaceContext |
+| 6 | `get_object_map` | Lists every moment that references an object | workspaceContext |
+| 7 | `get_action_catalog` | Lists all valid Query names in the story | workspaceContext |
+| 8 | `get_trigger_action_catalog` | Fetches valid action/trigger types from Infinity Workshop API | actionsService (cached) |
+| 9 | `get_story_context` | Returns story header + session summary + merkle root + confirmedSceneObjects | workspaceContext, sessionStore |
+| 10 | `get_relevant_moments` | Token-budget-aware moment fetch | contextReducer.clip() |
+| 11 | `apply_diffs` | Atomic field-level edit with rollback | pipeline/executor |
+| 12 | `rename_object` | Renames a Query name across all moments | diffService + executor |
+| 13 | `verify_story` | Runs all integrity checks | pipeline/verifier |
+| 14 | `add_session_note` | Records an agent observation | sessionStore |
+| 15 | `save_story` | Writes in-memory story JSON to disk | fs.writeFileSync |
+| 16 | `load_sop` | Reads a SOP/training doc, extracts structured context via LLM | workspaceContext (sopContext), sessionStore |
+| 17 | `create_story` | Creates a new story from scratch — confirm:false plans, confirm:true generates all moments in parallel | creationService, workspaceContext, sessionStore |
+| 18 | `generate_moments` | Generates new moments for an existing loaded story in parallel — returns raw moment array for agent to splice | creationService, workspaceContext, sessionStore |
+| 19 | `generate_sfx` | Resolves all `GENERATE_THIS.com` SFX placeholders in a story file into real ElevenLabs audio | sfxService, fs.writeFileSync |
+| 20 | `resolve_scene_objects` | Two-step SOP→Unity resolver: extracts nouns (LLM), expands keywords+synonyms, maps to live scene objects via unity_execute_code results, stores confirmedSceneObjects | objectResolverService, workspaceContext |
 
 ---
 
@@ -241,17 +243,18 @@ A Node.js `Map` held in process memory.
 ```js
 _store.get('my-story') = {
   storyJson,
-  relationshipIndex,   // momentChain, objectMap, storyContextHeader
-  objectCatalog,       // all Query names: ["Dragon", "Sword", ...]
-  merkleTree,          // { leaves: [...], root: 'sha256hex' }
-  sceneAwareness,      // raw text from load_scene_awareness
-  confirmedSceneObjects,
-  sopContext,          // { objectives, procedures, equipment, constraints }
-  pendingPlan          // saved plan from create_story/generate_moments confirm:false
+  relationshipIndex,    // momentChain, objectMap, storyContextHeader
+  objectCatalog,        // all Query names: ["Dragon", "Sword", ...]
+  merkleTree,           // { leaves: [...], root: 'sha256hex' }
+  sceneAwareness,       // raw text from load_scene_awareness OR JSON report from resolve_scene_objects
+  confirmedSceneObjects,// confirmed Unity object names (set by load_scene_awareness or resolve_scene_objects)
+  sopContext,           // { objectives, procedures, equipment, constraints }
+  pendingPlan,          // saved plan from create_story/generate_moments confirm:false
+  resolverState         // intermediate state between resolve_scene_objects step 1 and step 2
 }
 ```
 
-`snapshot()` — deep clone for atomic rollback. `sopContext` and `pendingPlan` are NOT rolled back on `apply_diffs` failure (same rule as `sceneAwareness`).
+`snapshot()` — deep clone for atomic rollback. `sopContext`, `pendingPlan`, and `resolverState` are NOT rolled back on `apply_diffs` failure (same rule as `sceneAwareness`).
 
 ### `core/sessionStore.js` — Persistent Session Memory
 
@@ -291,7 +294,7 @@ moment[2] JSON  →  sha256()  →  hash_2  ─┘
 
 ### `services/actionsService.js` — Infinity Workshop Catalog Cache
 
-Fetches action + trigger types from Infinity Workshop API once per process lifetime. All 18 tools and the creation pipeline read from `_cache` — no repeated HTTP calls.
+Fetches action + trigger types from Infinity Workshop API once per process lifetime. All 20 tools and the creation pipeline read from `_cache` — no repeated HTTP calls.
 
 ### `services/creationService.js` — Story Creation Engine
 
@@ -323,3 +326,100 @@ Thin axios wrapper over OpenRouter `/v1/chat/completions`. Uses `ANTHROPIC_AUTH_
 | **Catalog cached once** | `actionsService._cache` — Infinity Workshop fetched once per server process |
 | **Creation uses parallel gen** | `generateAllMoments` — all moment LLM calls simultaneous via `Promise.allSettled` |
 | **Plan persisted before generation** | `pendingPlan` in workspaceContext + sessionStore — survives MCP restart between confirm:false and confirm:true |
+| **Scene-type-aware discovery** | `resolve_scene_objects` detects standard vs non-standard Unity scenes, skips broken calls on EAF-type scenes |
+| **Object resolver is stateful** | `resolverState` in workspaceContext bridges step 1 and step 2 of `resolve_scene_objects` without requiring the agent to pass large JSON back |
+
+---
+
+## Scene Object Resolver
+
+Solves the core hallucination problem: SOP terms use human language ("shroud manipulator arm"), Unity uses PascalCase names (`Shroud_Ladle`). Without a resolver, `create_story` invents Query names that don't exist in the scene.
+
+### Problem
+
+The old 4-step discovery flow (`unity_vrse_query_objects_list` + `unity_scene_hierarchy(parentPath="QueryObjects/...")`) fails on non-standard scenes like EAF:
+- EAF has no `QueryObjectsIdManager` → `unity_vrse_query_objects_list` errors
+- EAF uses `#h2  Interactables` root layout → hardcoded `QueryObjects/` paths don't exist
+
+### Solution: Two-Step Resolver
+
+```
+AGENT                              resolve_scene_objects tool         Unity Editor
+  │                                        │                              │
+  │  load_sop(filePath)                    │                              │
+  │─────────────────────────────────────▶ sopContext stored              │
+  │                                        │                              │
+  │  unity_scene_hierarchy(maxDepth=1)    │                              │
+  │──────────────────────────────────────────────────────────────────▶  │
+  │  ◀── root object names (67 names) ────────────────────────────────── │
+  │                                        │                              │
+  │  resolve_scene_objects(sceneCatalog)  │                              │
+  │─────────────────────────────────────▶ │                              │
+  │                                        │ extractSopNouns (LLM)        │
+  │                                        │ generateSynonyms (LLM x N)  │
+  │                                        │ build mega keyword list      │
+  │                                        │ store nounGroups in          │
+  │                                        │   workspaceContext           │
+  │  ◀─ batchSearchCode (C#) ─────────────│                              │
+  │                                        │                              │
+  │  unity_execute_code(batchSearchCode)  │                              │
+  │──────────────────────────────────────────────────────────────────▶  │
+  │  ◀── matched objects (name, path, childCount) ─────────────────────  │
+  │                                        │                              │
+  │  resolve_scene_objects(batchResultsJson) [+ optional subtreeResultsJson]
+  │─────────────────────────────────────▶ │                              │
+  │                                        │ map hits → nouns            │
+  │                                        │ LLM child mapping           │
+  │                                        │ attempt 3 catalog match      │
+  │                                        │ store confirmedSceneObjects  │
+  │  ◀─ RESOLVED / AMBIGUOUS / NOT_IN_SCENE report ───────────────────── │
+  │                                        │                              │
+  │  (if pendingSubtrees returned:         │                              │
+  │   run unity_execute_code per subtree   │                              │
+  │   then re-call step 2 with results)    │                              │
+```
+
+### Three-Attempt Resolution
+
+| Attempt | Input | Unity calls | LLM calls |
+|---------|-------|------------|-----------|
+| 1 | SOP nouns → sub-word + synonym keywords | 1 batch search | 1 noun extraction + N synonym generations |
+| 1b (subtrees) | Hit objects with SOP children | 1 per parent hit | 1 child mapping per parent |
+| 3 | Unresolved nouns | 0 | 1 per noun (reads scene catalog) |
+
+*Attempt 2 (synonym search) is folded into Attempt 1 — synonyms are generated upfront and included in the single batch search, minimising Unity MCP calls.*
+
+### MCP Call Budget
+
+```
+unity_select_instance           — 1 (always)
+unity_scene_info                — 1 (always)
+unity_scene_hierarchy (root)    — 1 (always, maxDepth=1 maxNodes=200)
+unity_execute_code batch search — 1 (all nouns + synonyms in one call)
+unity_execute_code subtree walk — 1 per parent hit with SOP children (typically 2–5)
+
+Typical total:  6–10 Unity calls per SOP
+Worst case:     ~15 calls
+```
+
+### Output Report
+
+```json
+{
+  "RESOLVED":      [{ "sopTerm": "shroud manipulator arm", "queryName": "Shroud_Ladle", "path": "EAF/.../Shroud_Ladle", "resolvedAtAttempt": 1 }],
+  "PARTIAL_MATCH": [{ "sopTerm": "...", "queryName": "...", "note": "inactive or on NPC rig" }],
+  "AMBIGUOUS":     [{ "sopTerm": "...", "candidates": ["A", "B"], "note": "human confirmation needed" }],
+  "NOT_IN_SCENE":  [{ "sopTerm": "...", "note": "no match after 3 attempts" }]
+}
+```
+
+`RESOLVED` entries are stored in `workspaceContext.confirmedSceneObjects`. `get_story_context` returns them as `confirmedSceneObjects`. `create_story` reads them when generating the story, ensuring zero hallucinated Query names.
+
+### Key Files
+
+| File | Role |
+|------|------|
+| `services/objectResolverService.js` | All LLM calls: noun extraction, synonym generation, child mapping, catalog matching. Pure functions — no Unity calls, fully testable. |
+| `mcp-server/index.js` tool 20 | Tool handler: guards (sopContext required), manages step 1/2 state, stores results. |
+| `core/workspaceContext.js` | `setResolverState` / `getResolverState` — bridges the two tool calls. |
+

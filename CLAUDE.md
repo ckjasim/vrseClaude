@@ -42,6 +42,63 @@ All `mcp__vrsebuilder-tools__*` and `unity_*` tools are pre-approved and may be 
    - **struct-editor** — Structural fields (triggers, actions, SFX Data, object references, spawn states): read real actions/triggers from the story first, return structured diffs only, validate every Data field as a valid JSON string, only reference Query names that exist in the object catalog.
    - **redesign-editor** — New moments: call `get_trigger_action_catalog` first to know what action types and triggers the platform supports, then read neighbouring moments via `get_moment_json` + `get_chain_context` to match actual structure and Query conventions, only reference `confirmedSceneObjects`, return the new moment JSON plus target insert position (chapterIndex + insertAt).
    - **continuity-fixer** — Narrative continuity: check VO flow between moments, entry/exit state consistency, momentIndex sequencing; use `verify_story` for objective integrity checks, report violations before proposing fixes, return structured diffs only.
+   - **scene-resolver** — Full SOP→Unity object resolution for non-standard scenes. Runs autonomously through four internal steps and returns a single clean confirmed-objects JSON to the orchestrator. The orchestrator only needs to provide the inputs below — it never manages the resolution loop itself.
+
+     **Inputs the orchestrator must provide in the Task prompt:**
+     - `storyId` — the story ID used with `load_sop`
+     - `port` — Unity instance port from `unity_select_instance`
+     - `interactablesList` — the direct children of `#h2  Interactables` extracted from `unity_scene_hierarchy(maxDepth=1, maxNodes=200)`
+     - `sopContextSummary` — paste the `objectives`, `procedures`, and `equipment` arrays from the `load_sop` output
+
+     **Internal flow the subagent runs autonomously:**
+
+     STEP A — Resolver step 1 (call exactly once — never repeat)
+     ```
+     resolve_scene_objects(storyId, sceneCatalog=interactablesList)
+     ```
+     Receive `batchSearchCode`, `nounGroups`, `keywordMap`, and `sceneCatalog` from the output. Store these — you will pass them back as `prepareStateJson` in step C. **Do NOT call step 1 a second time under any circumstances.** If step 1 already succeeded and you have `batchSearchCode`, proceed to step B immediately.
+
+     STEP B — Unity batch search with large-result handling
+     ```
+     unity_execute_code(port=<N>, code=<batchSearchCode>)
+     ```
+     If the result is large or truncated: save the raw output to `dev/batch_results_temp.json` using the Write tool. Then filter it with this one-liner:
+     ```
+     node -e "const d=require('./dev/batch_results_temp.json');const r=d.filter(o=>o.path&&o.path.includes('#h2  Interactables'));const c=r.map(({name,path,childCount})=>({name,path,childCount}));require('fs').writeFileSync('./dev/batch_compact.json',JSON.stringify(c));console.log(c.length+' objects')"
+     ```
+     Read `dev/batch_compact.json` — this compact form (no `components` field, Interactables-only) is always small enough to pass as a parameter.
+
+     If the result is small enough to use directly, still drop the `components` field and filter to Interactables-only before passing to step C.
+
+     STEP C — Resolver step 2 (pass prepareStateJson for stateless operation)
+     ```
+     resolve_scene_objects(
+       storyId,
+       batchResultsJson=<compact JSON string>,
+       prepareStateJson=JSON.stringify({ nounGroups, keywordMap, sceneCatalog })
+     )
+     ```
+     Always pass `prepareStateJson` — this makes the call stateless and immune to resolver state loss. If `pendingSubtrees` is returned: run `unity_execute_code` subtree walk for each listed object name using `buildSubtreeWalkCode`. Collect all results into a map `{ objectName: resultsArray }`. Then call step 2 again with **both** `batchResultsJson` (same compact JSON as before) **and** `subtreeResultsJson` (the map as a JSON string) AND `prepareStateJson` in the same call. Never call step 2 a second time without `batchResultsJson`.
+
+     If step C fails despite `prepareStateJson` being provided: do not retry. Instead, skip the tool and resolve manually — take the compact batch results, group object names under SOP nouns using the `sopContextSummary`, and build the confirmed list directly.
+
+     STEP D — Scene-first cross-check (bidirectional pass)
+     Take the full `interactablesList`. Build a Set of all `queryName` values already in the RESOLVED list from step C. Remove any interactable already in that set. For each remaining object, reason against the `sopContextSummary`: is this object clearly used in, or relevant to, the procedures described? If yes, add it to the confirmed list with `note: "scene-first-pass"`. Do NOT add objects that are clearly unrelated to the SOP domain (e.g. objects from a different process area). `sceneFirstPassAdditions` must contain ONLY objects added in this step — never objects already in RESOLVED.
+
+     **Before returning — final cleanup:**
+     - Deduplicate `confirmedObjects`: remove any name that appears more than once
+     - Scan all Unity names in `confirmedObjects` for quirks (trailing spaces, special characters, parentheses) and add them to `warnings`
+     - Label the report's "not found" category as `NOT_SOP_RELEVANT` (not `NOT_IN_SCENE`) — these objects exist in Unity but are out of scope for this SOP
+
+     **Output — return this single JSON to the orchestrator:**
+     ```json
+     {
+       "confirmedObjects": ["Ladle", "Furnace", "Electrodes", "..."],
+       "report": { "RESOLVED": [...], "PARTIAL_MATCH": [...], "AMBIGUOUS": [...], "NOT_SOP_RELEVANT": [...] },
+       "sceneFirstPassAdditions": ["Electrodes", "FurnaceCrane", "..."],
+       "warnings": ["ElebiaRemote has trailing space — use exact name 'ElebiaRemote '"]
+     }
+     ```
 
 **STARTUP:** call `load_story` (and `load_scene_awareness` if a scene file is given), then `get_story_context` to anchor the stable prompt prefix.
 
@@ -71,8 +128,8 @@ No fixed step sequence — reason about each request and pick the right approach
 | Need to know what actions or triggers the platform supports | `get_trigger_action_catalog` |
 | Load a SOP / training document | `load_sop` |
 | Create a whole new story from brief or SOP | `create_story` (confirm:false → review plan → confirm:true) |
-| No scene file but Unity MCP is available | Run Unity scene discovery flow → use result as scene context → `create_story` |
-| Unity MCP available + SOP loaded | Run discovery flow → combine with SOP → best possible context → `create_story` |
+| No scene file but Unity MCP is available | Run scene-type-aware discovery (Steps 1–2) → standard: catalog tools → non-standard: spawn `scene-resolver` subagent → `create_story` |
+| Unity MCP available + SOP loaded | `load_sop` first → detect scene type → standard: catalog tools → non-standard: spawn `scene-resolver` subagent (full resolution + bidirectional pass) → `create_story` |
 | Add 1–2 new moments to existing story (small, context-sensitive) | `redesign-editor` subagent → returns moment JSON → exec splice script |
 | Add 3+ moments or a new chapter to existing story | `get_story_context` → `generate_moments` (confirm:false → review → confirm:true) → exec splice script → `load_story` → `verify_story` |
 | Redesign an existing chapter (replace moments) | exec script to remove old moments → `generate_moments` for replacements → exec splice script → `load_story` → `verify_story` |
@@ -99,8 +156,8 @@ Only call `create_story` once you have an answer to at least question 1. Combine
 | SOP only | Enough — call `create_story` directly, sopContext is in workspaceContext |
 | Chat description already given | Enough — call `create_story(brief=description)` directly |
 | SOP + scene | Best — call `create_story` directly |
-| Unity MCP reachable, no scene file | Run Unity scene discovery flow → treat output as scene awareness → proceed like "Scene awareness only" |
-| Unity MCP reachable + SOP | Run discovery flow → combine with SOP → best possible context |
+| Unity MCP reachable, no scene file | Run scene discovery flow (scene-type-aware, see below) → treat output as scene awareness → proceed like "Scene awareness only" |
+| Unity MCP reachable + SOP | `load_sop` first → run scene discovery flow → for non-standard scenes: `resolve_scene_objects` (2-step) → `confirmedSceneObjects` populated → `create_story` |
 
 ### When to Ask vs. Act
 
@@ -134,7 +191,7 @@ When creating new moments, call `get_story_context` first. Use only objects from
 
 ### Unity MCP — Live Scene Discovery
 
-When `sceneAwarenessLoaded` is `false` and the user asks to use Unity tools, check the live scene, or build from a connected Unity instance, run this 4-call discovery flow before calling `create_story` or `generate_moments`. Treat the combined output as the authoritative scene context — equivalent to a loaded scene awareness document.
+When `sceneAwarenessLoaded` is `false` and the user asks to use Unity tools or build from a connected Unity instance, run the scene-type-aware flow below. **Do not blindly run all 4 old steps** — Step 3 and Step 4 from the old flow fail on non-standard scenes like EAF and must only run on standard scenes.
 
 **Step 1 — Connect**
 ```
@@ -142,20 +199,20 @@ unity_list_instances()
 unity_select_instance(port=<N>)
 ```
 
-**Step 2 — Active scene**
+**Step 2 — Detect scene type**
 ```
 unity_scene_info(port=<N>)
 ```
-Confirm the active scene name and that a `QueryObjects` root exists.
+Inspect `rootObjects`. This determines which path to follow:
 
-**Step 3 — Interactable catalog**
+| Root objects contain | Scene type | What to do next |
+|---|---|---|
+| `"QueryObjects"` | **Standard** | Proceed to Step 3a |
+| `"#h2  Interactables"` or no `QueryObjects` | **Non-standard (e.g. EAF)** | Skip to Step 3b |
+
+**Step 3a — Standard scene: use the catalog tools**
 ```
 unity_vrse_query_objects_list(port=<N>)
-```
-Returns every registered queryable: name, path, queryName, and vrseComponents (Grabbable / PlacePoint / Touchable / BaseItem). Group entries by `gameObjectPath` bucket to build the full interactable inventory. This is the authoritative object list — only reference Query names found here.
-
-**Step 4 — Non-interactable support objects**
-```
 unity_scene_hierarchy(
   port=<N>,
   parentPath="QueryObjects/#h1 Story Objects/#h2 Non Interactables",
@@ -163,9 +220,42 @@ unity_scene_hierarchy(
   maxNodes=500
 )
 ```
-Returns snap positions (`*Pos` transforms), ghost hints (`*Ghost`), spawnpoints, collision triggers, VFX, and the chapter split signal (`#h4 Chapter N` folders). Pair each `*Pos` with its corresponding grabbable/touchable by name. The `#h4 Chapter N` split tells you how many chapters the scene is designed for.
+Returns every registered queryable + snap positions, ghost hints, spawnpoints, VFX, and chapter structure.
+After these calls, proceed as you would with a loaded scene awareness file — only reference confirmed Query names.
 
-After these 4 calls, proceed exactly as you would with a loaded scene awareness file — only reference objects confirmed in this data.
+**Step 3b — Non-standard scene: spawn `scene-resolver` subagent**
+
+> **Do NOT call `unity_vrse_query_objects_list`** — it will error (no `QueryObjectsIdManager`).
+> **Do NOT call `unity_scene_hierarchy` with a `QueryObjects/...` path** — that path does not exist.
+
+**Collect inputs (one call):**
+```
+unity_scene_hierarchy(port=<N>, maxDepth=1, maxNodes=200)
+```
+Extract the **direct children of `#h2  Interactables`** as `interactablesList` (e.g. 67 names). These are the only objects that matter for resolution.
+
+**Then spawn the scene-resolver subagent:**
+```
+Task(
+  subagent_type="generalPurpose",
+  prompt="You are the scene-resolver subagent. Your inputs:
+    storyId: <storyId>
+    port: <N>
+    interactablesList: <paste the list of direct children of #h2  Interactables>
+    sopContextSummary: <paste the objectives, procedures, and equipment arrays
+                        from the load_sop output>
+
+  Follow the scene-resolver role instructions in CLAUDE.md exactly.
+  Key reminders: call step 1 exactly once; always pass prepareStateJson to step 2;
+  use the node one-liner for large batch results.
+  Return the confirmedObjects JSON when done."
+)
+```
+
+**When the subagent returns:**
+- `confirmedObjects` is the authoritative set for this story — store it via `resolve_scene_objects(storyId, batchResultsJson=<confirmedObjects JSON>)` or note it directly in the session
+- If `sceneFirstPassAdditions` is non-empty, briefly mention to the user which objects were added by the scene-first pass (they weren't explicitly mentioned in the SOP but are relevant)
+- Proceed to `create_story`
 
 ### Parse → Mutate → Serialize
 

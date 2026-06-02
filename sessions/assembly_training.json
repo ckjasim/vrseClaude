@@ -38,6 +38,10 @@
     {
       "ts": "2026-05-14T13:57:53.594Z",
       "text": "Round 5 (final): Whole story is now passive narration + animation. Converted M9 Feeder Pipe, M10 Dancing Roller, M11 Skimming Assembly, M13 Secure Clamps (two-clamp ObjectAnimationAction Rotation to ClampRot1/ClampRot2), and the two touch-tour moments M1 Fixed Component Inspection + M12 Verification Tour (now pure VO narration with timer pauses). All 15 moments report [AUTO] (zero onRight triggerActionSets, zero onWrong). verify_story clean. Object catalog dropped to 24 (Hopper Assembly / IndexRoller / Cooling Roller / Sweep Brush / DyePlates_2 / Haptics no longer referenced since touch interactions removed)."
+    },
+    {
+      "ts": "2026-05-15T07:19:48.579Z",
+      "text": "Final audit (2026-05-15): Assembly_Training.json passed all 10 check categories with ZERO issues. 15/15 moments auto-place, 142 actions, 48 VO (all VOPlayer Query), 13 SFX (all SFXPlayer Query), 1 ambient loop, all Names+Options match action catalog, all Queries resolve to real scene objects, all Data fields valid JSON, all ObjectAnimationAction targetTransforms resolve, no GENERATE_THIS placeholders, no trolley despawn. verify_story clean."
     }
   ],
   "sopContext": null,

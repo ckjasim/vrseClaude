@@ -1,0 +1,1957 @@
+{
+  "name": "EAF Steel Tapping Procedure - SMD2-EF-WI-008",
+  "chapters": [
+    {
+      "name": "Safety & Preparation",
+      "moments": [
+        {
+          "name": "PPE & Safety Requirements",
+          "description": "Introduction to required personal protective equipment and safety protocols for EAF steel tapping operations.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"AmbientIndustrial\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":10,\"setVolume\":0.3}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Welcome to the Electric Arc Furnace steel tapping procedure training. Before we begin, let's review the critical personal protective equipment required for this operation.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "TextPanel1",
+                "Name": "TextMediaAction",
+                "Option": "Enable",
+                "Data": "{\"content\":\"Required PPE:\\n• Heat-resistant safety hat\\n• Fire retardant uniform\\n• Aluminized gloves\\n• Safety shoes\\n• Face shield\\n• Anti-fog safety glasses\\n• Ear plugs\\n• Dust mask (N95)\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"You must wear a heat-resistant safety hat, fire retardant uniform, aluminized gloves, and safety shoes. Additionally, use a face shield, anti-fog safety glasses, ear plugs, and an N95 dust mask at all times during tapping operations.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Ensure your two-way radio is functional for communication with the control room and crane operator. Never proceed without complete PPE and working communication equipment.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"SafetyConfirmation\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/128d269b-d94b-464a-aaa8-4156106d88f4.mp3\",\"audioRange\":5,\"setVolume\":0.5}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "TextPanel1",
+                "Name": "TextMediaAction",
+                "Option": "Disable",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now that you understand the safety requirements, let's move on to verifying the furnace readiness for tapping.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial steel production facility with player standing at safe observation point viewing PPE equipment checklist overlay in virtual environment."
+        },
+        {
+          "name": "Ladle Preparation",
+          "description": "Narration explaining the importance of ladle preheating and inspection before tapping operations.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Ladle",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientIndustrialHum\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":15,\"setVolume\":0.3,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Before we begin the tapping process, proper ladle preparation is critical. The ladle must be preheated to prevent thermal shock and carefully inspected for any structural damage or refractory wear. A properly prepared ladle ensures safe handling of molten steel and maintains product quality.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Ladle",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"LadleInspectionAmbient\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.5,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Verify that the ladle refractory lining is intact, check for any cracks or erosion, and confirm that all drainage points are clear. The ladle should be positioned correctly under the furnace tapping spout using the overhead crane system.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "Ladle",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"With the ladle properly prepared and positioned, we can now proceed to the furnace preparation and tapping procedure.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial steel mill environment showing a large refractory-lined ladle positioned near an electric arc furnace, with ambient lighting highlighting the ladle's interior and surrounding safety zone."
+        }
+      ]
+    },
+    {
+      "name": "Tapping Setup",
+      "moments": [
+        {
+          "name": "Activate Tapping Pulpit",
+          "description": "Turn the local control switch ON using FurnaceBreakerKey01 to activate the tapping pulpit control panel.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientSteelPlant\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/73e760e6-63c3-4e7b-8541-ad717e75c3e5.mp3\",\"audioRange\":15,\"setVolume\":0.3,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now, approach the control console near the EAF tapping pulpit. You'll see the FurnaceBreakerKey01 switch at waist height. Your task is to turn the local control switch to ON to activate the tapping pulpit. This will power up the control panel and enable manual operation of the tapping process.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Turn Switch ON\"}}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":true,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "FurnaceBreakerKey01",
+                  "Name": "PivotRotateLimiterTrigger",
+                  "Option": "Max",
+                  "Data": "{\"lockOnReach\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"SwitchActivate\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/2eb67305-a2b2-419f-8c15-7374ff6c579f.mp3\",\"audioRange\":5,\"setVolume\":0.7,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.3,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "FurnaceBreakerKey01",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Excellent! The local control switch is now ON. Notice how the control panel has lit up, indicating that the tapping pulpit is now active and ready for manual operation. You now have control over the tapping sequence.\",\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not quite right. Look for the FurnaceBreakerKey01 switch on the control console. You need to rotate it fully to the ON position.\",\"waitForCompletion\":true}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, you need to grab the FurnaceBreakerKey01 switch and rotate it clockwise to the maximum position to turn it ON. The green outline shows you which switch to use.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let me guide you. Reach out and firmly grasp the FurnaceBreakerKey01 switch. Then, rotate it all the way clockwise until it clicks into the ON position. You'll feel it lock into place when you've reached the maximum rotation.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Perfect work! The tapping pulpit is now fully activated and under local control. You're ready to proceed with the next step of the tapping procedure.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Steel plant control console area with illuminated control panel, FurnaceBreakerKey01 switch in ON position, industrial lighting highlighting the activated tapping pulpit controls."
+        },
+        {
+          "name": "Move Ladle to Tapping Position",
+          "description": "Use the remote controller to position the ladle under the EBT for tapping.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientFurnaceHum\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":15,\"setVolume\":0.3,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "RemoteController",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Ladle",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "RemoteController",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":true,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now we need to position the ladle for tapping. Pick up the remote controller and press the EAF tapping position button to move the ladle under the EBT.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "RemoteController",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"InstructionChime\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "RemoteController",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Grab",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Good. Now locate and press the EAF tapping position button on the remote controller.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "RemoteController",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"ObjectGrabSuccess\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.3,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "RemoteController",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Used",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Button pressed. The ladle is now moving into tapping position under the EBT.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "Ladle",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"MoveToTappingPosition\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"LadleMovementMechanical\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/3afe4831-1c13-4ca0-a76f-37ca03131bef.mp3\",\"audioRange\":20,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.3,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Perfect. The ladle is now positioned correctly under the EBT, ready for tapping.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"TaskCompleteSuccess\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":false}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "Query": "VOPlayer",
+              "Name": "VoiceOver",
+              "Option": "Play",
+              "Data": "{\"text\":\"That's not correct. You need to grab the remote controller first, then press the EAF tapping position button.\",\"waitForCompletion\":true}"
+            },
+            {
+              "Query": "RemoteController",
+              "Name": "MetaLayerAction",
+              "Option": "Edit",
+              "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FF0000FF\",\"outlineWidth\":3.0}}"
+            },
+            {
+              "Query": "SFXPlayer",
+              "Name": "SFXPlayer",
+              "Option": "Play",
+              "Data": "{\"audioClipName\":\"ErrorBuzzer\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.5,\"waitForCompletion\":false}"
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, pick up the remote controller and look for the EAF tapping position button.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "RemoteController",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFA500FF\",\"outlineWidth\":4.0},\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"HintChime\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/29a3079b-b4a0-43af-acdc-14b33b038abb.mp3\",\"audioRange\":8,\"setVolume\":0.5,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let me guide you. Grab the remote controller with either hand, then squeeze the trigger to press the EAF tapping position button.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "RemoteController",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":5.0},\"Label\":{\"setActive\":true,\"labelText\":\"Grab and Press Button\"}}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"UrgentAlert\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent work. The ladle is in position and we're ready for the next step in the tapping procedure.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "RemoteController",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "StopAndSkip",
+                "Data": "{\"audioUrl\":\"https://GENERATE_THIS.com\"}"
+              },
+              {
+                "Query": "Player",
+                "Name": "Player",
+                "Option": "CameraFade",
+                "Data": "{\"fadeType\":\"FadeInOut\",\"fadeDuration\":1.0,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial EAF control area with operator holding remote controller, ladle transfer car visible in background moving into position beneath the furnace tapping point"
+        },
+        {
+          "name": "Position Material Addition Chute",
+          "description": "Use the remote controller to move the RCH01 selector to CCW position for tapping.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"IndustrialAmbient\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/1dfb191f-44aa-477f-bf62-88c0c2d40e0a.mp3\",\"audioRange\":10,\"setVolume\":0.3}"
+              },
+              {
+                "Query": "GunningAndFettling_Remote",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GunningAndFettling_Remote",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now, use the gunning and fettling remote controller to position the material addition chute. Move the RCH01 selector to the CCW position to align the chute for the tapping procedure.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GunningAndFettling_Remote",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Move RCH01 to CCW\"}}"
+              },
+              {
+                "Query": "GunningAndFettling_Remote",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":true,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"ControllerActivate\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.5}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "GunningAndFettling_Remote",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Used",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"ChuteMovement\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.6}"
+                  },
+                  {
+                    "Query": "GunningAndFettling_Remote",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.3,\"hapticDuration\":0.5}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Excellent work. The material addition chute is now in the correct tapping position. The chute is aligned and ready for the steel tapping procedure.\",\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember to use the remote controller to move the RCH01 selector to the CCW position. This will position the chute correctly.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GunningAndFettling_Remote",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Grab the gunning and fettling remote controller and press the selector switch to move RCH01 to the CCW position. This action positions the chute for tapping.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "GunningAndFettling_Remote",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"AttentionBeep\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.5}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The material addition chute is now positioned. Let's proceed to the next critical step in the tapping procedure.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"TaskComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/a15103fa-03b1-4f3c-b013-4ca08ae49323.mp3\",\"audioRange\":5,\"setVolume\":0.6}"
+              },
+              {
+                "Query": "GunningAndFettling_Remote",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial steel mill environment with the gunning and fettling remote control panel in the foreground, material addition chute visible in the background moving into tapping position, ambient industrial lighting with safety markings visible."
+        }
+      ]
+    },
+    {
+      "name": "Tapping Execution",
+      "moments": [
+        {
+          "name": "Verify Bath Conditions",
+          "description": "Player observes bath temperature and chemistry values being verified before tapping.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FurnaceAmbient\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":15,\"setVolume\":0.4}"
+              },
+              {
+                "Query": "Furnace",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Before tapping, we must verify the bath conditions. The target bath temperature must be between 1600 and 1650 degrees Celsius, and the chemistry values must be within the specified ranges for carbon, phosphorus, and sulfur. These parameters ensure the steel quality meets the required specifications. Let's check the current readings on the monitoring system.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "TextPanel1",
+                "Name": "TextMediaAction",
+                "Option": "Enable",
+                "Data": "{\"content\":\"Bath Temperature Target: 1600-1650°C\\nCarbon: Within spec\\nPhosphorus: Within spec\\nSulfur: Within spec\",\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Furnace",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "CountDownTimer",
+                "Name": "TimerAction",
+                "Option": "Start",
+                "Data": "{\"duration\":3.0,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Bath conditions verified. All parameters are within acceptable ranges. We can now proceed with the tapping sequence.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Furnace",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "TextPanel1",
+                "Name": "TextMediaAction",
+                "Option": "Disable",
+                "Data": "{\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial steel furnace with glowing interior visible, digital display panel showing temperature and chemistry readings in foreground, player observing from safe distance in dimly lit facility."
+        },
+        {
+          "name": "Open EBT and Begin Tapping",
+          "description": "Operator interacts with furnace breaker key to lift electrodes and initiate tapping sequence.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientFurnaceHum\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":15,\"setVolume\":0.3,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Electrodes",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Furnace",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now you will open the EBT to begin tapping. First, use the furnace breaker key to lift the electrodes, which will enable furnace tilt control. Locate the breaker key at the control panel.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0},\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":true,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "FurnaceBreakerKey01",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Grab",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Good. You have grabbed the furnace breaker key. Now rotate it to lift the electrodes.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.3,\"hapticDuration\":0.2,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"KeyGrab\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.6,\"waitForCompletion\":false}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "FurnaceBreakerKey01",
+                  "Name": "PivotRotateLimiterTrigger",
+                  "Option": "Max",
+                  "Data": "{\"lockOnReach\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Excellent! The furnace breaker key is now in position. The electrodes are lifting, and tilt control is enabled. Tapping has begun.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"ElectrodeLift\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/1e2c5b2b-1555-4b08-b77d-932445bf9db3.mp3\",\"audioRange\":20,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Electrodes",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"ElectrodesLift\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"MoltenSteelFlow\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":25,\"setVolume\":0.8,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Furnace",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"TappingFlow\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.5,\"hapticDuration\":1.0,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "FurnaceBreakerKey01",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, you need to rotate the furnace breaker key fully to lift the electrodes and begin tapping. Make sure you turn it all the way.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFFF00FF\",\"outlineWidth\":4.0}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The furnace breaker key at the control panel must be rotated completely. Grab it and turn it to the maximum position to lift the electrodes.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceBreakerKey01",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FF0000FF\",\"outlineWidth\":5.0},\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Well done. The EBT is now open and tapping has successfully begun. Molten steel is flowing into the ladle. You will now proceed to monitor the tapping process.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"SuccessChime\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":10,\"setVolume\":0.5,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial steel foundry control panel with furnace breaker key highlighted, large electric arc furnace with rising electrodes in background, molten steel beginning to flow into waiting ladle below, dramatic orange glow illuminating the operator area."
+        },
+        {
+          "name": "Add Ferroalloys During Tapping",
+          "description": "Interact with ferroalloy hopper to open slide gates when 20-25 tons have been tapped into the ladle.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Hopper_FeAlloys",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"TappingAmbient\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/49e791e3-3a48-4ccd-ad31-218216fdfa80.mp3\",\"audioRange\":15,\"setVolume\":0.3,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"As the tapping process continues, you need to add ferroalloys to the ladle. When 20 to 25 tons of molten steel have been tapped, interact with the ferroalloy hopper control to open the slide gates. This allows the ferroalloys to flow into the ladle, ensuring proper alloy composition in the final steel product.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Hopper_FeAlloys",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":true}"
+              },
+              {
+                "Query": "Hopper_FeAlloys",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":true,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "Hopper_FeAlloys",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Used",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "Hopper_FeAlloys",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"HopperGateOpen\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/021cdca7-2b66-4082-917e-3c8d3273ee28.mp3\",\"audioRange\":10,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.5,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Excellent! The slide gates are now open. The ferroalloys are flowing into the ladle, mixing with the molten steel to achieve the desired chemical composition. This is a critical step in the tapping process to ensure the final steel meets quality specifications.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"MaterialFlow\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, you need to interact with the ferroalloy hopper control to open the slide gates. Look for the highlighted hopper and use the control mechanism to release the materials.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Hopper_FeAlloys",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":4.0}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The ferroalloy hopper is directly in front of you. Grab or interact with the control to open the slide gates and allow the ferroalloys to flow into the ladle. This must be done at the correct time during tapping.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Hopper_FeAlloys",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Well done. The ferroalloys have been successfully added to the ladle. The tapping process continues with proper alloy composition being maintained. Let's proceed to the next step.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Hopper_FeAlloys",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":false,\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "StopAndSkip",
+                "Data": "{\"audioUrl\":\"https://GENERATE_THIS.com\"}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial steel plant ferroalloy hopper station with highlighted control mechanism, molten steel flowing into ladle below, worker preparing to activate slide gates during tapping operation"
+        }
+      ]
+    },
+    {
+      "name": "Completing the Tap",
+      "moments": [
+        {
+          "name": "Control Slag Carryover",
+          "description": "Operator tilts furnace back to deslagging side to control slag carryover when approximately 5-7 tons of steel remain.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FurnaceAmbient\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":15,\"setVolume\":0.4}"
+              },
+              {
+                "Query": "Furnace",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceTiltingKey",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Ladle",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"As the ladle reaches approximately 5 to 7 tons of steel remaining, it's critical to tilt the furnace back toward the deslagging side. This controls slag carryover and prevents contamination of the final steel. Use the furnace tilting key to begin the reverse tilt.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceTiltingKey",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true}"
+              },
+              {
+                "Query": "FurnaceTiltingKey",
+                "Name": "GrabbablePropertyChangeAction",
+                "Option": "ChangeIsGrabbable",
+                "Data": "{\"isGrabbable\":true,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "FurnaceTiltingKey",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Grab",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"KeyGrab\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/2d6fa032-5ef3-40db-b30e-ce7c605e1617.mp3\",\"audioRange\":5,\"setVolume\":0.6}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.3,\"hapticDuration\":0.2}"
+                  },
+                  {
+                    "Query": "FurnaceTiltingKey",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "FurnaceTiltingKey",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Used",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FurnaceTiltReverse\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":20,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.4,\"hapticDuration\":0.3}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Good. The furnace is tilting back to the deslagging side. This reverse tilt prevents slag from entering the ladle and ensures clean steel quality.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "Furnace",
+                    "Name": "Animation",
+                    "Option": "Play",
+                    "Data": "{\"_clipName\":\"TiltToDeslaggingSide\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "ToastMessage",
+                    "Name": "ToastMessage",
+                    "Option": "",
+                    "Data": "{\"message\":\"Furnace tilted back to deslagging side successfully\",\"messageType\":\"Correct\",\"duration\":3.0}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "trigger": {
+                "Query": "AnyTrigger",
+                "Name": "AnyTrigger",
+                "Option": "",
+                "Data": "{\"ignoreQueries\":[\"FurnaceTiltingKey\"],\"ignoreTriggerTypes\":[],\"triggerFrom\":1,\"triggerInterval\":0,\"triggerOnce\":false,\"ignoreOnRightTriggers\":true}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"Focus on the furnace tilting key. You need to use it to tilt the furnace back to the deslagging side to control slag carryover.\",\"waitForCompletion\":true}"
+                },
+                {
+                  "Query": "FurnaceTiltingKey",
+                  "Name": "MetaLayerAction",
+                  "Option": "SetActive",
+                  "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, you need to grab the furnace tilting key and activate it to tilt the furnace back. This prevents slag from contaminating the steel.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceTiltingKey",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFAA00FF\",\"outlineWidth\":4.0},\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Locate the furnace tilting key in front of you. Grab it with either hand, then squeeze the grip button to activate the reverse tilt to the deslagging side.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceTiltingKey",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FF0000FF\",\"outlineWidth\":5.0},\"Label\":{\"setActive\":true,\"labelText\":\"Grab and Use This Key\"},\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"},\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent work controlling the slag carryover. By tilting back to the deslagging side, you've ensured the final steel remains clean and uncontaminated. Let's proceed to finalize the tapping process.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FurnaceTiltingKey",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"TaskComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":10,\"setVolume\":0.5}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial steel furnace facility with operator at control console, EAF furnace visibly tilting back toward deslagging side, ladle partially filled with molten steel glowing orange, FurnaceTiltingKey controller in operator's hand, ambient industrial lighting with safety barriers visible."
+        },
+        {
+          "name": "EBT Cleanup and Sand Filling",
+          "description": "Player observes the final EBT cleanup and sand filling operations after tapping is complete.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"AmbientFurnaceIdle\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":10,\"setVolume\":0.3}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"After tapping is complete, the EBT cleanup and sand filling process begins. This critical step ensures the tap hole is properly sealed and prepared for the next heat cycle.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"EBTMechanicalOperation\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/0faece1a-4457-47da-a298-b137acd168d9.mp3\",\"audioRange\":8,\"setVolume\":0.6}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"The EBT system retracts and cleans the tap hole area, removing any residual slag or steel. Sand is then injected to seal the hole completely, preventing heat loss and maintaining furnace integrity.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":true,\"audioClipName\":\"SandFilling\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/eaf-steel-training/sfx/e11ae3f8-0492-4c48-9a40-f644ebb928aa.mp3\",\"audioRange\":8,\"setVolume\":0.5}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"This completes the steel tapping procedure. The furnace is now ready for the next melting cycle. Always ensure all safety protocols are followed and the area is clear before beginning a new operation.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent work. You have successfully completed the EAF steel tapping procedure training. Remember, precision and safety are paramount in every step of this critical operation.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "StopAndSkip",
+                "Data": "{\"audioUrl\":\"https://GENERATE_THIS.com\"}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial electric arc furnace environment post-tapping with EBT system performing cleanup operations and sand filling process, mechanical sounds echoing in the facility"
+        }
+      ]
+    }
+  ],
+  "pendingPlan": {
+    "storyName": "EAF Steel Tapping Training",
+    "chapters": [
+      {
+        "name": "Pre-Tapping Preparation",
+        "moments": [
+          {
+            "name": "Introduction and Safety Briefing",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player positioned at tapping pulpit overview",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Inspect Ladle Condition",
+            "userAction": "Touch Ladle with hand to inspect and verify temperature range 1000-1200°C",
+            "objectsInvolved": [
+              "Ladle"
+            ],
+            "successHint": "Voice-over confirms 'Ladle inspection complete, temperature within range'",
+            "spatialContext": "Ladle positioned at ground level 2m ahead",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Check Ferroalloy Bunkers",
+            "userAction": "Touch Hopper_FeAlloys to verify materials are ready",
+            "objectsInvolved": [
+              "Hopper_FeAlloys"
+            ],
+            "successHint": "Toast message 'Ferroalloy bunkers verified and ready'",
+            "spatialContext": "Hopper visible at platform level 3m to the right",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Activate Local Control",
+            "userAction": "Grab RemoteController and press button to turn ON local control",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Green indicator light on RemoteController, voice-over 'Local control activated'",
+            "spatialContext": "RemoteController on control panel at waist height 1m ahead",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Position Ladle Transfer Car",
+            "userAction": "Use RemoteController to move LadleCrane to tapping position",
+            "objectsInvolved": [
+              "RemoteController",
+              "LadleCrane"
+            ],
+            "successHint": "Animation shows LadleCrane moving into position, voice-over confirms 'Ladle in tapping position'",
+            "spatialContext": "Observe crane movement from pulpit control station",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Reset Steel Weight",
+            "userAction": "Press reset button on RemoteController to zero steel weight",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Display shows '0 tons', toast message 'Weight reset complete'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Tapping Preparation",
+        "moments": [
+          {
+            "name": "Position Material Addition Chute",
+            "userAction": "Use RemoteController selector switch RCH01 to move chute to CCW position",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Chute animation moves to tapping position, voice-over 'Material addition chute positioned'",
+            "spatialContext": "Control panel with selector switches",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Verify Bath Temperature and Composition",
+            "userAction": "Grab SamplingPipe_EAF and take sample from Furnace",
+            "objectsInvolved": [
+              "SamplingPipe_EAF",
+              "Furnace"
+            ],
+            "successHint": "Display shows temperature and chemical values, voice-over confirms 'Bath parameters within specification'",
+            "spatialContext": "SamplingPipe_EAF on equipment rack 1.5m to left, Furnace 5m ahead",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Unlock Furnace Frame Locks",
+            "userAction": "Press UNLOCK button under FRAME label on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Mechanical sound effect, indicator changes from red to green, voice-over 'Frame locks released'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Enable Tilting Control",
+            "userAction": "Rotate TILT-ENABLE selector switch to ON position on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Yellow indicator illuminates, voice-over 'Tilting control enabled'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Start Ladle Stirring",
+            "userAction": "Select gas type and increase pressure using STIR Line 1 and STIR Line 2 on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Gas flow animation visible, pressure gauge rises, voice-over 'Ladle stirring initiated'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Opening EBT System",
+        "moments": [
+          {
+            "name": "Unlock EBT Flap",
+            "userAction": "Press Extra Stroke By-Pass and EBT Unlock buttons simultaneously on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Hydraulic sound effect, flap unlocks, voice-over 'EBT flap unlocked'",
+            "spatialContext": "RemoteController at control panel with both hands positioned",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Open EBT Flap",
+            "userAction": "Press Extra Stroke By-Pass and EBT Opening buttons simultaneously on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Flap opens with animation, sand dropping visible, voice-over 'EBT flap open, observe steel flow'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Emergency Lancing Procedure (If Steel Does Not Flow)",
+            "userAction": "Grab LancingPipe and insert into tap hole to open flow with oxygen",
+            "objectsInvolved": [
+              "LancingPipe",
+              "Furnace"
+            ],
+            "successHint": "Steel flow animation begins, voice-over 'Steel flow established via lancing'",
+            "spatialContext": "LancingPipe on equipment rack, approach Furnace tap hole at ground level",
+            "onRightMode": "Random"
+          },
+          {
+            "name": "Observe Steel Flow",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Observe molten steel flowing from Furnace into Ladle",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Tapping Process and Material Addition",
+        "moments": [
+          {
+            "name": "Monitor Tapping Progress to 20-25 Tons",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Observe weight display reaching target range",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Add Ferroalloys",
+            "userAction": "Press BIN SHP01 and SHP02 Slide Gate open buttons on RemoteController",
+            "objectsInvolved": [
+              "RemoteController",
+              "Hopper_FeAlloys"
+            ],
+            "successHint": "Material flow animation from hoppers, voice-over 'Ferroalloys addition in progress'",
+            "spatialContext": "RemoteController at control panel, observe hoppers",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Move Chute to Parking Position",
+            "userAction": "Use RemoteController selector switch RCH01 to CW position",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Chute animation moves to parking position, voice-over 'Material addition chute parked'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Tilt Furnace to Complete Tapping",
+            "userAction": "Use joystick on RemoteController to gradually tilt Furnace forward",
+            "objectsInvolved": [
+              "RemoteController",
+              "Furnace"
+            ],
+            "successHint": "Furnace tilts with animation, steel flow increases, voice-over 'Tilting to complete tapping'",
+            "spatialContext": "RemoteController joystick at control panel, observe Furnace movement",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Monitor to 150-155 Tons",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Observe weight display approaching target weight",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Tilt Back for De-slagging",
+            "userAction": "Use joystick on RemoteController to tilt Furnace back to de-slagging side when 5-7 tons remain",
+            "objectsInvolved": [
+              "RemoteController",
+              "Furnace"
+            ],
+            "successHint": "Furnace tilts back, slag separates, voice-over 'De-slagging position achieved'",
+            "spatialContext": "RemoteController joystick at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Move Ladle Clear",
+            "userAction": "Press ladle car EAF PREHEAT CHARG.POSITION button on RemoteController",
+            "objectsInvolved": [
+              "RemoteController",
+              "LadleCrane"
+            ],
+            "successHint": "Ladle moves away from Furnace with animation, voice-over 'Ladle moved to charging position'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Communicate Ladle Status",
+            "userAction": "Grab WalkieTalkie and report ladle status",
+            "objectsInvolved": [
+              "WalkieTalkie"
+            ],
+            "successHint": "Radio communication sound effect, voice-over 'Ladle status reported'",
+            "spatialContext": "WalkieTalkie on belt or nearby holder at waist height",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "EBT Closure and Cleanup",
+        "moments": [
+          {
+            "name": "Tilt to 7 Degree Tapping Position",
+            "userAction": "Use joystick on RemoteController to tilt Furnace to 7° angle",
+            "objectsInvolved": [
+              "RemoteController",
+              "Furnace"
+            ],
+            "successHint": "Angle indicator shows 7°, voice-over 'Furnace at 7 degrees'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Clean EBT Bottom",
+            "userAction": "Press EXTRA STROKE BY-PASS and OPENING-CLOSING buttons on RemoteController to cycle EBT flap",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Flap cycles open and closed, voice-over 'EBT bottom cleaned'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Lock EBT Flap",
+            "userAction": "Press LOCK button under EBT movement label on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Lock indicator illuminates, mechanical lock sound, voice-over 'EBT flap locked'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Open EBT Cover",
+            "userAction": "Press EBT COVER OPEN button on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Cover opens with animation, voice-over 'EBT cover open'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Inspect Tap Hole",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Camera display shows tap hole condition",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Fill EBT with Sand",
+            "userAction": "Press EBT SAND CHARGING OPEN button on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Sand fills tap hole with animation forming dome, voice-over 'Sand charging complete, dome formed'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Close Sand Hopper",
+            "userAction": "Press EBT SAND CHARGING CLOSE button on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Hopper closes with animation, voice-over 'Sand hopper closed'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Close EBT Cover",
+            "userAction": "Press EBT COVER CLOSE button on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Cover closes with animation, voice-over 'EBT cover closed'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Post-Tapping Procedures",
+        "moments": [
+          {
+            "name": "Return Furnace to Horizontal",
+            "userAction": "Use joystick on RemoteController to tilt Furnace to horizontal position",
+            "objectsInvolved": [
+              "RemoteController",
+              "Furnace"
+            ],
+            "successHint": "Furnace returns to level position with animation, voice-over 'Furnace horizontal'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Clean Slag Door",
+            "userAction": "Use GunningAndFettling_Remote to clean slag door ensuring fettling material not higher than 10-15cm",
+            "objectsInvolved": [
+              "GunningAndFettling_Remote"
+            ],
+            "successHint": "Cleaning animation completes, voice-over 'Slag door cleaned to specification'",
+            "spatialContext": "GunningAndFettling_Remote on equipment rack or holder",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Insert Frame Locks",
+            "userAction": "Press LOCK button under FRAME label on RemoteController",
+            "objectsInvolved": [
+              "RemoteController"
+            ],
+            "successHint": "Lock indicators change to red, mechanical sound, voice-over 'Frame locks engaged'",
+            "spatialContext": "RemoteController at control panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Emergency Procedure Review",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Voice-over explains emergency hydraulic controls and EmergencyButton location",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Identify Emergency Button",
+            "userAction": "Touch EmergencyButton to acknowledge location",
+            "objectsInvolved": [
+              "EmergencyButton"
+            ],
+            "successHint": "Toast message 'Emergency stop location confirmed'",
+            "spatialContext": "EmergencyButton at eye level on emergency panel 2m to left",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Training Complete Summary",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Final summary of key safety and operational points",
+            "onRightMode": "InOrder"
+          }
+        ]
+      }
+    ]
+  },
+  "sopContext": {
+    "objectives": [
+      "Safely tap molten steel from EAF into ladles",
+      "Achieve required bath temperature and chemical composition before tapping",
+      "Maintain proper ladle temperature (1630°C +/- 10°C for ladles in circulation, 1650°C +/- 10°C for new ladles)",
+      "Control tapping process to avoid slag carryover into ladle",
+      "Manage ferroalloy and slag forming material additions during tapping",
+      "Operate EBT (Eccentric Bottom Tapping) system correctly",
+      "Ensure proper ladle preparation and inspection before tapping",
+      "Execute tapping under arcing procedures when applicable",
+      "Complete emergency tapping procedures using emergency hydraulic controls"
+    ],
+    "procedures": [
+      "Inspect ladle condition and verify temperature is 1000°C to 1200°C",
+      "Verify ladle top ring is cleaned and level after filling nozzle sand",
+      "Ensure ferroalloys and slag forming materials are ready in bunkers",
+      "Turn on local control switch from EAF tapping pulpit to ON position",
+      "Verify ladle preheater is in parking position",
+      "Move ladle transfer car to tapping position by pressing EAF tapping position button",
+      "Reset steel weight to zero before tapping",
+      "Move material addition chute to tapping position by moving selector switch RCH01 to CCW",
+      "Verify required bath temperature and oxygen levels are achieved",
+      "Verify chemical composition is at required level (C%, P, Cu, O2 ppm)",
+      "Unlock furnace frame locks",
+      "Verify DRI movable chute is working properly",
+      "Enable tilting control by rotating TILT-ENABLE selector switch to ON position",
+      "Start ladle stirring by selecting gas type (Nitrogen or Argon) and increasing rinsing gas pressure using STIR Line 1 and STIR Line 2 switches",
+      "Unlock EBT flap by pressing Extra Stroke By-Pass button and EBT Unlock button simultaneously",
+      "Open EBT flap by pressing Extra Stroke By-Pass button and EBT Opening button simultaneously",
+      "Observe EBT sand dropping and metal flow from furnace into ladle",
+      "If steel doesn't flow, use Oxygen lance to open EBT while wearing Aluminum jacket",
+      "When 20-25 tons tapped, add ferroalloys by pressing BIN SHP01 and SHP02 Slide Gate open buttons",
+      "Add FeMn, FeSi, SiMn, CaO, CaF2 and other materials as required for steel grade",
+      "Manually add recarburizer during ferroalloy addition if needed",
+      "Move material addition chute to parking position using selector switch RCH01 to CW",
+      "For tapping under arcing: maintain bath temperature during feeding and tapping simultaneously",
+      "For tapping under arcing: open furnace main circuit breaker and lift electrodes to tapping position after 20-25 tons tapped",
+      "For tapping without arcing: open furnace main circuit breaker, lift electrodes to tapping position and lock before starting tapping",
+      "Tilt furnace gradually using joystick to control tilting and complete tapping",
+      "When approximately 5-7 tons remain to desired weight (aim 150-155 tons), tilt furnace back to de-slagging side",
+      "Move ladle from below furnace by pressing ladle car EAF PREHEAT CHARG.POSITION button",
+      "Check ladle stirring availability",
+      "Tilt furnace to tapping position until 7° angle is reached",
+      "Clean EBT bottom by closing and opening flap using EXTRA STROKE BY-PASS and OPENING-CLOSING buttons",
+      "Close EBT flap and lock by pressing LOCK button under EBT movement label",
+      "Open EBT cover by pressing EBT COVER OPEN button",
+      "Inspect tap hole using camera through monitoring display",
+      "Fill EBT with sand by pressing EBT SAND CHARGING OPEN button",
+      "Ensure sand forms dome-like pile over tap hole",
+      "Close sand hopper by pressing EBT SAND CHARGING CLOSE button",
+      "Close EBT cover by pressing EBT COVER CLOSE button",
+      "Estimate hot heel quantity after every heat (average should be around 30 tons)",
+      "Tilt furnace to horizontal position using joystick",
+      "Clean slag door ensuring fettling material is not higher than 10-15 cm above slag apron",
+      "Insert shell verticality locks by pressing LOCK button under FRAME label if scrap or electrode charging needed",
+      "For emergency: use emergency stick on left side to open hydraulic line by pushing forward continuously",
+      "For emergency: use emergency stick on right side to tilt furnace forward for tapping or backward for de-slagging"
+    ],
+    "equipment": [
+      "EAF",
+      "ladle",
+      "ladle transfer car",
+      "ladle preheater",
+      "EBT (Eccentric Bottom Tapping)",
+      "EBT flap",
+      "EBT cover",
+      "material addition chute",
+      "DRI movable chute",
+      "ferroalloy bunkers",
+      "BIN SHP01",
+      "BIN SHP02",
+      "slide gates",
+      "overhead crane",
+      "ladle arms",
+      "EAF tapping pulpit",
+      "tapping control panel",
+      "TILT-ENABLE selector switch",
+      "RCH01 selector switch",
+      "joystick",
+      "electrodes",
+      "electrode arms",
+      "Oxygen lance",
+      "lancing pipes",
+      "back fire arrestor",
+      "thermocouple",
+      "samplers",
+      "catfish",
+      "two-way radios",
+      "camera",
+      "monitoring display",
+      "sand filling hopper",
+      "ladle car weight system",
+      "stirring gas system",
+      "STIR Line 1",
+      "STIR Line 2",
+      "Nitrogen",
+      "Argon",
+      "FeMn",
+      "FeSi",
+      "SiMn",
+      "CaO",
+      "CaF2",
+      "recarburizer",
+      "slag forming material",
+      "furnace main circuit breaker",
+      "frame locks",
+      "emergency hydraulic unit",
+      "emergency stick",
+      "slag door",
+      "slag apron",
+      "shell verticality locks",
+      "water cooled panels",
+      "EBT sand",
+      "nozzle sand",
+      "Heat-Resistant Safety Hat",
+      "Anti-Fog Safety Glasses",
+      "Dark Cobalt Glasses",
+      "Gold Safety Glasses",
+      "Face Shield",
+      "Leather Gloves",
+      "Aluminized Gloves",
+      "Safety Shoes",
+      "Aluminum Jacket",
+      "Dust Mask (N95)",
+      "Ear Plugs",
+      "Fire Retardant Uniform",
+      "FR clothing",
+      "leather gloves",
+      "toolbox",
+      "steel pipe"
+    ],
+    "constraints": "Use only tools and equipment in good condition and appropriate for the task. All protective and safety devices, machine guards and alarms must be functional. Follow all area safety warning signs and instructions. Maintain proper housekeeping. Report hazards, near-misses, or incidents immediately to Supervisor. Any member can stop activity if unsafe conditions are found and must immediately inform shift Supervisor. Operator shall use all proper PPE during tapping. Do not charge any material in the ladle before tapping. Ladle must not exceed 3 minutes under EAF before start tapping to avoid excessive temperature drop. Do not add recarburizer before adding ferroalloys material as it will lead to boiling. Addition of alloys and recarburizer on the bottom of the ladle is not allowed once it can boil. Stay at least 10 feet radius from suspended loads. Ensure floor is clean and free from obstructions. EBT needs to be changed or repaired by steel pipe if tapping time is equal to or less than 2.5 minutes. Tapping under arcing can be performed during charging hot DRI only. Projected EBT tapping time must be above 3 minutes for tapping under arcing. Furnace must be kept in horizontal position during tapping under arcing. Tapping under arcing should not exceed more than 25% of molten steel inside ladle (40-ton maximum). Ladle addition chute should be moved to parking position before reaching 2° tilting angle. Furnace frame locks must be unlocked before tapping. Only trained and authorized persons must operate equipment. Oxygen lance must have back fire arrestor and holder must always be pressed if pipe is inserted inside tap hole. Lancing pipe must be replaced after each time use. Lancing EBT from upside is not allowed. Control tilting smoothly using joystick to avoid liquid metal contact with water cooled panels. When approximately 5-7 tons remain to desired tapping weight (aim 150-155 tons), furnace must be tilted back to de-slagging side to avoid slag carryover. Minimum free board for ladle is around 400-500 mm. Average hot heel should be around 30 tons. Slag door fettling material should not be higher than 10-15 cm above slag apron. Use emergency stick with extra care and control smoothly to avoid jerking which can lead to electrode breakages. For any emergency, call 02 507 3000 and follow Department Emergency Response Plan SMD 2-PR-002."
+  }
+}

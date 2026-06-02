@@ -1,0 +1,18 @@
+{
+  "success": true,
+  "message": "Selected Unity instance: Test (port 7891)",
+  "instance": {
+    "port": 7891,
+    "projectName": "Test",
+    "projectPath": "C:/autovrse/vrse-builder",
+    "unityVersion": "2022.3.50f1",
+    "isClone": false,
+    "cloneIndex": -1,
+    "alive": true,
+    "source": "portscan"
+  },
+  "routing": {
+    "port": 7891,
+    "instruction": "IMPORTANT — PARALLEL SAFETY: To guarantee your commands reach \"Test\" (port 7891), you MUST include  port: 7891  as a parameter in ALL subsequent unity_* tool calls. This prevents cross-agent routing issues when multiple tasks run in parallel. Example: unity_execute_code({ code: \"...\", port: 7891 })"
+  }
+}

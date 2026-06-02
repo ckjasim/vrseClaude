@@ -1,0 +1,62 @@
+{
+  "storyId": "unity-experience",
+  "createdAt": "2026-05-25T14:23:04.739Z",
+  "changelog": [],
+  "notes": [],
+  "sopContext": {
+    "objectives": [
+      "Collect and properly wear all required Personal Protective Equipment (PPE)",
+      "Understand the function of the shroud in preventing steel oxidation during transfer from ladle to tundish",
+      "Learn the importance of timely shroud changes to prevent reoxidation, flow disruption, breakouts, and inclusions",
+      "Perform pre-change safety checks by monitoring tonnage displays and confirming slag detection",
+      "Remove worn shroud using the shroud manipulator arm controls",
+      "Rotate and position the shroud manipulator arm for lancing operation",
+      "Observe lancing operation to clear solidified steel or debris",
+      "Install new shroud by positioning and locking it at the ladle inlet",
+      "Coordinate with control room to resume casting operations safely"
+    ],
+    "procedures": [
+      "Collect all job-specific PPE items: helmet, gloves, boots, jacket, aluminized suit, gold plated face shield, leg guard, skull cap",
+      "Observe the shroud position connecting the ladle slide gate to the tundish inlet and understand the steel flow path",
+      "Review consequences of worn shrouds including reoxidation, flow disruption, breakouts, and inclusions",
+      "Check tonnage remaining in ladle and tundish on the digital display board",
+      "Confirm slag detector has triggered and slide gate has closed automatically",
+      "Hold the shroud manipulator arm from the platform",
+      "Press the down button on the manipulator arm to lower the shroud",
+      "Press the clockwise button to rotate the shroud away from the ladle",
+      "Move the shroud to the right using the manipulator arm before lancing starts",
+      "Hold the manipulator arm in place during lancing operation",
+      "Wait for co-worker to complete lancing operation on the shroud",
+      "Hold the shroud manipulator arm to begin installation",
+      "Press the anti-clockwise button to rotate the shroud to upright position",
+      "Press the up button on the manipulator arm to move the shroud close to the ladle inlet",
+      "Press the lock button to secure the shroud in place",
+      "Use walkie-talkie to coordinate with control room for casting resumption"
+    ],
+    "equipment": [
+      "helmet",
+      "gloves",
+      "boots",
+      "jacket",
+      "aluminized suit",
+      "gold plated face shield",
+      "leg guard",
+      "skull cap",
+      "shroud",
+      "ladle",
+      "tundish",
+      "shroud manipulator arm",
+      "digital display board",
+      "slag detector",
+      "slide gate",
+      "walkie-talkie",
+      "down button",
+      "clockwise button",
+      "anti-clockwise button",
+      "up button",
+      "lock button"
+    ],
+    "constraints": "All job-specific PPE must be collected and worn before beginning any work to protect against hazards such as sparks, heat, UV radiation, and electric shock. Shroud change can only be performed after the slag detector detects slag and the slide gate closes automatically. The user must hold the manipulator arm in place during the lancing operation. In case of damaged or worn out shroud, the shroud must be changed for a new one and will not be lanced. After every four to five heat cycles, the shroud must be changed. The shroud must be properly positioned and locked before casting operations can resume. Coordination with the control room via walkie-talkie is required before resuming casting operations."
+  },
+  "pendingPlan": null
+}

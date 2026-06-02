@@ -1,0 +1,219 @@
+{
+  "storyId": "shroud-inspection-v2",
+  "createdAt": "2026-05-25T15:05:49.053Z",
+  "changelog": [],
+  "notes": [
+    {
+      "ts": "2026-05-25T15:09:14.201Z",
+      "text": "resolve_scene_objects: 5 resolved, 0 ambiguous, 11 not found"
+    }
+  ],
+  "sopContext": {
+    "objectives": [
+      "Collect and wear all required Personal Protective Equipment (PPE)",
+      "Understand the function of the shroud in preventing steel oxidation during casting",
+      "Learn the importance of timely shroud changes to maintain steel quality and safety",
+      "Perform pre-change safety checks by monitoring ladle and tundish status",
+      "Remove worn shroud using the shroud manipulator arm",
+      "Observe and support lancing operation to clear solidified steel or debris",
+      "Install new shroud at the tundish inlet and secure it properly",
+      "Coordinate with control room to resume casting operations safely"
+    ],
+    "procedures": [
+      "Collect Personal Protective Equipment: helmet, gloves, boots, jacket, aluminized suit, gold plated face shield, leg guard, skull cap",
+      "Observe shroud position and steel flow path from ladle to tundish",
+      "Review consequences of worn shroud: reoxidation, flow disruption, breakouts, inclusions",
+      "Check digital display board for tonnage remaining in ladle and tundish",
+      "Wait for slag detector to detect slag and slide gate to close automatically",
+      "Hold the shroud manipulator arm from the platform",
+      "Press the down button on the manipulator arm to lower it",
+      "Press the clockwise button to rotate the shroud",
+      "Wait for new ladle to arrive at the station",
+      "Move the shroud to the right using the manipulator arm before lancing starts",
+      "Hold shroud in place during lancing operation performed by NPC",
+      "Wait for lancing operation completion confirmation",
+      "Hold the shroud manipulator arm to begin shroud installation",
+      "Press the anti-clockwise button to rotate the shroud to upright position",
+      "Press the up button on the manipulator arm to move shroud close to ladle inlet",
+      "Press the lock button to secure the shroud in place",
+      "Use walkie-talkie to coordinate with control room for casting resumption"
+    ],
+    "equipment": [
+      "helmet",
+      "gloves",
+      "boots",
+      "jacket",
+      "aluminized suit",
+      "gold plated face shield",
+      "leg guard",
+      "skull cap",
+      "shroud",
+      "ladle",
+      "tundish",
+      "shroud manipulator arm",
+      "digital display board",
+      "slag detector",
+      "slide gate",
+      "walkie-talkie",
+      "down button",
+      "clockwise button",
+      "anti-clockwise button",
+      "up button",
+      "lock button"
+    ],
+    "constraints": "All PPE items must be collected and worn before proceeding with any work. The slide gate must close automatically after the slag detector detects slag before shroud change can be performed. The shroud manipulator arm must be held continuously during lancing operation. In case of damaged or worn out shroud, the shroud must be changed for a new one and will not be lanced. The shroud is changed after every four to five heat cycles. All movements and operations must be performed in the specified sequence using the manipulator arm controls (down, clockwise, anti-clockwise, up, lock). Coordination with the control room via walkie-talkie is required before resuming casting operations."
+  },
+  "pendingPlan": {
+    "storyName": "Ladle Shroud Inspection and Replacement - CCM Steel Plant Training",
+    "chapters": [
+      {
+        "name": "Safety Preparation",
+        "moments": [
+          {
+            "name": "Collecting Personal Protective Equipment",
+            "userAction": "Touch and equip helmet, gloves, boots, jacket, aluminized suit, gold plated face shield, leg guard, and skull cap from PPE storage area",
+            "objectsInvolved": [
+              "PPE_Helmet",
+              "PPE_Gloves",
+              "PPE_Boots",
+              "PPE_Jacket",
+              "PPE_AluminizedSuit",
+              "PPE_FaceShield",
+              "PPE_LegGuard",
+              "PPE_SkullCap"
+            ],
+            "successHint": "Voice-over confirms each PPE item equipped; ChecklistUI displays all 10 training steps with step 1 marked current",
+            "spatialContext": "PPE items arranged on storage racks at waist to shoulder height within arm's reach",
+            "onRightMode": "Random"
+          },
+          {
+            "name": "Shroud Function Overview",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player positioned with clear view of Ladle, Shroud_Ladle, and Tundish arrangement showing steel flow path",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Understanding the Procedure",
+        "moments": [
+          {
+            "name": "Importance of Shroud Change",
+            "userAction": "Click 'I Understand' button on UI panel after reviewing shroud change consequences",
+            "objectsInvolved": [
+              "UI_UnderstandButton"
+            ],
+            "successHint": "Button click registered; voice-over acknowledges understanding; ChecklistUI advances to step 3",
+            "spatialContext": "UI panel appears 1.5m ahead at eye level displaying consequences text",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Pre-Change Safety Check",
+        "moments": [
+          {
+            "name": "Pre-Change Safety Check",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player near TundishControler with clear view of digital display showing tonnage and slag detector status",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Shroud Removal",
+        "moments": [
+          {
+            "name": "Shroud Removal - Hold Arm and Lower",
+            "userAction": "Grab ShroudHandle and press down button on manipulator arm control",
+            "objectsInvolved": [
+              "ShroudHandle",
+              "ShroudArms"
+            ],
+            "successHint": "Mechanical sound plays; empty ladle animation begins; voice-over confirms arm lowered; ChecklistUI updates step 5",
+            "spatialContext": "ShroudHandle at waist height on control platform; down button accessible on control panel 0.5m to right",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Shroud Rotation and Removal",
+            "userAction": "Hold ShroudHandle and press clockwise button to rotate shroud",
+            "objectsInvolved": [
+              "ShroudHandle",
+              "ShroudArms",
+              "Metal_Shrads"
+            ],
+            "successHint": "Rotation animation plays with mechanical sounds; new ladle arrives; voice-over confirms worn shroud successfully removed",
+            "spatialContext": "Maintain grip on ShroudHandle; clockwise button on same control panel as down button",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Lancing Operation",
+        "moments": [
+          {
+            "name": "Lancing Operation Support",
+            "userAction": "Move shroud to right using ShroudArms and hold position during NPC lancing operation",
+            "objectsInvolved": [
+              "ShroudArms",
+              "Metal_Shrads",
+              "LancingPipe"
+            ],
+            "successHint": "NPC performs lancing animation; lancing sound effects play; NPC voice-over confirms 'I have completed the lancing work'",
+            "spatialContext": "Move ShroudArms laterally 1m to right; maintain position while NPC with LancingPipe approaches and performs operation",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Shroud Installation",
+        "moments": [
+          {
+            "name": "Rotate Shroud to Upright Position",
+            "userAction": "Hold ShroudHandle and press anti-clockwise button to rotate shroud upright",
+            "objectsInvolved": [
+              "ShroudHandle",
+              "ShroudArms",
+              "Metal_Shrads"
+            ],
+            "successHint": "Arm and clamp rotation animation plays; mechanical rotation sounds; shroud visibly moves to vertical orientation",
+            "spatialContext": "ShroudHandle at waist height; anti-clockwise button on control panel adjacent to previous buttons",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Install and Secure New Shroud",
+            "userAction": "Press up button to move shroud close to Ladle inlet, then press lock button to secure",
+            "objectsInvolved": [
+              "ShroudHandle",
+              "ShroudArms",
+              "Metal_Shrads",
+              "Ladle"
+            ],
+            "successHint": "Mechanical positioning sounds; shroud moves upward toward Ladle inlet; pneumatic cylinder sound on lock; voice-over confirms proper installation and mentions 4-5 heat cycle replacement schedule",
+            "spatialContext": "Up button and lock button on control panel; Ladle inlet 2m above at top of Ladle structure",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Resume Operations",
+        "moments": [
+          {
+            "name": "Coordinate with Control Room",
+            "userAction": "Grab WalkieTalkie and press use button to radio control room",
+            "objectsInvolved": [
+              "WalkieTalkie"
+            ],
+            "successHint": "Walkie-talkie static sound; control room voice responds 'Thank you for letting us know. We will resume operations from the control room now'; final voice-over confirms completion and safe resumption",
+            "spatialContext": "WalkieTalkie positioned on nearby console at waist height within 1m reach",
+            "onRightMode": "InOrder"
+          }
+        ]
+      }
+    ]
+  }
+}

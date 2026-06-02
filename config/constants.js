@@ -14,7 +14,8 @@ const SERVICES = {
   llm:      path.join(PROJECT_ROOT, 'services', 'llmClient'),
   sop:      path.join(PROJECT_ROOT, 'services', 'sopService'),
   creation: path.join(PROJECT_ROOT, 'services', 'creationService'),
-  sfx:      path.join(PROJECT_ROOT, 'services', 'sfxService')
+  sfx:      path.join(PROJECT_ROOT, 'services', 'sfxService'),
+  resolver: path.join(PROJECT_ROOT, 'services', 'objectResolverService')
 }
 
 const CORE = {

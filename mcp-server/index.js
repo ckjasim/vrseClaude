@@ -16,6 +16,7 @@ const { getTriggerActionCatalog }                       = require(SERVICES.actio
 const { extractSopContext }                             = require(SERVICES.sop)
 const { planStory, generateAllMoments, assembleFinalJson } = require(SERVICES.creation)
 const { generateSFXForStory }                              = require(SERVICES.sfx)
+const { extractSopNouns, buildBatchSearchCode, buildSubtreeWalkCode, resolveFromResults } = require(SERVICES.resolver)
 
 const workspaceContext   = require(CORE.workspaceContext)
 const sessionStore       = require(CORE.sessionStore)
@@ -25,6 +26,37 @@ const { guard, ok, err } = require(CORE.toolRegistry)
 const { buildMerkleTree } = require(INTEGRITY.merkleTree)
 const { applyAtomic }     = require(PIPELINE.executor)
 const { assertStory }     = require(PIPELINE.verifier)
+
+// ── PDF text extraction helper ────────────────────────────────────────────────
+/**
+ * Extract plain text from a PDF using pdf2json.
+ * Handles scanned-image PDFs gracefully — returns whatever text layer exists.
+ *
+ * @param {string} filePath absolute path to the .pdf file
+ * @returns {Promise<string>}
+ */
+function extractPdfText(filePath) {
+  const PDFParser = require('pdf2json')
+  const parser    = new PDFParser()
+  return new Promise((resolve, reject) => {
+    parser.on('pdfParser_dataReady', (data) => {
+      let text = ''
+      for (const page of data.Pages || []) {
+        for (const t of page.Texts || []) {
+          for (const r of t.R || []) {
+            try { text += decodeURIComponent(r.T) + ' ' } catch { text += r.T + ' ' }
+          }
+        }
+        text += '\n'
+      }
+      resolve(text.trim())
+    })
+    parser.on('pdfParser_dataError', (errData) =>
+      reject(new Error(errData?.parserError || 'PDF parse error'))
+    )
+    parser.loadPDF(filePath)
+  })
+}
 
 // ── MCP server ────────────────────────────────────────────────────────────────
 const server = new McpServer({ name: 'vrsebuilder-tools', version: '1.0.0' })
@@ -417,19 +449,25 @@ server.registerTool(
     description:
       'Load a Standard Operating Procedure (SOP) or training document and extract structured ' +
       'context (objectives, procedures, equipment, constraints) via one LLM call. ' +
+      'Supports .txt, .md, .json, and .pdf files. ' +
       'Stores the result in workspaceContext and sessionStore so it is available to ' +
       'create_story without re-reading the file. ' +
       'Call this when the user uploads or references a SOP/training document. ' +
       'Does NOT require load_story to have been called first.',
     inputSchema: {
       storyId:  z.string().describe('Story ID to associate this SOP context with'),
-      filePath: z.string().describe('Absolute path to the SOP file (txt, md, json)')
+      filePath: z.string().describe('Absolute path to the SOP file (txt, md, json, pdf)')
     }
   },
   async (args) => {
     try {
-      const rawText = fs.readFileSync(args.filePath, 'utf-8')
-      if (!rawText.trim()) return err('SOP file is empty')
+      let rawText
+      if (args.filePath.toLowerCase().endsWith('.pdf')) {
+        rawText = await extractPdfText(args.filePath)
+      } else {
+        rawText = fs.readFileSync(args.filePath, 'utf-8')
+      }
+      if (!rawText || !rawText.trim()) return err('SOP file is empty or could not be extracted')
 
       const sopContext = await extractSopContext(rawText)
 
@@ -734,6 +772,183 @@ server.registerTool(
       })
     } catch (e) {
       return err(`generate_sfx failed: ${e.message}`)
+    }
+  }
+)
+
+// ─── 20. resolve_scene_objects ────────────────────────────────────────────────
+server.registerTool(
+  'resolve_scene_objects',
+  {
+    description:
+      'Resolve SOP physical-object nouns to confirmed Unity scene objects. ' +
+      'Two-step flow:\n\n' +
+      'STEP 1 — call with storyId + sceneCatalog (root object names from unity_scene_hierarchy ' +
+      'maxDepth=1 maxNodes=200). The tool extracts nouns from the loaded SOP, expands keywords ' +
+      'and synonyms via LLM, stores intermediate state, and returns a batchSearchCode (C#) for ' +
+      'you to run with unity_execute_code.\n\n' +
+      'STEP 2 — after running unity_execute_code with batchSearchCode, call again with ' +
+      'batchResultsJson (the raw JSON result from unity_execute_code). For any parent objects ' +
+      'returned in pendingSubtrees, run unity_execute_code with each subtreeCode and pass all ' +
+      'results back in subtreeResultsJson.\n\n' +
+      'TIP: Step 1 returns keywordMap, nounGroups, and sceneCatalog in its output. Pass these ' +
+      'back as prepareStateJson in step 2 to make the call stateless — this avoids failures if ' +
+      'resolver state is lost between calls.\n\n' +
+      'After STEP 2, confirmed objects are stored in workspaceContext and available to ' +
+      'get_story_context. Review AMBIGUOUS and NOT_IN_SCENE before calling create_story.\n\n' +
+      'Requires: load_sop must have been called first.',
+    inputSchema: {
+      storyId: z.string(),
+
+      // Step 1 inputs
+      sceneCatalog: z.array(z.string()).optional()
+        .describe('Root object names from unity_scene_hierarchy(maxDepth=1, maxNodes=200). Required for step 1.'),
+
+      // Step 2 inputs
+      batchResultsJson: z.string().optional()
+        .describe('JSON string of unity_execute_code results from the batchSearchCode. Triggers step 2.'),
+      subtreeResultsJson: z.string().optional()
+        .describe('JSON object mapping objectName → subtree result array from unity_execute_code. Provide alongside batchResultsJson when subtree walks are complete.'),
+      prepareStateJson: z.string().optional()
+        .describe('JSON string of { nounGroups, keywordMap, sceneCatalog } from step 1 output. Provide this to make step 2 stateless — the tool uses it instead of reading from stored resolver state. Strongly recommended when calling from a subagent context.')
+    }
+  },
+  async (args) => {
+    const { storyId, sceneCatalog, batchResultsJson, subtreeResultsJson, prepareStateJson } = args
+
+    // Guard: sopContext must exist
+    const sopContext = workspaceContext.getSopContext(storyId)
+                    || sessionStore.loadSopContext(storyId)
+    if (!sopContext) {
+      return err('No SOP context found. Call load_sop first.')
+    }
+
+    try {
+      // ── Step 1: extract nouns + build batch search code ──────────────────
+      if (!batchResultsJson) {
+        if (!sceneCatalog || sceneCatalog.length === 0) {
+          return err(
+            'sceneCatalog is required for step 1. ' +
+            'Call unity_scene_hierarchy(maxDepth=1, maxNodes=200) first and pass the root object names here.'
+          )
+        }
+
+        const prepareResult = await extractSopNouns(sopContext)
+
+        // Store intermediate state for step 2
+        workspaceContext.setResolverState(storyId, {
+          nounGroups:  prepareResult.nounGroups,
+          keywordMap:  prepareResult.keywordMap,
+          sceneCatalog
+        })
+
+        const nounCount = prepareResult.nounGroups.groups.length + prepareResult.nounGroups.orphans.length
+
+        return ok({
+          step:            1,
+          nounCount,
+          nounGroups:      prepareResult.nounGroups,
+          keywordMap:      prepareResult.keywordMap,
+          sceneCatalog,
+          keywordCount:    prepareResult.allKeywords.length,
+          batchSearchCode: prepareResult.batchSearchCode,
+          message:
+            `Step 1 complete: extracted ${nounCount} noun(s). ` +
+            'Run unity_execute_code with batchSearchCode, then call resolve_scene_objects again with ' +
+            'batchResultsJson AND prepareStateJson (JSON.stringify({ nounGroups, keywordMap, sceneCatalog }) from this output).'
+        })
+      }
+
+      // ── Step 2: resolve from search results ──────────────────────────────
+      let resolverState
+      if (prepareStateJson) {
+        try {
+          resolverState = JSON.parse(prepareStateJson)
+        } catch {
+          return err('prepareStateJson must be a valid JSON string of { nounGroups, keywordMap, sceneCatalog }.')
+        }
+      } else {
+        resolverState = workspaceContext.getResolverState(storyId)
+      }
+      if (!resolverState) {
+        return err('No resolver state found. Either provide prepareStateJson (the nounGroups/keywordMap/sceneCatalog from step 1 output) or call step 1 first.')
+      }
+
+      let batchResults = []
+      try {
+        batchResults = JSON.parse(batchResultsJson)
+        if (!Array.isArray(batchResults)) batchResults = []
+      } catch {
+        return err('batchResultsJson must be a valid JSON array string.')
+      }
+
+      let subtreeResultsMap = {}
+      if (subtreeResultsJson) {
+        try {
+          subtreeResultsMap = JSON.parse(subtreeResultsJson)
+        } catch {
+          return err('subtreeResultsJson must be a valid JSON object string.')
+        }
+      }
+
+      const report = await resolveFromResults({
+        nounGroups:        resolverState.nounGroups,
+        keywordMap:        resolverState.keywordMap,
+        batchResults,
+        subtreeResultsMap,
+        sceneCatalog:      resolverState.sceneCatalog
+      })
+
+      // If subtree walks are still pending, return their codes and don't store yet
+      if (report.pendingSubtrees.length > 0) {
+        const subtreeCodes = {}
+        for (const objectName of report.pendingSubtrees) {
+          subtreeCodes[objectName] = buildSubtreeWalkCode(objectName)
+        }
+        return ok({
+          step:           '2-pending',
+          pendingSubtrees: report.pendingSubtrees,
+          subtreeCodes,
+          partialReport:  report,
+          message:
+            `Run unity_execute_code for each subtreeCode, then call resolve_scene_objects again with ` +
+            `batchResultsJson (same as before) and subtreeResultsJson (map of objectName → result array).`
+        })
+      }
+
+      // All done — store confirmed objects
+      const confirmedObjects = report.RESOLVED.map(r => r.queryName).filter(Boolean)
+      workspaceContext.setSceneAwareness(
+        storyId,
+        JSON.stringify(report, null, 2),
+        confirmedObjects
+      )
+
+      try {
+        sessionStore.note(
+          storyId,
+          `resolve_scene_objects: ${report.RESOLVED.length} resolved, ` +
+          `${report.AMBIGUOUS.length} ambiguous, ${report.NOT_IN_SCENE.length} not found`
+        )
+      } catch { /* session may not be initialized in subagent contexts — non-fatal */ }
+
+      return ok({
+        step:             2,
+        RESOLVED:         report.RESOLVED,
+        PARTIAL_MATCH:    report.PARTIAL_MATCH,
+        AMBIGUOUS:        report.AMBIGUOUS,
+        NOT_IN_SCENE:     report.NOT_IN_SCENE,
+        confirmedObjects,
+        message:
+          `Resolution complete. ${report.RESOLVED.length} confirmed, ` +
+          `${report.AMBIGUOUS.length} ambiguous, ${report.NOT_IN_SCENE.length} not found. ` +
+          (report.AMBIGUOUS.length > 0
+            ? 'Review AMBIGUOUS entries before calling create_story. '
+            : '') +
+          'Confirmed objects are now in workspaceContext (visible via get_story_context).'
+      })
+    } catch (e) {
+      return err(`resolve_scene_objects failed: ${e.message}`)
     }
   }
 )

@@ -108,6 +108,22 @@ function getPendingPlan(storyId) {
   return _store.get(storyId)?.pendingPlan || null
 }
 
+/**
+ * Store intermediate resolver state produced by resolve_scene_objects step 1.
+ * Needed so step 2 can access the noun groups + keyword map without the
+ * agent having to pass them back as parameters.
+ * Safe to call before load_story — creates a stub entry.
+ * NOT rolled back on apply_diffs failure.
+ */
+function setResolverState(storyId, state) {
+  const existing = _store.get(storyId) || {}
+  _store.set(storyId, { ...existing, resolverState: state })
+}
+
+function getResolverState(storyId) {
+  return _store.get(storyId)?.resolverState || null
+}
+
 function has(storyId) {
   return _store.has(storyId)
 }
@@ -123,5 +139,6 @@ module.exports = {
   setSceneAwareness, getSceneAwareness,
   setSopContext, getSopContext,
   setPendingPlan, getPendingPlan,
+  setResolverState, getResolverState,
   has, clear
 }
