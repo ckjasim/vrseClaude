@@ -1,7 +1,3 @@
-const { chat } = require('./llmClient')
-
-const MAX_RETRIES = 3
-
 const PLACEHOLDER_URL = 'https://GENERATE_THIS.com'
 
 // ─── SFX normalizer ───────────────────────────────────────────────────────────
@@ -24,39 +20,6 @@ function normalizeSFXPlaceholders(node) {
     Object.values(node).forEach(val => normalizeSFXPlaceholders(val))
   }
 }
-
-// ─── Planning prompt ─────────────────────────────────────────────────────────
-
-const PLAN_SYSTEM_PROMPT = `You are a VrseBuilder Story Architect. Given a training brief, available action/trigger types, and optional scene and SOP context, produce a structured VR story plan as JSON.
-
-Return ONLY a valid JSON object with this exact schema:
-{
-  "storyName": "string",
-  "chapters": [
-    {
-      "name": "string",
-      "moments": [
-        {
-          "name": "string",
-          "userAction": "string",
-          "objectsInvolved": ["string"],
-          "successHint": "string",
-          "spatialContext": "string",
-          "onRightMode": "InOrder|Random|Any"
-        }
-      ]
-    }
-  ]
-}
-
-Rules:
-- Keep moment count proportional to the brief — do not over-generate
-- userAction: precise VERB + OBJECT of what the player does (e.g. "Grab FireExtinguisher and aim at base of flame"), OR "narration" for intro/transition moments with no player interaction
-- objectsInvolved: EXACT asset names from scene/SOP context if provided, or descriptive names if not; use [] for narration moments
-- successHint: what success looks/sounds like (voice-over cue, icon, animation); use "auto-advance" for narration moments
-- spatialContext: brief positioning note (e.g. "Object at waist height 1m ahead")
-- onRightMode: InOrder when steps are sequential, Random when all required but any order, Any when alternative methods; use "InOrder" for narration moments (triggerActionSets will be empty)
-- Return ONLY the JSON object — no markdown, no explanation`
 
 // ─── Moment generation prompt ─────────────────────────────────────────────────
 
@@ -192,139 +155,47 @@ Generate the complete VrseBuilder moment JSON for this spec.`
 // ─── Core functions ───────────────────────────────────────────────────────────
 
 /**
- * Plan step: one LLM call → structured story plan JSON.
+ * Build the full generation context for a plan — the shared system prompt plus
+ * one pre-built user message per moment. The orchestrator (Claude) spawns one
+ * subagent per momentPrompt, feeding it `systemPrompt` + `userMessage`, and
+ * collects the returned moment JSON. No LLM call happens inside the server.
+ *
+ * @returns {{ systemPrompt: string, cueSheet: string, momentPrompts: Array<{ generationId: string, name: string, userMessage: string }> }}
  */
-async function planStory({ brief, sopContext, sceneAwareness, catalogText }) {
-  const contextParts = []
-
-  if (sopContext) {
-    contextParts.push(`SOP CONTEXT:
-Objectives: ${sopContext.objectives.join('; ')}
-Procedures: ${sopContext.procedures.join('; ')}
-Equipment: ${sopContext.equipment.join(', ')}
-Constraints: ${sopContext.constraints || 'none'}`)
-  }
-
-  if (sceneAwareness) {
-    contextParts.push(`SCENE AWARENESS (use ONLY objects listed here):
-${sceneAwareness}`)
-  }
-
-  contextParts.push(`AVAILABLE ACTION/TRIGGER TYPES (for reference when designing interactions):
-${catalogText}`)
-
-  const userMessage = [
-    `TRAINING BRIEF:\n${brief || 'No brief provided — use SOP context above to determine the story.'}`,
-    ...contextParts,
-    'Generate the story plan JSON.'
-  ].join('\n\n')
-
-  const raw = await chat({
-    systemPrompt: PLAN_SYSTEM_PROMPT,
-    userMessage,
-    jsonMode: true
-  })
-
-  let plan
-  try {
-    plan = JSON.parse(raw)
-  } catch {
-    throw new Error(`Planning call returned invalid JSON: ${raw.slice(0, 300)}`)
-  }
-
-  if (!plan.storyName || !Array.isArray(plan.chapters) || plan.chapters.length === 0) {
-    throw new Error('Planning call returned incomplete plan — missing storyName or chapters')
-  }
-
-  return plan
-}
-
-/**
- * Generate a single moment. Returns parsed moment object or throws.
- */
-async function generateMoment({ spec, catalogText, sceneAwareness, cueSheet }) {
+function buildGenerationContext(plan, catalogText, sceneAwareness) {
+  const cueSheet     = buildCueSheet(plan, sceneAwareness)
   const systemPrompt = buildMomentSystemPrompt(catalogText, sceneAwareness)
-  const userMessage  = buildMomentUserMessage(spec, cueSheet)
-
-  const raw = await chat({ systemPrompt, userMessage, jsonMode: true, maxTokens: 8192 })
-
-  let moment
-  try {
-    moment = JSON.parse(raw)
-  } catch {
-    throw new Error(`Moment generation returned invalid JSON for "${spec.name}"`)
-  }
-
-  if (!moment.onRight || !moment.onStart) {
-    throw new Error(`Moment "${spec.name}" missing required fields (onRight / onStart)`)
-  }
-
-  // Force all SFX audioUrl values to the placeholder — LLM output is not trusted here
-  normalizeSFXPlaceholders(moment)
-
-  return moment
-}
-
-/**
- * Generate all moments in parallel with up to MAX_RETRIES retry rounds.
- * Returns { moments: Map<generationId, momentJson>, failed: spec[] }
- */
-async function generateAllMoments({ plan, catalogText, sceneAwareness }) {
-  const cueSheet = buildCueSheet(plan, sceneAwareness)
-
-  // Flatten all moment specs from the plan
-  let globalIndex = 0
   const totalMoments = plan.chapters.reduce((sum, ch) => sum + ch.moments.length, 0)
 
-  const allSpecs = plan.chapters.flatMap((ch, ci) =>
+  let globalIndex = 0
+  const momentPrompts = plan.chapters.flatMap((ch, ci) =>
     ch.moments.map((m, mi) => ({
-      generationId:   `ch${ci}_m${mi}`,
-      chapterIndex:   ci,
-      chapterName:    ch.name,
-      localIndex:     mi,
-      totalInChapter: ch.moments.length,
-      globalIndex:    globalIndex++,
-      totalMoments,
-      name:           m.name,
-      userAction:     m.userAction,
-      objectsInvolved: m.objectsInvolved || [],
-      successHint:    m.successHint,
-      spatialContext:  m.spatialContext,
-      onRightMode:    m.onRightMode || 'InOrder'
+      generationId: `ch${ci}_m${mi}`,
+      name:         m.name,
+      userMessage:  buildMomentUserMessage({
+        name:            m.name,
+        chapterName:     ch.name,
+        localIndex:      mi,
+        totalInChapter:  ch.moments.length,
+        globalIndex:     globalIndex++,
+        totalMoments,
+        userAction:      m.userAction,
+        objectsInvolved: m.objectsInvolved || [],
+        successHint:     m.successHint,
+        spatialContext:  m.spatialContext,
+        onRightMode:     m.onRightMode || 'InOrder'
+      }, cueSheet)
     }))
   )
 
-  const results = new Map()
-  let pending = allSpecs
-
-  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-    if (pending.length === 0) break
-
-    const settled = await Promise.allSettled(
-      pending.map(spec => generateMoment({ spec, catalogText, sceneAwareness, cueSheet }))
-    )
-
-    const stillFailed = []
-    settled.forEach((result, i) => {
-      if (result.status === 'fulfilled') {
-        results.set(pending[i].generationId, result.value)
-      } else {
-        if (attempt === MAX_RETRIES - 1) {
-          console.error(`[creationService] Moment "${pending[i].name}" failed after ${MAX_RETRIES} attempts: ${result.reason?.message}`)
-        }
-        stillFailed.push(pending[i])
-      }
-    })
-
-    pending = stillFailed
-  }
-
-  return { moments: results, failed: pending }
+  return { systemPrompt, cueSheet, momentPrompts }
 }
 
 /**
  * Assemble the final story JSON from the plan + generated moments.
  * Enforces name and momentIndex from the plan — never trusts model output for these.
+ * Applies the SFX placeholder safety net to every moment, since the moments now
+ * arrive from subagents and are not normalized upstream.
  */
 function assembleFinalJson({ plan, moments }) {
   return {
@@ -335,6 +206,9 @@ function assembleFinalJson({ plan, moments }) {
         const generationId = `ch${ci}_m${mi}`
         const generated    = moments.get(generationId)
         if (!generated) return null
+
+        // Force all SFX audioUrl values to the placeholder — model output is not trusted here
+        normalizeSFXPlaceholders(generated)
 
         return {
           ...generated,
@@ -381,4 +255,4 @@ function buildCueSheet(plan, sceneAwareness) {
   return lines.join('\n')
 }
 
-module.exports = { planStory, generateMoment, generateAllMoments, assembleFinalJson }
+module.exports = { buildGenerationContext, assembleFinalJson, normalizeSFXPlaceholders }

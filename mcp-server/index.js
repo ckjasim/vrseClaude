@@ -7,14 +7,13 @@ const fs                     = require('fs')
 const path                   = require('path')
 
 // ── Domain modules ────────────────────────────────────────────────────────────
-const { SERVICES, CORE, INTEGRITY, PIPELINE } = require('../config/constants')
+const { SERVICES, CORE, INTEGRITY, PIPELINE, SESSIONS_DIR } = require('../config/constants')
 
 const { indexStoryMoments, searchMoments }              = require(SERVICES.vector)
 const { buildRelationshipIndex, extractObjectCatalog }  = require(SERVICES.index)
 const { handleRename }                                  = require(SERVICES.diff)
 const { getTriggerActionCatalog }                       = require(SERVICES.actions)
-const { extractSopContext }                             = require(SERVICES.sop)
-const { planStory, generateAllMoments, assembleFinalJson } = require(SERVICES.creation)
+const { buildGenerationContext, assembleFinalJson, normalizeSFXPlaceholders } = require(SERVICES.creation)
 const { generateSFXForStory }                              = require(SERVICES.sfx)
 const { extractSopNouns, buildBatchSearchCode, buildSubtreeWalkCode, resolveFromResults } = require(SERVICES.resolver)
 
@@ -26,6 +25,31 @@ const { guard, ok, err } = require(CORE.toolRegistry)
 const { buildMerkleTree } = require(INTEGRITY.merkleTree)
 const { applyAtomic }     = require(PIPELINE.executor)
 const { assertStory }     = require(PIPELINE.verifier)
+
+// ── Shared schemas for story creation ─────────────────────────────────────────
+// The orchestrator authors the plan and runs moment generation via subagents.
+// These schemas describe the plan it passes in and the subagent results it returns.
+const PLAN_MOMENT_SCHEMA = z.object({
+  name:            z.string(),
+  userAction:      z.string().optional(),
+  objectsInvolved: z.array(z.string()).optional(),
+  successHint:     z.string().optional(),
+  spatialContext:  z.string().optional(),
+  onRightMode:     z.string().optional()
+})
+
+const PLAN_SCHEMA = z.object({
+  storyName: z.string(),
+  chapters:  z.array(z.object({
+    name:    z.string(),
+    moments: z.array(PLAN_MOMENT_SCHEMA)
+  }))
+})
+
+const MOMENT_RESULT_SCHEMA = z.object({
+  generationId: z.string().describe('Matches an id from generationContext.momentPrompts, e.g. "ch0_m2"'),
+  momentJson:   z.any().describe('The moment JSON object returned by the subagent (object, or a JSON string)')
+})
 
 // ── PDF text extraction helper ────────────────────────────────────────────────
 /**
@@ -455,11 +479,12 @@ server.registerTool(
   'load_sop',
   {
     description:
-      'Load a Standard Operating Procedure (SOP) or training document and extract structured ' +
-      'context (objectives, procedures, equipment, constraints) via one LLM call. ' +
+      'Load a Standard Operating Procedure (SOP) or training document and store its raw text ' +
+      '(truncated to 40,000 chars). No LLM call is made — the orchestrator and subagents reason ' +
+      'over the raw text directly, which preserves exact object names. ' +
       'Supports .txt, .md, .json, and .pdf files. ' +
-      'Stores the result in workspaceContext and sessionStore so it is available to ' +
-      'create_story without re-reading the file. ' +
+      'Stores the text in workspaceContext and sessionStore so it is available to ' +
+      'create_story and resolve_scene_objects without re-reading the file. ' +
       'Call this when the user uploads or references a SOP/training document. ' +
       'Does NOT require load_story to have been called first.',
     inputSchema: {
@@ -477,17 +502,16 @@ server.registerTool(
       }
       if (!rawText || !rawText.trim()) return err('SOP file is empty or could not be extracted')
 
-      const sopContext = await extractSopContext(rawText)
+      const truncated  = rawText.slice(0, 40000)
+      const sopContext = { rawText: truncated }
 
       workspaceContext.setSopContext(args.storyId, sopContext)
       sessionStore.saveSopContext(args.storyId, sopContext)
 
       return ok({
-        loaded:      true,
-        objectives:  sopContext.objectives,
-        procedures:  sopContext.procedures,
-        equipment:   sopContext.equipment,
-        constraints: sopContext.constraints || 'none'
+        loaded:    true,
+        charCount: truncated.length,
+        rawText:   truncated
       })
     } catch (e) {
       return err(`load_sop failed: ${e.message}`)
@@ -500,14 +524,18 @@ server.registerTool(
   'create_story',
   {
     description:
-      'Create a new VrseBuilder story JSON from a brief or loaded SOP context. ' +
-      'Uses a two-phase confirm flag to control cost:\n' +
-      '  confirm:false (default) — runs one planning LLM call, returns the structured plan ' +
-      '(chapter names, moment names, count) for agent review. Cheap. Re-call with a revised ' +
-      'brief to replan.\n' +
-      '  confirm:true — reads the saved plan and fires all moment generation calls in parallel ' +
-      '(one LLM call per moment simultaneously). Retries failures up to 3 times. ' +
-      'Writes the assembled story JSON to outputFilePath.\n\n' +
+      'Assemble a new VrseBuilder story JSON from an orchestrator-authored plan and the moment ' +
+      'JSONs produced by subagents. The server performs NO LLM calls — all planning and moment ' +
+      'generation happen in your Claude session.\n\n' +
+      'Two-phase confirm flag:\n' +
+      '  confirm:false (default) — pass the `plan` you authored. The server returns the same plan ' +
+      'plus a `generationContext` containing the shared `systemPrompt` and one pre-built ' +
+      '`userMessage` per moment (keyed by generationId). Spawn one subagent per momentPrompt, ' +
+      'feeding it generationContext.systemPrompt + that momentPrompt.userMessage. Each subagent ' +
+      'returns the raw moment JSON.\n' +
+      '  confirm:true — pass back the `plan` and the collected `moments` array ' +
+      '([{ generationId, momentJson }]). The server assembles, normalizes SFX placeholders, ' +
+      'optionally generates real SFX audio, and writes the story JSON to outputFilePath.\n\n' +
       'BEFORE calling this tool you MUST ask the user TWO questions:\n' +
       '  1. Catalog mode — "basic" (curated fixed set) or "goWild" (full platform catalog).\n' +
       '  2. Generate SFX — yes or no. If yes, ElevenLabs is called to produce real audio. ' +
@@ -517,8 +545,15 @@ server.registerTool(
     inputSchema: {
       storyId:        z.string(),
       outputFilePath: z.string().describe('Absolute path where the generated story JSON will be written'),
-      brief:          z.string().optional().describe('Free-text description of the story. If omitted, uses sopContext from load_sop.'),
-      confirm:        z.boolean().optional().describe('false: plan only. true: generate all moments in parallel.'),
+      plan:           PLAN_SCHEMA.optional().describe(
+        'The orchestrator-authored story plan. Required for BOTH phases. ' +
+        'confirm:false uses it to build generationContext; confirm:true uses it to assemble the story.'
+      ),
+      moments:        z.array(MOMENT_RESULT_SCHEMA).optional().describe(
+        'confirm:true only — the collected subagent outputs: [{ generationId, momentJson }]. ' +
+        'generationId must match the ids from generationContext.momentPrompts.'
+      ),
+      confirm:        z.boolean().optional().describe('false: return generationContext for the plan. true: assemble the collected moments.'),
       mode:           z.enum(['basic', 'goWild']).describe(
         'REQUIRED — ask the user before calling. ' +
         '"basic" = curated fixed set via POST. "goWild" = full platform catalog via GET.'
@@ -531,26 +566,34 @@ server.registerTool(
     }
   },
   async (args) => {
-    const { storyId, outputFilePath, brief, confirm = false, mode, generateSfx = false } = args
+    const { storyId, outputFilePath, plan, moments, confirm = false, mode, generateSfx = false } = args
 
     try {
-      // ── Phase 1: Plan only ────────────────────────────────────────────────
+      // ── Phase 1: Build generation context for the orchestrator-authored plan ──
       if (!confirm) {
-        const catalog        = await getTriggerActionCatalog('all', mode)
-        const sopContext     = workspaceContext.getSopContext(storyId)
-                           || sessionStore.loadSopContext(storyId)
-        const sceneData      = workspaceContext.getSceneAwareness(storyId)
-        const sceneAwareness = sceneData.text || null
-
-        if (!brief && !sopContext && !sceneAwareness) {
+        if (!plan) {
           return err(
-            'No context available to plan a story. ' +
-            'Provide a brief, call load_sop with a SOP file, or call load_scene_awareness with a scene file first.'
+            'confirm:false requires a `plan` object. Author the story plan ' +
+            '(storyName + chapters[].moments[]) in your session, then pass it here to receive ' +
+            'the generationContext (system prompt + per-moment user messages) for the subagents.'
           )
         }
 
-        const catalogText = JSON.stringify(catalog, null, 2)
-        const plan = await planStory({ brief, sopContext, sceneAwareness, catalogText })
+        const catalog        = await getTriggerActionCatalog('all', mode)
+        const catalogText    = JSON.stringify(catalog, null, 2)
+        const sceneData      = workspaceContext.getSceneAwareness(storyId)
+        const sceneAwareness = sceneData.text || null
+
+        const generationContext = buildGenerationContext(plan, catalogText, sceneAwareness)
+
+        // Create the staging directory and annotate each prompt with its output file path.
+        // Subagents write their moment JSON here using the Write tool — no MCP call needed.
+        const momentOutputDir = path.join(SESSIONS_DIR, storyId)
+        if (!fs.existsSync(momentOutputDir)) fs.mkdirSync(momentOutputDir, { recursive: true })
+        generationContext.momentPrompts = generationContext.momentPrompts.map(p => ({
+          ...p,
+          outputFilePath: path.join(momentOutputDir, `moment-${p.generationId}.json`)
+        }))
 
         workspaceContext.setPendingPlan(storyId, plan)
         sessionStore.savePendingPlan(storyId, plan)
@@ -558,33 +601,67 @@ server.registerTool(
         const totalMoments = plan.chapters.reduce((s, c) => s + c.moments.length, 0)
 
         return ok({
-          phase:         'plan',
-          storyName:     plan.storyName,
-          totalChapters: plan.chapters.length,
+          phase:           'plan',
+          storyName:       plan.storyName,
+          totalChapters:   plan.chapters.length,
           totalMoments,
+          momentOutputDir,
           plan,
+          generationContext,
           message:
-            `Plan ready: ${plan.chapters.length} chapter(s), ${totalMoments} moment(s). ` +
-            'Review the plan above. If satisfied, call create_story with confirm:true to generate. ' +
-            'To adjust, call again with confirm:false and a revised brief.'
+            `Plan compiled: ${plan.chapters.length} chapter(s), ${totalMoments} moment(s). ` +
+            'Spawn one subagent per generationContext.momentPrompts entry. Give each subagent ' +
+            'generationContext.systemPrompt + that entry.userMessage, and instruct it to write ' +
+            'the resulting moment JSON to the path in entry.outputFilePath using the Write tool ' +
+            '(raw JSON only — no markdown). Once all subagents finish, call create_story with ' +
+            'confirm:true and the same plan — the server reads the files automatically.'
         })
       }
 
-      // ── Phase 2: Generate ─────────────────────────────────────────────────
-      const plan = workspaceContext.getPendingPlan(storyId)
-                || sessionStore.loadPendingPlan(storyId)
+      // ── Phase 2: Assemble subagent-produced moments ───────────────────────
+      const finalPlan = plan
+                     || workspaceContext.getPendingPlan(storyId)
+                     || sessionStore.loadPendingPlan(storyId)
 
-      if (!plan) {
-        return err('No pending plan found. Call create_story with confirm:false first to generate a plan.')
+      if (!finalPlan) {
+        return err('confirm:true requires a `plan`. Pass back the plan you used in the confirm:false call.')
       }
 
-      const catalog        = await getTriggerActionCatalog('all', mode)
-      const sceneData      = workspaceContext.getSceneAwareness(storyId)
-      const sceneAwareness = sceneData.text || null
-      const catalogText    = JSON.stringify(catalog, null, 2)
+      // ── Read moment files written by subagents (primary path) ──────────────
+      const momentOutputDir = path.join(SESSIONS_DIR, storyId)
+      const momentsMap = new Map()
 
-      const { moments, failed } = await generateAllMoments({ plan, catalogText, sceneAwareness })
-      const jsonData = assembleFinalJson({ plan, moments })
+      if (fs.existsSync(momentOutputDir)) {
+        const files = fs.readdirSync(momentOutputDir)
+          .filter(f => f.startsWith('moment-') && f.endsWith('.json'))
+        for (const file of files) {
+          const generationId = file.slice('moment-'.length, -'.json'.length)
+          try {
+            const mj = JSON.parse(fs.readFileSync(path.join(momentOutputDir, file), 'utf-8'))
+            if (mj) momentsMap.set(generationId, mj)
+          } catch { /* skip malformed file */ }
+        }
+      }
+
+      // ── Fallback: inline moments[] (small stories / backward compat) ───────
+      if (momentsMap.size === 0) {
+        if (!Array.isArray(moments) || moments.length === 0) {
+          return err(
+            'confirm:true: no moment files found in the staging directory and no inline moments[] provided. ' +
+            'Run the moment-generator subagents first — each subagent should write its result to ' +
+            `the outputFilePath in its momentPrompts entry (under ${momentOutputDir}).`
+          )
+        }
+        for (const m of moments) {
+          let mj = m.momentJson
+          if (typeof mj === 'string') {
+            try { mj = JSON.parse(mj) } catch { mj = null }
+          }
+          if (mj) momentsMap.set(m.generationId, mj)
+        }
+      }
+
+      const jsonData = assembleFinalJson({ plan: finalPlan, moments: momentsMap })
 
       // Generate real SFX audio only if the user opted in
       const sfxResult = generateSfx
@@ -601,23 +678,39 @@ server.registerTool(
       if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
       fs.writeFileSync(outputFilePath, JSON.stringify(jsonData, null, 2), 'utf-8')
 
-      const totalMoments   = plan.chapters.reduce((s, c) => s + c.moments.length, 0)
-      const failedMoments  = failed.length
+      // Clean up staging moment files and directory now that the story is assembled
+      if (fs.existsSync(momentOutputDir)) {
+        try {
+          fs.readdirSync(momentOutputDir)
+            .filter(f => f.startsWith('moment-') && f.endsWith('.json'))
+            .forEach(f => fs.unlinkSync(path.join(momentOutputDir, f)))
+          fs.rmdirSync(momentOutputDir)
+        } catch { /* non-fatal — files may already be gone */ }
+      }
+
+      const totalMoments = finalPlan.chapters.reduce((s, c) => s + c.moments.length, 0)
+      const failedNames  = []
+      finalPlan.chapters.forEach((ch, ci) =>
+        ch.moments.forEach((mm, mi) => {
+          if (!momentsMap.has(`ch${ci}_m${mi}`)) failedNames.push(mm.name)
+        })
+      )
+      const failedMoments  = failedNames.length
       const successMoments = totalMoments - failedMoments
 
       sessionStore.note(
         storyId,
-        `Story created: "${plan.storyName}" — ${successMoments}/${totalMoments} moments generated. Written to ${outputFilePath}`
+        `Story created: "${finalPlan.storyName}" — ${successMoments}/${totalMoments} moments assembled. Written to ${outputFilePath}`
       )
 
       return ok({
         phase:          'generated',
-        storyName:      plan.storyName,
-        totalChapters:  plan.chapters.length,
+        storyName:      finalPlan.storyName,
+        totalChapters:  finalPlan.chapters.length,
         totalMoments,
         successMoments,
         failedMoments,
-        failedNames:    failed.map(s => s.name),
+        failedNames,
         sfx: {
           generated: sfxResult.totalUpdates,
           errors:    sfxResult.totalErrors,
@@ -625,15 +718,16 @@ server.registerTool(
         outputFilePath,
         message:
           failedMoments > 0
-            ? `${failedMoments} moment(s) failed after 3 retries: ${failed.map(s => s.name).join(', ')}. ` +
-              'Call load_story then use apply_diffs to fix failed moments manually.'
+            ? `${failedMoments} moment(s) missing or unparseable: ${failedNames.join(', ')}. ` +
+              'Re-run those subagents and call create_story confirm:true again with the complete moments array, ' +
+              'or call load_story then fix them with apply_diffs.'
             : !generateSfx
-              ? 'All moments generated. SFX placeholders preserved — call generate_sfx when ready to produce audio. ' +
+              ? 'All moments assembled. SFX placeholders preserved — call generate_sfx when ready to produce audio. ' +
                 'Then call load_story → verify_story.'
               : sfxResult.totalErrors > 0
-                ? `All moments generated. ${sfxResult.totalErrors} SFX failed — call generate_sfx to retry. ` +
+                ? `All moments assembled. ${sfxResult.totalErrors} SFX failed — call generate_sfx to retry. ` +
                   'Then call load_story → verify_story.'
-                : 'All moments generated with SFX. Call load_story to load into context, then verify_story.'
+                : 'All moments assembled with SFX. Call load_story to load into context, then verify_story.'
       })
     } catch (e) {
       return err(`create_story failed: ${e.message}`)
@@ -646,48 +740,64 @@ server.registerTool(
   'generate_moments',
   {
     description:
-      'Generate new VrseBuilder moments in parallel for an EXISTING loaded story. ' +
-      'Use when the user asks to add moments, add a chapter, or redesign part of the flow.\n\n' +
-      'confirm:false (default) — planning call only, returns the moment plan for review.\n' +
-      'confirm:true — fires all moment generation calls in parallel, returns the raw moment ' +
-      'objects. Agent then writes an exec script to splice them into the existing story JSON, ' +
+      'Build new VrseBuilder moments for an EXISTING loaded story. The server performs NO LLM ' +
+      'calls — you author the plan and run moment generation via subagents.\n\n' +
+      'confirm:false (default) — pass the `plan` you authored for the NEW moments. The server ' +
+      'returns it plus a `generationContext` (shared systemPrompt + per-moment userMessages). ' +
+      'Spawn one subagent per momentPrompt to produce each moment JSON.\n' +
+      'confirm:true — pass back the `plan` and the collected `moments` array ' +
+      '([{ generationId, momentJson }]). The server returns the assembled raw moments (with ' +
+      'suggested chapter/index hints) for you to splice into the story via an exec script, ' +
       'followed by load_story → verify_story.\n\n' +
-      'IMPORTANT: Call get_story_context first and pass its output as existingStoryContext so ' +
-      'the planner knows what chapters, objects, and moments already exist.\n\n' +
+      'IMPORTANT: Call get_story_context first so your authored plan accounts for what chapters, ' +
+      'objects, and moments already exist.\n\n' +
       'BEFORE calling this tool you MUST ask the user which catalog mode they want:\n' +
       '  • "basic"  — curated fixed set (VoiceOver, SFXPlayer, Objects, Player, Haptics, Timers, ' +
       'TextMedia, ImageMedia, MetaLayer + 3 core triggers).\n' +
       '  • "goWild" — full platform catalog from the Infinity Workshop API.\n' +
       'Do not assume a default — always ask the user first.',
     inputSchema: {
-      storyId:              z.string(),
-      brief:                z.string().describe('What to generate, e.g. "Add 3 moments to chapter 2 about valve inspection"'),
-      existingStoryContext: z.string().optional().describe('Output of get_story_context — tells planner what already exists'),
-      confirm:              z.boolean().optional().describe('false: plan only. true: generate all moments in parallel and return raw array.'),
-      mode:                 z.enum(['basic', 'goWild']).describe(
+      storyId:  z.string(),
+      plan:     PLAN_SCHEMA.optional().describe(
+        'The orchestrator-authored plan for the NEW moments. Required for BOTH phases.'
+      ),
+      moments:  z.array(MOMENT_RESULT_SCHEMA).optional().describe(
+        'confirm:true only — the collected subagent outputs: [{ generationId, momentJson }].'
+      ),
+      confirm:  z.boolean().optional().describe('false: return generationContext for the plan. true: assemble the collected moments.'),
+      mode:     z.enum(['basic', 'goWild']).describe(
         'REQUIRED — ask the user before calling. ' +
         '"basic" = curated fixed set via POST. "goWild" = full platform catalog via GET.'
       )
     }
   },
   async (args) => {
-    const { storyId, brief, existingStoryContext, confirm = false, mode } = args
+    const { storyId, plan, moments, confirm = false, mode } = args
 
     try {
-      const catalog        = await getTriggerActionCatalog('all', mode)
-      const sopContext     = workspaceContext.getSopContext(storyId)
-                         || sessionStore.loadSopContext(storyId)
-      const sceneData      = workspaceContext.getSceneAwareness(storyId)
-      const sceneAwareness = sceneData.text || null
-      const catalogText    = JSON.stringify(catalog, null, 2)
-
-      const fullBrief = existingStoryContext
-        ? `EXISTING STORY CONTEXT (do NOT recreate these — only design the NEW moments requested):\n${existingStoryContext}\n\nREQUEST FOR NEW MOMENTS:\n${brief}`
-        : brief
-
-      // ── Phase 1: Plan only ──────────────────────────────────────────────
+      // ── Phase 1: Build generation context for the authored plan ──────────
       if (!confirm) {
-        const plan = await planStory({ brief: fullBrief, sopContext, sceneAwareness, catalogText })
+        if (!plan) {
+          return err(
+            'confirm:false requires a `plan` object for the new moments. Call get_story_context ' +
+            'first, author the plan (storyName + chapters[].moments[]), then pass it here.'
+          )
+        }
+
+        const catalog        = await getTriggerActionCatalog('all', mode)
+        const catalogText    = JSON.stringify(catalog, null, 2)
+        const sceneData      = workspaceContext.getSceneAwareness(storyId)
+        const sceneAwareness = sceneData.text || null
+
+        const generationContext = buildGenerationContext(plan, catalogText, sceneAwareness)
+
+        // Create staging directory and annotate each prompt with its output file path.
+        const momentOutputDir = path.join(SESSIONS_DIR, storyId)
+        if (!fs.existsSync(momentOutputDir)) fs.mkdirSync(momentOutputDir, { recursive: true })
+        generationContext.momentPrompts = generationContext.momentPrompts.map(p => ({
+          ...p,
+          outputFilePath: path.join(momentOutputDir, `moment-${p.generationId}.json`)
+        }))
 
         workspaceContext.setPendingPlan(storyId, { ...plan, _source: 'generate_moments' })
         sessionStore.savePendingPlan(storyId, { ...plan, _source: 'generate_moments' })
@@ -695,31 +805,75 @@ server.registerTool(
         const totalMoments = plan.chapters.reduce((s, c) => s + c.moments.length, 0)
 
         return ok({
-          phase:         'plan',
-          totalChapters: plan.chapters.length,
+          phase:           'plan',
+          totalChapters:   plan.chapters.length,
           totalMoments,
+          momentOutputDir,
           plan,
+          generationContext,
           message:
-            `Plan ready: ${plan.chapters.length} chapter group(s), ${totalMoments} new moment(s). ` +
-            'Review the plan. Call generate_moments with confirm:true to generate. ' +
-            'To adjust, call again with confirm:false and a revised brief.'
+            `Plan compiled: ${plan.chapters.length} chapter group(s), ${totalMoments} new moment(s). ` +
+            'Spawn one subagent per generationContext.momentPrompts entry. Give each subagent ' +
+            'generationContext.systemPrompt + that entry.userMessage, and instruct it to write ' +
+            'the resulting moment JSON to the path in entry.outputFilePath using the Write tool ' +
+            '(raw JSON only — no markdown). Once all subagents finish, call generate_moments with ' +
+            'confirm:true and the same plan — the server reads the files automatically.'
         })
       }
 
-      // ── Phase 2: Generate and return raw moments ────────────────────────
-      const plan = workspaceContext.getPendingPlan(storyId)
-                || sessionStore.loadPendingPlan(storyId)
+      // ── Phase 2: Assemble and return raw moments ─────────────────────────
+      const finalPlan = plan
+                     || workspaceContext.getPendingPlan(storyId)
+                     || sessionStore.loadPendingPlan(storyId)
 
-      if (!plan) {
-        return err('No pending plan found. Call generate_moments with confirm:false first.')
+      if (!finalPlan) {
+        return err('confirm:true requires a `plan`. Pass back the plan you used in the confirm:false call.')
       }
 
-      const { moments, failed } = await generateAllMoments({ plan, catalogText, sceneAwareness })
+      // ── Read moment files written by subagents (primary path) ──────────────
+      const momentOutputDir = path.join(SESSIONS_DIR, storyId)
+      const momentsMap = new Map()
 
-      const generatedMoments = plan.chapters.flatMap((ch, ci) =>
+      if (fs.existsSync(momentOutputDir)) {
+        const files = fs.readdirSync(momentOutputDir)
+          .filter(f => f.startsWith('moment-') && f.endsWith('.json'))
+        for (const file of files) {
+          const generationId = file.slice('moment-'.length, -'.json'.length)
+          try {
+            const mj = JSON.parse(fs.readFileSync(path.join(momentOutputDir, file), 'utf-8'))
+            if (mj) momentsMap.set(generationId, mj)
+          } catch { /* skip malformed file */ }
+        }
+      }
+
+      // ── Fallback: inline moments[] (small stories / backward compat) ───────
+      if (momentsMap.size === 0) {
+        if (!Array.isArray(moments) || moments.length === 0) {
+          return err(
+            'confirm:true: no moment files found in the staging directory and no inline moments[] provided. ' +
+            'Run the moment-generator subagents first — each subagent should write its result to ' +
+            `the outputFilePath in its momentPrompts entry (under ${momentOutputDir}).`
+          )
+        }
+        for (const m of moments) {
+          let mj = m.momentJson
+          if (typeof mj === 'string') {
+            try { mj = JSON.parse(mj) } catch { mj = null }
+          }
+          if (mj) momentsMap.set(m.generationId, mj)
+        }
+      }
+
+      const failedNames = []
+      const generatedMoments = finalPlan.chapters.flatMap((ch, ci) =>
         ch.moments.map((m, mi) => {
-          const generated = moments.get(`ch${ci}_m${mi}`)
-          if (!generated) return null
+          const generated = momentsMap.get(`ch${ci}_m${mi}`)
+          if (!generated) {
+            failedNames.push(m.name)
+            return null
+          }
+          // SFX placeholder safety net — model output is not trusted here
+          normalizeSFXPlaceholders(generated)
           return {
             suggestedChapterIndex: ci,
             suggestedChapterName:  ch.name,
@@ -729,13 +883,23 @@ server.registerTool(
         }).filter(Boolean)
       )
 
-      const totalMoments   = plan.chapters.reduce((s, c) => s + c.moments.length, 0)
-      const failedMoments  = failed.length
+      const totalMoments   = finalPlan.chapters.reduce((s, c) => s + c.moments.length, 0)
+      const failedMoments  = failedNames.length
       const successMoments = totalMoments - failedMoments
+
+      // Clean up staging moment files and directory
+      if (fs.existsSync(momentOutputDir)) {
+        try {
+          fs.readdirSync(momentOutputDir)
+            .filter(f => f.startsWith('moment-') && f.endsWith('.json'))
+            .forEach(f => fs.unlinkSync(path.join(momentOutputDir, f)))
+          fs.rmdirSync(momentOutputDir)
+        } catch { /* non-fatal */ }
+      }
 
       sessionStore.note(
         storyId,
-        `generate_moments: ${successMoments}/${totalMoments} new moments generated. Chapters: ${plan.chapters.map(c => c.name).join(', ')}`
+        `generate_moments: ${successMoments}/${totalMoments} new moments assembled. Chapters: ${finalPlan.chapters.map(c => c.name).join(', ')}`
       )
 
       return ok({
@@ -743,13 +907,13 @@ server.registerTool(
         totalMoments,
         successMoments,
         failedMoments,
-        failedNames:     failed.map(s => s.name),
+        failedNames,
         generatedMoments,
         message:
           failedMoments > 0
-            ? `${failedMoments} moment(s) failed after 3 retries: ${failed.map(s => s.name).join(', ')}. ` +
-              'Write a splice script for the successful moments, then fix failures with apply_diffs.'
-            : `All ${successMoments} moments generated. Write an exec script to splice them into the story, then call load_story → verify_story.`
+            ? `${failedMoments} moment(s) missing or unparseable: ${failedNames.join(', ')}. ` +
+              'Re-run those subagents, or splice the successful moments and fix the rest with apply_diffs.'
+            : `All ${successMoments} moments assembled. Write an exec script to splice them into the story, then call load_story → verify_story.`
       })
     } catch (e) {
       return err(`generate_moments failed: ${e.message}`)

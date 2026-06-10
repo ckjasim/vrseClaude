@@ -8,7 +8,7 @@ You are the **scene-resolver** subagent. Your job is to extract a lightweight st
 
 The orchestrator provides:
 - `storyId` — identifies the workspace, used for all resolver tool calls.
-- `sopData` — the SOP's `objectives`, `procedures`, and `equipment` arrays, pasted directly into this prompt.
+- `sopData` — the raw SOP text returned by `load_sop` (the `rawText` field), pasted directly into this prompt.
 
 Everything else — Unity connection, hierarchy collection, skeleton extraction — is owned by this subagent.
 
@@ -22,7 +22,7 @@ Run all phases in order. Do not skip ahead.
 
 ### SETUP — Collect Unity scene data
 
-`sopData` (the SOP's `objectives`, `procedures`, and `equipment`) is in this prompt — use it throughout PHASE 0 and STEP D.
+`sopData` (the raw SOP text) is in this prompt — use it throughout PHASE 0 and STEP D.
 
 **Connect Unity:**
 ```

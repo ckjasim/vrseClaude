@@ -18,8 +18,8 @@ All `mcp__vrsebuilder-tools__*` and `unity_*` tools are pre-approved and may be 
    - Structural ops (add / remove / reorder / splice moments, schema migrations, bulk transforms) → write a Node.js script using the `write` tool, run it with `exec`, then reload with `load_story` and check with `verify_story`
    - Audit integrity → `verify_story`
    - Load a SOP or training document → `load_sop`
-   - Create a brand-new story from a brief or SOP → `create_story` (confirm:false → review plan → confirm:true)
-   - Add moments or chapters to an existing loaded story → `generate_moments` (call `get_story_context` first, pass output as `existingStoryContext`; confirm:false → review → confirm:true → splice via exec script → `load_story`)
+   - Create a brand-new story from a brief or SOP → `create_story` (you author the plan → `confirm:false` returns generation prompts → spawn subagents to generate each moment → `confirm:true` assembles). See **Story Generation — Subagent Moment Flow**.
+   - Add moments or chapters to an existing loaded story → `generate_moments` (call `get_story_context` first; you author the plan for the new moments → `confirm:false` returns generation prompts → spawn subagents → `confirm:true` returns raw moments → splice via exec script → `load_story`). See **Story Generation — Subagent Moment Flow**.
    - Generate real audio for `GENERATE_THIS.com` SFX placeholders → `generate_sfx` (pass `storyId` + absolute `filePath` of the saved story JSON)
 
 4. **MINIMAL FOOTPRINT.** Change only what is asked. Never regenerate or overwrite structures you did not touch. For structural changes, splice into arrays and re-sequence only affected `momentIndex` values — never rewrite the full JSON.
@@ -43,6 +43,7 @@ All `mcp__vrsebuilder-tools__*` and `unity_*` tools are pre-approved and may be 
    - **redesign-editor** — New moments: call `get_trigger_action_catalog` first to know what action types and triggers the platform supports, then read neighbouring moments via `get_moment_json` + `get_chain_context` to match actual structure and Query conventions, only reference `confirmedSceneObjects`, return the new moment JSON plus target insert position (chapterIndex + insertAt).
    - **continuity-fixer** — Narrative continuity: check VO flow between moments, entry/exit state consistency, momentIndex sequencing; use `verify_story` for objective integrity checks, report violations before proposing fixes, return structured diffs only.
    - **scene-resolver** — Extracts a story skeleton from the SOP, maps every `{token}` to a Unity object (interactables + scene meshes), resolves all doubts inline, and returns a fully resolved skeleton ready for `create_story`. Full role spec: **`SCENE_RESOLVER.md`**.
+   - **moment-generator** — Generates a single VrseBuilder moment JSON. Receives the shared `systemPrompt` and one `userMessage` from `create_story` / `generate_moments` `confirm:false` output (`generationContext`). Returns ONLY the raw moment JSON object — no markdown, no commentary. One subagent per moment; run them in parallel. See **Story Generation — Subagent Moment Flow**.
 
 9. **SCENE-RESOLVER IS MANDATORY — YOU ARE PROHIBITED FROM DOING UNITY DISCOVERY YOURSELF.** When the user asks to build a story from a connected Unity instance and `sceneAwarenessLoaded` is `false`, you MUST spawn the scene-resolver subagent. This is not optional and has no exceptions. You are **PROHIBITED** from calling `unity_list_instances`, `unity_select_instance`, `unity_scene_hierarchy`, or any other Unity discovery tool yourself — not even as a "head start", not in parallel with `load_sop`, not at any point before the subagent runs. The subagent owns 100% of Unity scene discovery. If you call any Unity tool before spawning the scene-resolver, you have violated this rule.
 
@@ -70,23 +71,25 @@ No fixed step sequence — reason about each request and pick the right approach
 | Bulk schema migration or transform | `write` a Node script → `exec` it → `load_story` → `verify_story` |
 | Audit integrity | `verify_story` |
 | Persist changes to disk | `save_story` |
-| Resolve `GENERATE_THIS.com` SFX placeholders into real audio | `generate_sfx` (storyId + filePath) — `create_story` calls this automatically |
+| Resolve `GENERATE_THIS.com` SFX placeholders into real audio | `generate_sfx` (storyId + filePath) — `create_story confirm:true` calls this automatically when `generateSfx:true` |
 | Need to know what actions or triggers the platform supports | `get_trigger_action_catalog` |
 | Load a SOP / training document | `load_sop` |
-| Create a whole new story from brief or SOP | present plan to user as chat text → wait for approval → `create_story(confirm:true, brief=<plan>)` |
+| Create a whole new story from brief or SOP | author plan → present to user → on approval run the **Story Generation — Subagent Moment Flow** |
 
-> **create_story confirm protocol:**
-> - Never call `confirm:false` as a review step. The server stores plan state in memory and it will be lost before `confirm:true` can use it.
-> - Instead: write the plan as a chat message (chapters, moments, confirmed object names). Wait for the user to approve.
-> - Once the user approves, call `create_story(confirm:true, brief=<plan>)` — single call, no prior `confirm:false`.
-> - Also call `load_sop` immediately before `create_story` if the subagent ran (the server session may have timed out during the subagent's execution).
+> **create_story / generate_moments are now two real phases — no internal LLM:**
+> - The server performs NO model calls for planning or moment generation. YOU author the plan, and subagents generate the moments.
+> - `confirm:false` takes the `plan` you authored and returns a `generationContext` (shared `systemPrompt` + one `userMessage` + one `outputFilePath` per moment). This is the prompt-compile step, not a review step.
+> - Spawn one `moment-generator` subagent per `generationContext.momentPrompts` entry, in parallel. Each subagent writes its moment JSON to `entry.outputFilePath` using the Write tool.
+> - `confirm:true` takes the same `plan` (no `moments[]` needed) — the server reads the staged files, assembles, and cleans them up.
+> - If the scene-resolver subagent ran, call `load_sop` again before `create_story` (the server session may have timed out during the subagent).
+> - Full step-by-step: see **Story Generation — Subagent Moment Flow** below.
 
-| No scene file but Unity MCP is available | `load_sop` → **spawn scene-resolver subagent** (NEVER call Unity tools directly — see Principle 9) → wait for skeleton → `create_story(brief=skeleton)` |
-| Unity MCP available + SOP loaded | `load_sop` → **spawn scene-resolver subagent** (NEVER call Unity tools directly — see Principle 9) → wait for skeleton → `create_story(brief=skeleton)` |
+| No scene file but Unity MCP is available | `load_sop` → **spawn scene-resolver subagent** (NEVER call Unity tools directly — see Principle 9) → wait for skeleton → author plan from skeleton → Subagent Moment Flow |
+| Unity MCP available + SOP loaded | `load_sop` → **spawn scene-resolver subagent** (NEVER call Unity tools directly — see Principle 9) → wait for skeleton → author plan from skeleton → Subagent Moment Flow |
 | Add 1–2 new moments to existing story (small, context-sensitive) | `redesign-editor` subagent → returns moment JSON → exec splice script |
-| Add 3+ moments or a new chapter to existing story | `get_story_context` → `generate_moments` (confirm:false → review → confirm:true) → exec splice script → `load_story` → `verify_story` |
-| Redesign an existing chapter (replace moments) | exec script to remove old moments → `generate_moments` for replacements → exec splice script → `load_story` → `verify_story` |
-| Complete story restructure | `create_story` with existing story context in the brief |
+| Add 3+ moments or a new chapter to existing story | `get_story_context` → `generate_moments` (Subagent Moment Flow) → exec splice script → `load_story` → `verify_story` |
+| Redesign an existing chapter (replace moments) | exec script to remove old moments → `generate_moments` for replacements (Subagent Moment Flow) → exec splice script → `load_story` → `verify_story` |
+| Complete story restructure | `create_story` with existing story context folded into the plan you author |
 | Duplicate story objects from art scene to dev scene and convert them | Object-to-Interactable flow — see below |
 
 ### Object-to-Interactable Flow
@@ -163,27 +166,78 @@ After all duplicates are confirmed converted, disable the originals in the art s
 
 ### Story Creation — Context Collection
 
-Before calling `create_story` or `generate_moments`, you must have at least a `brief`. Do not call either tool without one.
+Before authoring a plan, you must have at least enough context to write one. Do not start the Subagent Moment Flow without it.
 
-**If the user asks for a new story and no useful brief is available, gather context first — ask up to 3 questions, one at a time, stop as soon as you have enough:**
+**If the user asks for a new story and no useful context is available, gather it first — ask up to 3 questions, one at a time, stop as soon as you have enough:**
 
 1. "What is this VR training about?" — topic, industry, scenario (e.g. fire safety, equipment operation, warehouse inspection)
 2. "How many chapters and roughly how many steps per chapter?"
 3. "Are there specific objects, tools, or assets the player should interact with?"
 
-Only call `create_story` once you have an answer to at least question 1. Combine all answers into the `brief` parameter.
+Only begin authoring the plan once you have an answer to at least question 1. Use all answers, plus any SOP/scene context, to write the plan.
 
 **Scene awareness and SOP are additive — they improve accuracy but are never required:**
 
 | What's available | What to do |
 |---|---|
-| Nothing | Ask questions 1–3, then call `create_story(brief=answers)` |
-| Scene awareness only | Ask question 1 at minimum, then `create_story(brief=answer)` — scene is auto-used |
-| SOP only | Enough — call `create_story` directly, sopContext is in workspaceContext |
-| Chat description already given | Enough — call `create_story(brief=description)` directly |
-| SOP + scene | Best — call `create_story` directly |
+| Nothing | Ask questions 1–3, then author the plan from the answers |
+| Scene awareness only | Ask question 1 at minimum, then author the plan — scene objects are auto-injected into the generation prompts |
+| SOP only | Enough — author the plan; sopContext is in workspaceContext |
+| Chat description already given | Enough — author the plan from the description |
+| SOP + scene | Best — author the plan directly |
 | Unity MCP reachable, no scene file | `unity_list_instances` + `unity_select_instance` → `unity_scene_hierarchy` → use interactables as `confirmedSceneObjects` → proceed like "Scene awareness only" |
-| Unity MCP reachable + SOP | `load_sop` → spawn `scene-resolver` (`storyId`) → `create_story(brief=skeleton)` |
+| Unity MCP reachable + SOP | `load_sop` → spawn `scene-resolver` (`storyId`) → author the plan from the skeleton |
+
+### Story Generation — Subagent Moment Flow
+
+This is the canonical flow for both `create_story` (writes a new story file) and `generate_moments` (returns raw moments to splice into an existing story). The MCP server runs NO model calls — you author the plan and subagents generate the moments.
+
+**Step 1 — Author the plan.** Using the gathered context, write a story plan object yourself:
+
+```json
+{
+  "storyName": "string",
+  "chapters": [
+    {
+      "name": "string",
+      "moments": [
+        {
+          "name": "string",
+          "userAction": "VERB + OBJECT the player performs, or \"narration\" for intro/transition moments",
+          "objectsInvolved": ["EXACT scene/SOP object names, or [] for narration"],
+          "successHint": "what success looks/sounds like, or \"auto-advance\" for narration",
+          "spatialContext": "brief positioning note",
+          "onRightMode": "InOrder | Random | Any"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Keep moment count proportional to the brief. Use only objects from `confirmedSceneObjects` when scene awareness is loaded.
+
+**Step 2 — Present and approve.** Show the plan (chapters, moment names, confirmed object names) to the user as a chat message. Wait for approval before generating.
+
+**Step 3 — Compile prompts.** Call `confirm:false` with the approved plan:
+- `create_story(confirm:false, plan=<plan>, mode, generateSfx)` or
+- `generate_moments(confirm:false, plan=<plan>, mode)`
+
+The server returns `generationContext`:
+- `systemPrompt` — the shared moment-design system prompt (catalog + scene constraints baked in)
+- `momentPrompts` — array of `{ generationId, name, userMessage }`, one per moment
+
+**Step 4 — Generate moments in parallel (subagents).** Spawn one `moment-generator` subagent per `momentPrompts` entry. Give each subagent exactly `generationContext.systemPrompt` followed by that entry's `userMessage`. Instruct each subagent to **write the raw moment JSON to `entry.outputFilePath`** using the Write tool (that path comes from the `confirm:false` response — `generationContext.momentPrompts[i].outputFilePath`). The subagent must write raw JSON only — no markdown fences, no commentary.
+- Spawn all moment subagents together in one parallel batch using standard `Task` calls — no threshold, no switching required.
+- For very large stories (30+ moments), consider Dynamic Workflows to keep the run fully backgrounded and out of the main session context.
+- If a subagent fails or writes malformed JSON, re-run only that `generationId` and overwrite its file.
+
+**Step 5 — Assemble.** Once all subagents have written their files, call `confirm:true` with ONLY the plan — **do not pass `moments[]`**. The server reads the staged files automatically, assembles the story, then deletes the temp files.
+- `create_story(confirm:true, plan=<plan>, outputFilePath, mode, generateSfx)` — assembles, normalizes SFX placeholders, generates real SFX when `generateSfx:true`, writes the file, and cleans up staging files.
+- `generate_moments(confirm:true, plan=<plan>, mode)` — assembles raw moments with chapter/index hints for you to splice via an exec script, then cleans up staging files.
+- **Fallback (small stories only):** if you need to bypass file staging, you may still pass `moments=[{ generationId, momentJson }, ...]` inline — the server uses it when no staged files are found.
+
+**Step 6 — Verify.** `create_story` → `load_story` → `verify_story` → `save_story`. `generate_moments` → exec splice script → `load_story` → `verify_story`.
 
 ### When to Ask vs. Act
 
@@ -232,7 +286,7 @@ Task(
   subagent_type="generalPurpose",
   prompt="You are the scene-resolver subagent. Your inputs:
     storyId: <storyId>
-    sopData: <paste the full objectives, procedures, and equipment arrays from the load_sop return value here>
+    sopData: <paste the rawText from the load_sop return value here>
 
   Read SCENE_RESOLVER.md and follow it exactly.
   Return the resolution JSON (skeleton + confirmed + scene_mesh_pending_convert +
@@ -246,7 +300,7 @@ Task(
    "PPE / abstract items have no Unity objects — those beats will be narrative VO only."
 3. **If `pending_questions` is non-empty** — present each question to the user with `AskQuestion`. Apply each answer to `confirmed` (replace the assumed entry with the confirmed Unity name, or mark the token VO-only as directed). Only proceed once all questions are answered.
 4. Present the finalized plan (chapters + moments + confirmed object names) to the user as a chat message. Wait for approval.
-5. Once approved: call `load_sop` again (to re-establish the server session, which may have timed out during the subagent), then call `create_story(confirm:true, brief=<finalized skeleton>)`.
+5. Once approved: call `load_sop` again (to re-establish the server session, which may have timed out during the subagent), then author the plan from the finalized skeleton and run the **Story Generation — Subagent Moment Flow** (`confirm:false` → moment-generator subagents → `confirm:true`).
 
 ### Parse → Mutate → Serialize
 
@@ -292,7 +346,7 @@ These rules are **non-negotiable** when editing VR story moments.
 
 - When adding SFX, set `useCloudAudio: true` and `audioUrl: "https://GENERATE_THIS.com"` in the Data
 - SFX Query is always `"SFXPlayer"`
-- After adding SFX via `apply_diffs` or `generate_moments`, call `generate_sfx` to resolve all `GENERATE_THIS.com` placeholders into real audio. `create_story` does this automatically.
+- After adding SFX via `apply_diffs` or `generate_moments`, call `generate_sfx` to resolve all `GENERATE_THIS.com` placeholders into real audio. `create_story confirm:true` does this automatically when `generateSfx:true`.
 
 ### Diff Rules
 

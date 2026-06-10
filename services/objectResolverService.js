@@ -23,7 +23,7 @@ const { chat } = require('./llmClient')
 
 const NOUN_EXTRACTION_SYSTEM = `You are a VR training content analyst specialising in industrial scenes.
 
-Given SOP equipment list and procedure steps, extract every physical object the trainee must interact with, observe, or that is highlighted/animated.
+Given a Standard Operating Procedure document, extract every physical object the trainee must interact with, observe, or that is highlighted/animated.
 
 Group objects hierarchically:
 - "parent": a major assembly or standalone object (use exact SOP wording)
@@ -194,7 +194,7 @@ function parseLlmJson(raw) {
 /**
  * Extract SOP nouns and expand keywords + synonyms for a batch Unity search.
  *
- * @param {{ equipment: string[], procedures: string[] }} sopContext
+ * @param {{ rawText: string }} sopContext
  * @returns {Promise<{
  *   nounGroups: { groups: object[], orphans: string[] },
  *   keywordMap: Record<string, string[]>,   // keyword → nouns that produced it
@@ -203,12 +203,11 @@ function parseLlmJson(raw) {
  * }>}
  */
 async function extractSopNouns(sopContext) {
-  const equipmentList  = (sopContext.equipment  || []).join('\n')
-  const procedureList  = (sopContext.procedures || []).join('\n')
+  const sopText = sopContext.rawText || ''
 
   const raw = await chat({
     systemPrompt: NOUN_EXTRACTION_SYSTEM,
-    userMessage:  `Equipment list:\n${equipmentList}\n\nProcedure steps:\n${procedureList}`,
+    userMessage:  `SOP Document:\n${sopText}`,
     jsonMode:     true
   })
 

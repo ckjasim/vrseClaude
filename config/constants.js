@@ -11,8 +11,6 @@ const SERVICES = {
   index:    path.join(PROJECT_ROOT, 'services', 'indexService'),
   diff:     path.join(PROJECT_ROOT, 'services', 'diffService'),
   actions:  path.join(PROJECT_ROOT, 'services', 'actionsService'),
-  llm:      path.join(PROJECT_ROOT, 'services', 'llmClient'),
-  sop:      path.join(PROJECT_ROOT, 'services', 'sopService'),
   creation: path.join(PROJECT_ROOT, 'services', 'creationService'),
   sfx:      path.join(PROJECT_ROOT, 'services', 'sfxService'),
   resolver: path.join(PROJECT_ROOT, 'services', 'objectResolverService')
