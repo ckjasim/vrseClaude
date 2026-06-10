@@ -44,6 +44,8 @@ All `mcp__vrsebuilder-tools__*` and `unity_*` tools are pre-approved and may be 
    - **continuity-fixer** — Narrative continuity: check VO flow between moments, entry/exit state consistency, momentIndex sequencing; use `verify_story` for objective integrity checks, report violations before proposing fixes, return structured diffs only.
    - **scene-resolver** — Extracts a story skeleton from the SOP, maps every `{token}` to a Unity object (interactables + scene meshes), resolves all doubts inline, and returns a fully resolved skeleton ready for `create_story`. Full role spec: **`SCENE_RESOLVER.md`**.
 
+9. **SCENE-RESOLVER IS MANDATORY — YOU ARE PROHIBITED FROM DOING UNITY DISCOVERY YOURSELF.** When the user asks to build a story from a connected Unity instance and `sceneAwarenessLoaded` is `false`, you MUST spawn the scene-resolver subagent. This is not optional and has no exceptions. You are **PROHIBITED** from calling `unity_list_instances`, `unity_select_instance`, `unity_scene_hierarchy`, or any other Unity discovery tool yourself — not even as a "head start", not in parallel with `load_sop`, not at any point before the subagent runs. The subagent owns 100% of Unity scene discovery. If you call any Unity tool before spawning the scene-resolver, you have violated this rule.
+
 **STARTUP:** call `load_story` (and `load_scene_awareness` if a scene file is given), then `get_story_context` to anchor the stable prompt prefix.
 
 ---
@@ -79,12 +81,85 @@ No fixed step sequence — reason about each request and pick the right approach
 > - Once the user approves, call `create_story(confirm:true, brief=<plan>)` — single call, no prior `confirm:false`.
 > - Also call `load_sop` immediately before `create_story` if the subagent ran (the server session may have timed out during the subagent's execution).
 
-| No scene file but Unity MCP is available | `unity_list_instances` + `unity_select_instance` → `unity_scene_hierarchy` → use interactables as `confirmedSceneObjects` → `create_story` |
-| Unity MCP available + SOP loaded | `load_sop` → spawn `scene-resolver` (`storyId`) → wait for skeleton → `create_story(brief=skeleton)` |
+| No scene file but Unity MCP is available | `load_sop` → **spawn scene-resolver subagent** (NEVER call Unity tools directly — see Principle 9) → wait for skeleton → `create_story(brief=skeleton)` |
+| Unity MCP available + SOP loaded | `load_sop` → **spawn scene-resolver subagent** (NEVER call Unity tools directly — see Principle 9) → wait for skeleton → `create_story(brief=skeleton)` |
 | Add 1–2 new moments to existing story (small, context-sensitive) | `redesign-editor` subagent → returns moment JSON → exec splice script |
 | Add 3+ moments or a new chapter to existing story | `get_story_context` → `generate_moments` (confirm:false → review → confirm:true) → exec splice script → `load_story` → `verify_story` |
 | Redesign an existing chapter (replace moments) | exec script to remove old moments → `generate_moments` for replacements → exec splice script → `load_story` → `verify_story` |
 | Complete story restructure | `create_story` with existing story context in the brief |
+| Duplicate story objects from art scene to dev scene and convert them | Object-to-Interactable flow — see below |
+
+### Object-to-Interactable Flow
+
+**Trigger:** User asks to duplicate story objects from an art scene to a dev scene and convert them as interactables.
+
+**Gate 0 — Dev scene must be open in Unity.**
+Use `unity_list_instances` + `unity_select_instance`, then run:
+```csharp
+for (int i = 0; i < SceneManager.sceneCount; i++) {
+  var s = SceneManager.GetSceneAt(i);
+  // list s.name and s.path
+}
+```
+Look at the loaded scenes. The dev scene is any scene that is **not** an art scene (art scenes live under `Assets/Training/Art/` or similar art-only paths). If only art scenes are open and no dev scene is found, stop and tell the user:
+> "No dev scene is open in Unity. Please create a new scene (or open an existing one), and let me know when it's open."
+Do not proceed until a dev scene is confirmed open.
+
+**Step 1 — Analyse the story.**
+Parse all unique Query names from the story JSON (exclude `VOPlayer` and `SFXPlayer`). Classify each by trigger type:
+- `TOUCH` → `HandTouchTrigger:Touch` appears in its actions/triggers
+- `GRAB` → `GrabbableTrigger:Grab` or `GrabbableTrigger:Used` appears
+- `VRSE` → Spawn / MetaLayerAction only, no interaction trigger
+
+Present the full classified list to the user and ask for confirmation before proceeding.
+
+**Step 2 — Audit the dev scene.**
+Check `QueryObjects/Others` for what already exists. For each object check its components and categorise as:
+- Already correctly converted → skip
+- Exists but missing interaction component → fix in place
+- Missing entirely → needs duplication from art scene
+
+Report the audit result. Ask the user to confirm before proceeding.
+
+**Step 3 — Duplicate missing objects from art scene.**
+For each missing object, use `unity_execute_code`:
+1. Search the art scene recursively by exact name — do NOT use `Resources.FindObjectsOfTypeAll` as it returns prefab assets before scene instances
+2. Check it is not nested inside another object you are also duplicating — if it is, handle it as a separate standalone duplicate
+3. `Instantiate → MoveGameObjectToScene(devScene) → SetParent(QueryObjects/Others) → SetActive(true)`
+
+After all duplications, ask the user to confirm before converting.
+
+**Step 4 — Convert using the real platform methods directly.**
+Do **NOT** use `vrse_convert_to_touch_object`, `vrse_convert_to_grabbable`, or `vrse_convert_to_vrse_object` MCP wrappers — they only add `GameObjectQuery` + visual components, not the actual interaction components. Call the real static methods via `unity_execute_code`:
+
+```csharp
+var converterType = typeof(VRseBuilder.Platform.MetaXR.Editor.MetaXRInteractableConverter);
+
+// TOUCH objects
+converterType.GetMethod("ConvertToTouchable", new Type[]{ typeof(GameObject) })
+    .Invoke(null, new object[]{ go });
+
+// GRAB objects
+converterType.GetMethod("ConvertToNetworkMetaXRGrabbable", new Type[]{ typeof(GameObject) })
+    .Invoke(null, new object[]{ go });
+
+// VRSE-only objects (reference / spawn only)
+converterType.GetMethod("ConvertToNetworkMetaXRBaseItem", new Type[]{ typeof(GameObject) })
+    .Invoke(null, new object[]{ go });
+```
+
+Process all objects of the same type in a single batch call. After conversion, run a component audit — zero `[RAW]` objects (no `GameObjectQuery`) are allowed.
+
+**Step 5 — Disable originals in art scene.**
+After all duplicates are confirmed converted, disable the originals in the art scene in one pass via `unity_execute_code`. Search each by name recursively in the art scene and call `SetActive(false)`.
+
+**Step 6 — Verify and save.**
+1. Run a component audit: confirm every story object is `[TOUCH]`, `[GRAB]`, or `[VRSE]`
+2. Load the story into the StoryCreator and run `unity_vrse_story_validate` to catch any remaining mismatches
+3. Save both scenes: `EditorSceneManager.SaveScene(devScene)` and `EditorSceneManager.SaveScene(artScene)`
+4. Confirm `isDirty: False` on both before finishing
+
+---
 
 ### Story Creation — Context Collection
 
@@ -142,10 +217,14 @@ When creating new moments, call `get_story_context` first. Use only objects from
 
 ### Unity MCP — Live Scene Discovery
 
-When `sceneAwarenessLoaded` is `false` and the user asks to use Unity tools or build from a connected Unity instance:
+> **STOP.** If `sceneAwarenessLoaded` is `false` and the user wants to build from a connected Unity instance — do NOT call any Unity tool. Spawn the scene-resolver subagent. Full stop. See Principle 9.
 
-1. Call `load_sop` (if not already called).
-2. Spawn the scene-resolver subagent immediately — do not call `unity_list_instances`, `unity_select_instance`, `unity_scene_hierarchy`, or any other Unity tool yourself. The subagent owns all Unity work without exception. Do not "get a head start" by running Unity calls in parallel with `load_sop` or before spawning.
+The only two things you do before spawning:
+
+1. Call `load_sop` (if not already called) — this is the only pre-spawn action allowed.
+2. Spawn the scene-resolver subagent immediately after.
+
+**You are NEVER allowed to call** `unity_list_instances`, `unity_select_instance`, `unity_scene_hierarchy`, or any Unity discovery tool yourself — not before spawning, not in parallel, not as a shortcut. If you find yourself about to call any of these, stop and spawn the subagent instead.
 
 **Spawn the scene-resolver subagent:**
 ```
@@ -162,8 +241,7 @@ Task(
 ```
 
 **When the subagent returns:**
-1. Mention `scene_mesh_pending_convert` in one line:
-   "X panel buttons resolved as scene meshes — they need `vrse_convert_to_vrse_object` before story use."
+1. Mention `scene_mesh_pending_convert` in one line — then STOP and route each object through the **Object-to-Interactable Flow** (see above). Do NOT call `vrse_convert_to_vrse_object` directly on art scene meshes. Each object in `scene_mesh_pending_convert` must go through all 4 steps: duplicate to dev scene, disable original, convert with the correct tool, assign to story. Present the list to the user and ask which object to start with first.
 2. Mention `out_of_scope` in one line:
    "PPE / abstract items have no Unity objects — those beats will be narrative VO only."
 3. **If `pending_questions` is non-empty** — present each question to the user with `AskQuestion`. Apply each answer to `confirmed` (replace the assumed entry with the confirmed Unity name, or mark the token VO-only as directed). Only proceed once all questions are answered.

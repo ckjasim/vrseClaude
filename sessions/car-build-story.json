@@ -1,0 +1,162 @@
+{
+  "storyId": "car-build-story",
+  "createdAt": "2026-06-08T09:53:04.715Z",
+  "changelog": [],
+  "notes": [
+    {
+      "ts": "2026-06-08T09:53:59.605Z",
+      "text": "SFX generation: 15 generated, 22 errors"
+    },
+    {
+      "ts": "2026-06-08T09:53:59.620Z",
+      "text": "Story created: \"How to Build a Car — Basic VR Training\" — 9/9 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\car-build-story.json"
+    },
+    {
+      "ts": "2026-06-08T10:12:29.629Z",
+      "text": "SFX skipped — GENERATE_THIS.com placeholders preserved. Call generate_sfx to produce audio later."
+    },
+    {
+      "ts": "2026-06-08T10:12:29.646Z",
+      "text": "Story created: \"How to Build a Car — Basic VR Training\" — 9/9 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\car-build-story.json"
+    },
+    {
+      "ts": "2026-06-08T10:15:08.406Z",
+      "text": "generate_sfx: 14 generated, 26 errors. File: C:\\autovrse\\jsonClaw\\stories\\car-build-story.json"
+    }
+  ],
+  "sopContext": null,
+  "pendingPlan": {
+    "storyName": "How to Build a Car — Basic VR Training",
+    "chapters": [
+      {
+        "name": "Engine Bay",
+        "moments": [
+          {
+            "name": "Introduction",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Player positioned at assembly station workbench",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Install Engine Block",
+            "userAction": "Grab EngineBlock and place into ChassisPlacePoint",
+            "objectsInvolved": [
+              "EngineBlock",
+              "ChassisPlacePoint"
+            ],
+            "successHint": "Positive audio cue and green outline confirmation when engine block locks into place",
+            "spatialContext": "Engine block on left workbench, chassis centered 1.5m ahead at waist height",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Connect Engine Components",
+            "userAction": "Attach PowerCable, CoolantHose, and DriveBelt to engine block connection points",
+            "objectsInvolved": [
+              "PowerCable",
+              "CoolantHose",
+              "DriveBelt",
+              "CableConnectionPoint",
+              "HoseConnectionPoint",
+              "BeltConnectionPoint"
+            ],
+            "successHint": "Each component snaps with haptic feedback and completion checklist updates",
+            "spatialContext": "Components on right workbench, connection points highlighted on installed engine block",
+            "onRightMode": "Any"
+          }
+        ]
+      },
+      {
+        "name": "Body Assembly",
+        "moments": [
+          {
+            "name": "Mount the Doors",
+            "userAction": "Grab LeftDoor and RightDoor and attach to door hinge place points",
+            "objectsInvolved": [
+              "LeftDoor",
+              "RightDoor",
+              "LeftDoorHinge",
+              "RightDoorHinge"
+            ],
+            "successHint": "Door alignment animation plays and lock sound confirms successful mounting",
+            "spatialContext": "Doors positioned on floor racks left and right, hinge points at shoulder height on chassis",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Install Windshield",
+            "userAction": "Grab Windshield and place into WindshieldFrame, then apply SealingTool around edges",
+            "objectsInvolved": [
+              "Windshield",
+              "WindshieldFrame",
+              "SealingTool"
+            ],
+            "successHint": "Glass clicks into frame, then progress bar fills as sealing tool traces perimeter",
+            "spatialContext": "Windshield on front rack, frame at eye level on chassis front",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Fit Hood and Trunk",
+            "userAction": "Attach Hood to front hinges and TrunkLid to rear hinges",
+            "objectsInvolved": [
+              "Hood",
+              "TrunkLid",
+              "FrontHinges",
+              "RearHinges"
+            ],
+            "successHint": "Each panel aligns with magnetic snap and outline turns green",
+            "spatialContext": "Hood on front table, trunk lid on rear table, both at waist height",
+            "onRightMode": "Any"
+          }
+        ]
+      },
+      {
+        "name": "Final Inspection",
+        "moments": [
+          {
+            "name": "Install Wheels",
+            "userAction": "Use WheelGun to attach FrontLeftWheel, FrontRightWheel, RearLeftWheel, and RearRightWheel",
+            "objectsInvolved": [
+              "WheelGun",
+              "FrontLeftWheel",
+              "FrontRightWheel",
+              "RearLeftWheel",
+              "RearRightWheel",
+              "WheelMountFL",
+              "WheelMountFR",
+              "WheelMountRL",
+              "WheelMountRR"
+            ],
+            "successHint": "Wheel gun trigger animation with ratcheting sound, checklist updates for each wheel",
+            "spatialContext": "Wheels on ground around chassis, wheel gun on tool rack at waist height",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Interior Setup",
+            "userAction": "Install SteeringWheel onto steering column and place DriverSeat onto seat rails",
+            "objectsInvolved": [
+              "SteeringWheel",
+              "DriverSeat",
+              "SteeringColumn",
+              "SeatRails"
+            ],
+            "successHint": "Steering wheel locks with click, seat slides forward and locks with confirmation tone",
+            "spatialContext": "Components inside vehicle cabin, accessible through open door",
+            "onRightMode": "Any"
+          },
+          {
+            "name": "Final Walkthrough",
+            "userAction": "Use InspectionTablet to verify all assembly points, then sign completion form",
+            "objectsInvolved": [
+              "InspectionTablet",
+              "CompletionForm"
+            ],
+            "successHint": "Green checkmarks appear on tablet for each verified component, final signature triggers completion celebration",
+            "spatialContext": "Tablet spawns in hand, player walks around completed vehicle for 360-degree inspection",
+            "onRightMode": "InOrder"
+          }
+        ]
+      }
+    ]
+  }
+}

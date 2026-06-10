@@ -258,18 +258,26 @@ server.registerTool(
   'get_trigger_action_catalog',
   {
     description:
-      'Fetch the platform catalog of available triggerActionSets — action types and trigger ' +
-      'types — from the Infinity Workshop API. Returns the full list of what Name/Option combos ' +
-      'and trigger types the platform supports. Cached once per server session. ' +
-      'Call this before creating a new moment so you know what actions and triggers are valid.',
+      'Fetch the platform catalog of available action types and trigger types. ' +
+      'BEFORE calling this tool you MUST ask the user which catalog mode they want:\n' +
+      '  • "basic"  — a curated set (VoiceOver, SFXPlayer, Objects, Player, Haptics, Timers, ' +
+      'TextMedia, ImageMedia, MetaLayer + 3 core triggers). Fetched via POST with a fixed list.\n' +
+      '  • "goWild" — the full platform catalog from the Infinity Workshop API (every action ' +
+      'and trigger available). Fetched via GET.\n' +
+      'Do not assume a default — always ask the user first. Cached per mode for the session.',
     inputSchema: {
       type: z.enum(['actions', 'triggers', 'all']).optional()
-        .describe('Which catalog to return: "actions", "triggers", or "all" (default)')
+        .describe('Which catalog to return: "actions", "triggers", or "all" (default)'),
+      mode: z.enum(['basic', 'goWild'])
+        .describe(
+          'REQUIRED — ask the user before calling. ' +
+          '"basic" = curated fixed set via POST. "goWild" = full platform catalog via GET.'
+        )
     }
   },
   async (args) => {
     try {
-      const result = await getTriggerActionCatalog(args.type || 'all')
+      const result = await getTriggerActionCatalog(args.type || 'all', args.mode)
       return ok(result)
     } catch (e) {
       return err(e.message)
@@ -500,25 +508,35 @@ server.registerTool(
       '  confirm:true — reads the saved plan and fires all moment generation calls in parallel ' +
       '(one LLM call per moment simultaneously). Retries failures up to 3 times. ' +
       'Writes the assembled story JSON to outputFilePath.\n\n' +
+      'BEFORE calling this tool you MUST ask the user TWO questions:\n' +
+      '  1. Catalog mode — "basic" (curated fixed set) or "goWild" (full platform catalog).\n' +
+      '  2. Generate SFX — yes or no. If yes, ElevenLabs is called to produce real audio. ' +
+      'If no, GENERATE_THIS.com placeholders are kept in the JSON so the user can call generate_sfx later.\n' +
+      'Do not assume defaults — always ask the user first.\n\n' +
       'After confirm:true completes, call load_story → verify_story → save_story.',
     inputSchema: {
       storyId:        z.string(),
       outputFilePath: z.string().describe('Absolute path where the generated story JSON will be written'),
       brief:          z.string().optional().describe('Free-text description of the story. If omitted, uses sopContext from load_sop.'),
       confirm:        z.boolean().optional().describe('false: plan only. true: generate all moments in parallel.'),
-      generationOptions: z.object({
-        allowedActions:  z.array(z.string()).optional(),
-        allowedTriggers: z.array(z.string()).optional()
-      }).optional()
+      mode:           z.enum(['basic', 'goWild']).describe(
+        'REQUIRED — ask the user before calling. ' +
+        '"basic" = curated fixed set via POST. "goWild" = full platform catalog via GET.'
+      ),
+      generateSfx:    z.boolean().describe(
+        'REQUIRED — ask the user before calling with confirm:true. ' +
+        'true: call ElevenLabs to generate real audio and upload to S3. ' +
+        'false: keep GENERATE_THIS.com placeholders in place; user can call generate_sfx later.'
+      )
     }
   },
   async (args) => {
-    const { storyId, outputFilePath, brief, confirm = false } = args
+    const { storyId, outputFilePath, brief, confirm = false, mode, generateSfx = false } = args
 
     try {
       // ── Phase 1: Plan only ────────────────────────────────────────────────
       if (!confirm) {
-        const catalog        = await getTriggerActionCatalog('all')
+        const catalog        = await getTriggerActionCatalog('all', mode)
         const sopContext     = workspaceContext.getSopContext(storyId)
                            || sessionStore.loadSopContext(storyId)
         const sceneData      = workspaceContext.getSceneAwareness(storyId)
@@ -560,7 +578,7 @@ server.registerTool(
         return err('No pending plan found. Call create_story with confirm:false first to generate a plan.')
       }
 
-      const catalog        = await getTriggerActionCatalog('all')
+      const catalog        = await getTriggerActionCatalog('all', mode)
       const sceneData      = workspaceContext.getSceneAwareness(storyId)
       const sceneAwareness = sceneData.text || null
       const catalogText    = JSON.stringify(catalog, null, 2)
@@ -568,11 +586,15 @@ server.registerTool(
       const { moments, failed } = await generateAllMoments({ plan, catalogText, sceneAwareness })
       const jsonData = assembleFinalJson({ plan, moments })
 
-      // Generate real SFX audio for all GENERATE_THIS placeholders in the story
-      const sfxResult = await generateSFXForStory(jsonData, storyId)
+      // Generate real SFX audio only if the user opted in
+      const sfxResult = generateSfx
+        ? await generateSFXForStory(jsonData, storyId)
+        : { totalUpdates: 0, totalErrors: 0 }
       sessionStore.note(
         storyId,
-        `SFX generation: ${sfxResult.totalUpdates} generated, ${sfxResult.totalErrors} errors`
+        generateSfx
+          ? `SFX generation: ${sfxResult.totalUpdates} generated, ${sfxResult.totalErrors} errors`
+          : 'SFX skipped — GENERATE_THIS.com placeholders preserved. Call generate_sfx to produce audio later.'
       )
 
       const dir = path.dirname(outputFilePath)
@@ -605,10 +627,13 @@ server.registerTool(
           failedMoments > 0
             ? `${failedMoments} moment(s) failed after 3 retries: ${failed.map(s => s.name).join(', ')}. ` +
               'Call load_story then use apply_diffs to fix failed moments manually.'
-            : sfxResult.totalErrors > 0
-              ? `All moments generated. ${sfxResult.totalErrors} SFX failed — call generate_sfx to retry. ` +
+            : !generateSfx
+              ? 'All moments generated. SFX placeholders preserved — call generate_sfx when ready to produce audio. ' +
                 'Then call load_story → verify_story.'
-              : 'All moments generated with SFX. Call load_story to load into context, then verify_story.'
+              : sfxResult.totalErrors > 0
+                ? `All moments generated. ${sfxResult.totalErrors} SFX failed — call generate_sfx to retry. ` +
+                  'Then call load_story → verify_story.'
+                : 'All moments generated with SFX. Call load_story to load into context, then verify_story.'
       })
     } catch (e) {
       return err(`create_story failed: ${e.message}`)
@@ -628,19 +653,28 @@ server.registerTool(
       'objects. Agent then writes an exec script to splice them into the existing story JSON, ' +
       'followed by load_story → verify_story.\n\n' +
       'IMPORTANT: Call get_story_context first and pass its output as existingStoryContext so ' +
-      'the planner knows what chapters, objects, and moments already exist.',
+      'the planner knows what chapters, objects, and moments already exist.\n\n' +
+      'BEFORE calling this tool you MUST ask the user which catalog mode they want:\n' +
+      '  • "basic"  — curated fixed set (VoiceOver, SFXPlayer, Objects, Player, Haptics, Timers, ' +
+      'TextMedia, ImageMedia, MetaLayer + 3 core triggers).\n' +
+      '  • "goWild" — full platform catalog from the Infinity Workshop API.\n' +
+      'Do not assume a default — always ask the user first.',
     inputSchema: {
       storyId:              z.string(),
       brief:                z.string().describe('What to generate, e.g. "Add 3 moments to chapter 2 about valve inspection"'),
       existingStoryContext: z.string().optional().describe('Output of get_story_context — tells planner what already exists'),
-      confirm:              z.boolean().optional().describe('false: plan only. true: generate all moments in parallel and return raw array.')
+      confirm:              z.boolean().optional().describe('false: plan only. true: generate all moments in parallel and return raw array.'),
+      mode:                 z.enum(['basic', 'goWild']).describe(
+        'REQUIRED — ask the user before calling. ' +
+        '"basic" = curated fixed set via POST. "goWild" = full platform catalog via GET.'
+      )
     }
   },
   async (args) => {
-    const { storyId, brief, existingStoryContext, confirm = false } = args
+    const { storyId, brief, existingStoryContext, confirm = false, mode } = args
 
     try {
-      const catalog        = await getTriggerActionCatalog('all')
+      const catalog        = await getTriggerActionCatalog('all', mode)
       const sopContext     = workspaceContext.getSopContext(storyId)
                          || sessionStore.loadSopContext(storyId)
       const sceneData      = workspaceContext.getSceneAwareness(storyId)

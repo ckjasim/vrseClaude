@@ -1,0 +1,503 @@
+{
+  "storyId": "eaf-steel",
+  "createdAt": "2026-06-08T13:23:37.744Z",
+  "changelog": [
+    {
+      "ts": "2026-06-08T13:54:29.148Z",
+      "diffsApplied": 1,
+      "changeLog": "M11: Fix empty trigger Query — use CountDownTimer TimerTrigger OnComplete for observation moment"
+    }
+  ],
+  "notes": [
+    {
+      "ts": "2026-06-08T13:37:46.434Z",
+      "text": "resolve_scene_objects: 0 resolved, 0 ambiguous, 56 not found"
+    },
+    {
+      "ts": "2026-06-08T13:54:04.713Z",
+      "text": "SFX skipped — GENERATE_THIS.com placeholders preserved. Call generate_sfx to produce audio later."
+    },
+    {
+      "ts": "2026-06-08T13:54:04.723Z",
+      "text": "Story created: \"EAF Steel Tapping VR Training\" — 29/29 moments generated. Written to C:\\autovrse\\jsonClaw\\stories\\eaf-steel.json"
+    }
+  ],
+  "sopContext": {
+    "objectives": [
+      "Execute safe EAF steel tapping procedures from furnace into ladles",
+      "Perform proper ladle preparation and inspection before tapping",
+      "Control tapping operations including under-arcing and without-arcing methods",
+      "Manage ferroalloy and slag forming material additions during tapping",
+      "Operate EBT (Eccentric Bottom Tapping) system correctly",
+      "Maintain proper furnace tilting control and sequencing",
+      "Ensure appropriate PPE usage during high-temperature operations",
+      "Monitor and control steel temperature and composition during tapping",
+      "Execute emergency procedures for equipment failures during tapping"
+    ],
+    "procedures": [
+      "Inspect ladle condition - bricks, temperature (1000-1200°C), top ring cleaning, level condition",
+      "Supervisor and Senior Melter inspect ladle cleaning and temperature using color chart",
+      "Ensure ferroalloys and slag forming materials are ready in bunkers",
+      "Turn on local control switch from EAF tapping pulpit to ON position",
+      "Move ladle transfer car to tapping position by pressing EAF tapping position button",
+      "Move material addition chute to tapping position by moving selector switch RCH01 to CCW",
+      "Verify required bath temperature and oxygen levels achieved in furnace",
+      "Ensure furnace frame lock is unlocked",
+      "Verify DRI movable chute is working properly",
+      "Turn on local control switch from EAF tapping pulpit to ON position",
+      "Enable tilting control by rotating TILT-ENABLE selector switch to ON position",
+      "For tapping under arcing: Maintain bath temperature during feeding and tapping simultaneously",
+      "Get clearance from EAF Pulpit Operator to start tapping",
+      "Start ladle stirring by selecting stirring gas (Nitrogen or Argon according to steel grade)",
+      "Increase rinsing gas pressure using STIR Line 1 and STIR Line 2 selector switches",
+      "Unlock EBT flap by pressing Extra Stroke By-Pass button and EBT Unlock button simultaneously",
+      "Open EBT flap by pressing Extra Stroke By-Pass button and EBT Opening button simultaneously",
+      "Observe EBT sand dropping and metal flow from furnace into ladle",
+      "If steel doesn't flow, use Oxygen lance to open EBT (aluminum jacket mandatory)",
+      "When 20-25 tons tapped, add ferroalloys by pressing BIN SHP01 and SHP02 Slide Gate open buttons",
+      "Add recarburizer manually during ferroalloy addition if needed",
+      "Move material addition chute to parking position using selector switch RCH01 to CW",
+      "For tapping under arcing: Open furnace main circuit breaker and lift electrodes to tapping position",
+      "Tilt furnace gradually using joystick to complete tapping",
+      "When 5-7 tons remaining to desired weight (150-155 tons), tilt furnace back to de-slagging side",
+      "Move ladle from below furnace after tapping by pressing EAF PREHEAT CHARG.POSITION button",
+      "Check ladle stirring availability",
+      "Tilt furnace to tapping position until 7° angle reached",
+      "Clean EBT bottom by closing and opening flap using Extra Stroke By-Pass and Opening-Closing buttons",
+      "Close EBT flap and lock by pressing LOCK button under EBT movement label",
+      "Open EBT cover by pressing EBT COVER OPEN button",
+      "Inspect tap hole by camera through monitoring display",
+      "Fill EBT with sand by pressing EBT SAND CHARGING OPEN button",
+      "Ensure sand forms dome-shaped pile over tap hole",
+      "Close sand hopper by pressing EBT SAND CHARGING CLOSE button",
+      "Close EBT cover by pressing EBT COVER CLOSE button",
+      "Estimate hot heel quantity after every heat (average 30 tons)",
+      "Tilt furnace to horizontal position using joystick",
+      "Clean slag door - fettling material should not exceed 10-15 cm above slag apron",
+      "Insert shell verticality locks by pressing LOCK button under FRAME label if scrap or electrode charging needed"
+    ],
+    "equipment": [
+      "EAF (Electric Arc Furnace)",
+      "ladle",
+      "ladle transfer car",
+      "EBT (Eccentric Bottom Tapping)",
+      "EBT flap",
+      "material addition chute",
+      "DRI movable chute",
+      "ladle preheater",
+      "overhead crane",
+      "tapping pulpit",
+      "control panel",
+      "selector switch",
+      "joystick",
+      "Two-way radios",
+      "Catfish",
+      "Thermocouple for temperature/Oxygen measurements",
+      "samplers",
+      "Oxygen lance",
+      "back fire arrestor",
+      "lancing pipes",
+      "ferroalloys (FeMn, FeSi, SiMn)",
+      "slag forming material (CaO, CaF2)",
+      "recarburizer",
+      "BIN SHP01",
+      "BIN SHP02",
+      "Slide Gate",
+      "electrodes",
+      "furnace main circuit breaker",
+      "electrode arms",
+      "ladle stirring system",
+      "Nitrogen",
+      "Argon",
+      "STIR Line 1",
+      "STIR Line 2",
+      "Extra Stroke By-Pass button",
+      "EBT Unlock button",
+      "EBT Opening button",
+      "EBT Closing button",
+      "EBT LOCK button",
+      "sand filling hopper",
+      "EBT SAND CHARGING OPEN button",
+      "EBT SAND CHARGING CLOSE button",
+      "EBT COVER OPEN button",
+      "EBT COVER CLOSE button",
+      "camera",
+      "monitoring display",
+      "Frame Unlock button",
+      "FRAME LOCK button",
+      "emergency hydraulic unit",
+      "emergency stick",
+      "slag door",
+      "water cooled panels",
+      "shell verticality locks",
+      "ladle car weighing system",
+      "Heat-Resistant Safety Hat",
+      "Anti-Fog Safety Glasses",
+      "Dark Cobalt Glasses",
+      "Gold Safety Glasses",
+      "Face Shield",
+      "Leather Gloves",
+      "Aluminized Gloves",
+      "Safety Shoes",
+      "Aluminum Jacket",
+      "Dust Mask (N95)",
+      "Ear Plugs",
+      "Fire Retardant Uniform",
+      "toolbox",
+      "steel pipe",
+      "gunning material",
+      "RCH01 selector switch",
+      "tapping position button",
+      "EAF PREHEAT CHARG.POSITION button",
+      "TILT-ENABLE selector switch"
+    ],
+    "constraints": "Use only tools and equipment in good condition and appropriate for the task. Check tools and equipment to ensure protective and safety devices, machine guards and alarms are functional. Follow all area safety warning signs and instructions. Maintain proper arrangements and housekeeping of the area. Report immediately to Supervisor any hazard, near-misses, or incidents. Any members can stop the activity if they found any unsafe condition, unsafe act or any other abnormalities and must immediately inform the shift Supervisor. All employees should comply with the safety regulations and use the safety means available to them for their own protection and protection of their fellow colleagues. Operator shall use all proper safety apparels PPE during tapping the furnace. Do not charge any material in the ladle before tapping. Supervisor and Senior Melter should inspect the ladle cleaning and temperature condition before tapping - if there is an issue on cleaning or temperature, immediately inform Slide Gate Team to replace the ladle and do corrective action. Appropriate PPE including FR clothing, leather gloves, and face shield is mandatory. Effective means of communication is a must within working team (radio). Stay at least 10 feet radius from where a suspended load could fall. Pay attention to crane siren and path of load travel. Ensure floor around work area is clean and free from obstructing objects, materials, uneven floors. Good cable management - trailing cords/cables, tools/materials organized, floors kept dry free from water, grease, and slippery liquids. All hand tools must be stored in toolbox. EBT needs to be changed or repaired by steel pipe if tapping time equals or less than 2.5 min. For emergency, call 02 507 3000 and follow emergency actions per Department Emergency Response Plan SMD 2-PR-002. Ladle temperature should be 1000-1200°C. Ladle top ring must be cleaned before sending ladle to EAF for tapping and should be in level condition after filling nozzle sand. Ladle should not exceed more than 3 minutes under EAF before start tapping to avoid excessive ladle temperature drop. Check visually the ladle before tapping to make sure it is in tapping position under EBT. Make sure steel weight is reset and becomes zero before tapping. Make sure ladle top ring is free of slag and metal accumulation to avoid touching chute during chute or ladle movement. Make sure ladle addition chute is in right position before tapping to avoid discharging ferroalloys material on ground. Make sure ladle is in tapping position under EBT. Ladle addition chute must be in tapping position and working properly (reaching working and parking position). Furnace frame locks are unlocked. DRI movable chute is working properly (reaching working and parking position). Only trained and authorized persons must operate. Ensure labels are clearly readable. Defective parts (buttons, levers) must be replaced. Timely inspection of tapping pulpit glass required. Regular and monthly cleaning of pulpit glasses required. Tapping under arcing can be performed during charging hot DRI only. Projected EBT tapping time must be above 3 min. Furnace must be kept in horizontal position during tapping under arcing. Tapping under arcing should not exceed more than 25% of molten steel inside ladle (40-ton maximum). Ladle addition chute should be moved to parking position before reaching 2° tilting angle. Required tapping temperature depends on ladle temperature and life conditions: for ladles in circulation is 1630°C +/- 10°C; for ladles out of circulation and new ladles is 1650°C +/- 10°C. Ladle must be kept under preheater before tapping. Make sure control panel is always clean to press right button. Make sure ladle preheater is in parking position. Make sure ladle is available on ladle transfer car and overhead crane is not holding ladle arms. Oxygen lance must have back fire arrestor and holder must always be pressed if pipe is inserted inside tap hole until removed from EBT to prevent pipe blockage by metal leading to back fire and burn injury. Lancing pipe must be replaced after each time use. Lancing EBT from upside EBT is not allowed. Addition of Alloys and Recarburizer on bottom of ladle is not allowed once it can boil. Do not add Recarburizer before adding ferroalloys material as it will lead to boiling inside ladle. Tilting of furnace should be done by joystick to control tilting and avoid liquid metal getting in contact with water cooled panels above tap hole which can cause damage of panels and create water leak/explosion. In case of ladle car weight system not working or malfunctioning, tapping can be done and controlled visually by ladle life and free board - minimum free board for ladle is around 400-500 mm. If any abnormality of ladle stirring, immediately coordinate with Refractory Team to prepare ladle for re-ladle activity or pour back metal into furnace in case no ladle available. Hot heel quantity has to be estimated every heat after tapping - average Hot Heel should be around 30 ton. Slag door has to be cleaned and fettling material on slag door should not be higher than 10-15 cm above slag apron. Manual handling good practices to be followed: not more than 20kg to be carried by hand; maintain proper posture (lift with legs not back); area of movements must be sufficiently wide; face toward direction you will throw shoveled load; no matter what material shoveling, always try to skim off top - do not pick up more than 10 pounds with any shovel at one time; pay attention to blade type, handle length and grip of shovel - always select most appropriate tool for job. Extra care to be taken during usage of emergency stick as it should be controlled smoothly to avoid jerking which can lead to electrodes breakages."
+  },
+  "pendingPlan": {
+    "storyName": "EAF Steel Tapping VR Training",
+    "chapters": [
+      {
+        "name": "Pre-Tap Inspection",
+        "moments": [
+          {
+            "name": "Safety briefing and PPE check",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Voice-over introduction covering mandatory PPE requirements",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Inspect ladle condition and temperature",
+            "userAction": "Touch Ladle_EAF and verify temperature 1000-1200C",
+            "objectsInvolved": [
+              "Ladle_EAF"
+            ],
+            "successHint": "Temperature readout displays, voice-over confirms acceptable range",
+            "spatialContext": "Ladle positioned near furnace base, approach within 2m",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Verify ferroalloys ready in bunkers",
+            "userAction": "Touch Hopper_FeAlloys to check material availability",
+            "objectsInvolved": [
+              "Hopper_FeAlloys"
+            ],
+            "successHint": "Visual indicator confirms BIN SHP01 and SHP02 loaded, voice-over acknowledgment",
+            "spatialContext": "Ferroalloy hoppers elevated 3m above ground level",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Setting Up for Tapping",
+        "moments": [
+          {
+            "name": "Turn on local control switch",
+            "userAction": "Press LocalControls button to ON position",
+            "objectsInvolved": [
+              "LocalControls"
+            ],
+            "successHint": "LED indicator illuminates green, console powers up",
+            "spatialContext": "Control panel at pulpit, chest height, center console",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Move ladle transfer car to tapping position",
+            "userAction": "Press EAFPreheatChargePosition button and verify LadleCar_EAF positioning",
+            "objectsInvolved": [
+              "EAFPreheatChargePosition",
+              "LadleCar_EAF"
+            ],
+            "successHint": "Ladle car moves beneath furnace EBT, position indicator confirms alignment",
+            "spatialContext": "Button on main console, ladle car tracks visible below furnace",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Position material addition chute to working position",
+            "userAction": "Press RCH01InWorkingPosition selector switch to CCW",
+            "objectsInvolved": [
+              "RCH01InWorkingPosition"
+            ],
+            "successHint": "Chute rotates to tapping position, indicator light confirms CCW position",
+            "spatialContext": "Selector switch on left panel of console, chute visible overhead",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Verify bath temperature and composition",
+            "userAction": "Check SamplingConsole_01 display for 1630C target temperature",
+            "objectsInvolved": [
+              "SamplingConsole_01"
+            ],
+            "successHint": "Display shows 1630C +/- 10C, voice-over confirms readiness",
+            "spatialContext": "Main digital display on pulpit console, eye level",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Enable Tilt and Start Stirring",
+        "moments": [
+          {
+            "name": "Enable tilting control",
+            "userAction": "Rotate FurnaceTiltingKeySwitch to ON and press TiltEnable button",
+            "objectsInvolved": [
+              "FurnaceTiltingKeySwitch",
+              "TiltEnable"
+            ],
+            "successHint": "Tilting system activates, hydraulic unlock sound, indicator illuminates",
+            "spatialContext": "Key switch on console upper section, TiltEnable button adjacent",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Start ladle stirring",
+            "userAction": "Press ArgonSelection or NitrogenSelection button and set gas flow max 300 l/min",
+            "objectsInvolved": [
+              "ArgonSelection",
+              "NitrogenSelection"
+            ],
+            "successHint": "Gas flow indicator active, stirring sound begins, voice-over confirms flow rate",
+            "spatialContext": "Gas selection buttons on right panel, flow meters visible",
+            "onRightMode": "Any"
+          }
+        ]
+      },
+      {
+        "name": "Opening the EBT",
+        "moments": [
+          {
+            "name": "Unlock EBT flap",
+            "userAction": "Press ExtrastrokeBYpass and Unlock_01 simultaneously",
+            "objectsInvolved": [
+              "ExtrastrokeBYpass",
+              "Unlock_01"
+            ],
+            "successHint": "Unlock sound, indicator changes from locked to unlocked state",
+            "spatialContext": "Both buttons on lower console panel, spaced 15cm apart",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Open EBT flap",
+            "userAction": "Press ExtrastrokeBYpass and Opening button simultaneously",
+            "objectsInvolved": [
+              "ExtrastrokeBYpass",
+              "Opening"
+            ],
+            "successHint": "Hydraulic opening sound, sand begins to drop, flap opens visually",
+            "spatialContext": "Opening button adjacent to ExtrastrokeBYpass on lower panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Observe EBT sand drop and steel flow",
+            "userAction": "Monitor Furnace and Ladle_EAF for steel flow initiation, minimum 3 minutes",
+            "objectsInvolved": [
+              "Furnace",
+              "Ladle_EAF"
+            ],
+            "successHint": "Molten steel stream visible, timer displays 3+ minutes, voice-over confirms flow",
+            "spatialContext": "View from pulpit toward furnace base, steel stream visible below EBT",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Use Oxygen lance if steel does not flow",
+            "userAction": "Grab LancingPipe and insert into EBT to clear blockage",
+            "objectsInvolved": [
+              "LancingPipe"
+            ],
+            "successHint": "Lance ignites, blockage clears, steel flow resumes, voice-over caution on aluminum jacket",
+            "spatialContext": "Lance stored on right wall rack, 1.5m length, aim toward tap hole",
+            "onRightMode": "Any"
+          }
+        ]
+      },
+      {
+        "name": "Adding Ferroalloys During Tapping",
+        "moments": [
+          {
+            "name": "Wait until 20-25 tons in ladle",
+            "userAction": "Monitor Ladle_EAF weight display until 20-25 ton threshold",
+            "objectsInvolved": [
+              "Ladle_EAF"
+            ],
+            "successHint": "Weight indicator reaches 20-25 tons, voice-over signals alloy addition readiness",
+            "spatialContext": "Weight display on console, ladle filling visible below",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Open ferroalloy slide gates",
+            "userAction": "Press BinShip01SlideGateOpen and BinShip02SlideGateOpen simultaneously",
+            "objectsInvolved": [
+              "BinShip01SlideGateOpen",
+              "BinShip02SlideGateOpen",
+              "Hopper_FeAlloys"
+            ],
+            "successHint": "Ferroalloys discharge through chute into ladle, gate indicators show open position",
+            "spatialContext": "Gate open buttons on upper right panel, chute discharge visible overhead",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Move chute to parking position before 2 degree tilt",
+            "userAction": "Press RCH01InParkPosition selector switch to CW before furnace tilts 2 degrees",
+            "objectsInvolved": [
+              "RCH01InParkPosition"
+            ],
+            "successHint": "Chute retracts to park position, indicator confirms CW position, voice-over confirms safe clearance",
+            "spatialContext": "Selector switch on left panel, tilt angle gauge shows below 2 degrees",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Completing the Tapping",
+        "moments": [
+          {
+            "name": "Open circuit breaker and lift electrodes",
+            "userAction": "Rotate FurnaceBreakerKeySwitch01 and observe Electrodes lift to tapping position",
+            "objectsInvolved": [
+              "FurnaceBreakerKeySwitch01",
+              "Electrodes"
+            ],
+            "successHint": "Breaker opens with audible click, electrodes rise, arc extinguishes",
+            "spatialContext": "Breaker key switch on console upper section, electrodes visible through window",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Tilt furnace gradually",
+            "userAction": "Push Joystick_Left forward to tilt Furnace, avoid water cooled panels contact",
+            "objectsInvolved": [
+              "Joystick_Left",
+              "Furnace"
+            ],
+            "successHint": "Furnace tilts smoothly, steel pours steadily, tilt angle gauge increases, voice-over cautions on panels",
+            "spatialContext": "Joystick on remote controller left side, furnace tilts forward in view",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Tilt back at 5-7 tons remaining",
+            "userAction": "Pull Joystick_Left backward to de-slag when 5-7 tons remain, target 150-155 tons total",
+            "objectsInvolved": [
+              "Joystick_Left"
+            ],
+            "successHint": "Furnace tilts to de-slagging side, weight display shows 150-155 tons, voice-over confirms completion",
+            "spatialContext": "Reverse joystick motion, furnace tilts opposite direction, slag separates",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Move ladle to preheat/charging position",
+            "userAction": "Press EAFPreheatChargePosition to move LadleCar_EAF away from furnace",
+            "objectsInvolved": [
+              "EAFPreheatChargePosition",
+              "LadleCar_EAF"
+            ],
+            "successHint": "Ladle car moves to preheater zone, position indicator confirms, voice-over confirms ladle clear",
+            "spatialContext": "Position button on main console, ladle car tracks extend to preheat area",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "EBT Maintenance and Sand Filling",
+        "moments": [
+          {
+            "name": "Tilt furnace to 7 degrees and clean EBT bottom",
+            "userAction": "Use Joystick_Left to tilt Furnace to 7 degrees, press Closing and Opening cycle",
+            "objectsInvolved": [
+              "Joystick_Left",
+              "Furnace",
+              "Closing",
+              "Opening"
+            ],
+            "successHint": "Furnace reaches 7 degrees, EBT flap cycles open/close, cleaning motion visible",
+            "spatialContext": "Joystick forward tilt, angle gauge shows 7 degrees, flap cycling buttons on lower panel",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Close EBT flap and lock",
+            "userAction": "Press Closing button then Lock_01 to secure EBT flap",
+            "objectsInvolved": [
+              "Closing",
+              "Lock_01"
+            ],
+            "successHint": "Flap closes fully, lock engages with audible click, indicator shows locked state",
+            "spatialContext": "Closing and Lock buttons on lower panel, flap closes visibly below furnace",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Open EBT cover",
+            "userAction": "Press PowerSwitch_Cover to open EBT access cover",
+            "objectsInvolved": [
+              "PowerSwitch_Cover"
+            ],
+            "successHint": "Cover slides open, interior tap hole visible, indicator confirms open",
+            "spatialContext": "Cover button on mid-panel, cover movement visible at furnace base",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Inspect tap hole via monitoring display",
+            "userAction": "Check EAF_System_Miniature display for tap hole condition via camera",
+            "objectsInvolved": [
+              "EAF_System_Miniature"
+            ],
+            "successHint": "Camera feed shows tap hole interior, voice-over confirms condition assessment",
+            "spatialContext": "Monitoring display on right console section, camera feed at eye level",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Fill EBT with sand",
+            "userAction": "Press BinShip01SlideGateOpen to discharge sand through Forklift_Sandgun, form dome over tap hole",
+            "objectsInvolved": [
+              "BinShip01SlideGateOpen",
+              "Forklift_Sandgun"
+            ],
+            "successHint": "Sand flows into EBT, dome-shaped pile forms over tap hole, voice-over confirms proper fill",
+            "spatialContext": "Sand gate button upper panel, sand flow visible through camera feed",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Close sand hopper and EBT cover",
+            "userAction": "Press BinShip01SlideGateClose then PowerSwitch_Cover to secure sand system and cover",
+            "objectsInvolved": [
+              "BinShip01SlideGateClose",
+              "PowerSwitch_Cover"
+            ],
+            "successHint": "Sand gate closes, cover slides shut, indicators confirm closed state",
+            "spatialContext": "Close buttons on respective panels, cover closes over EBT",
+            "onRightMode": "InOrder"
+          }
+        ]
+      },
+      {
+        "name": "Post-Tap Operations",
+        "moments": [
+          {
+            "name": "Estimate hot heel quantity",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Voice-over explains hot heel estimation, average 30 tons, impact on next heat DRI charge",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Return furnace to horizontal position",
+            "userAction": "Use Joystick_Left to return Furnace to 0 degrees horizontal",
+            "objectsInvolved": [
+              "Joystick_Left",
+              "Furnace"
+            ],
+            "successHint": "Furnace tilts back to horizontal, angle gauge reads 0 degrees, voice-over confirms position",
+            "spatialContext": "Joystick centered, furnace visibly level, hydraulic hum settles",
+            "onRightMode": "InOrder"
+          },
+          {
+            "name": "Clean slag door and check fettling material",
+            "userAction": "narration",
+            "objectsInvolved": [],
+            "successHint": "auto-advance",
+            "spatialContext": "Voice-over instructs slag door cleaning procedure, fettling material max 10-15cm above apron",
+            "onRightMode": "InOrder"
+          }
+        ]
+      }
+    ]
+  }
+}

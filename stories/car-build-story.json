@@ -1,0 +1,2259 @@
+{
+  "name": "How to Build a Car — Basic VR Training",
+  "chapters": [
+    {
+      "name": "Engine Bay",
+      "moments": [
+        {
+          "name": "Introduction",
+          "description": "Player receives orientation to the car assembly training environment and prepares to begin engine installation.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"audioClipName\":\"AmbientFactory\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":15,\"setVolume\":0.3,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Welcome to automotive assembly training. Today you'll learn the fundamentals of building a car from the ground up. We'll start with the engine bay, move through body assembly, and finish with final inspection. Let's begin by installing the engine block into the chassis.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Player",
+                "Name": "Player",
+                "Option": "UnlockMovement",
+                "Data": "{}"
+              },
+              {
+                "Query": "Player",
+                "Name": "Player",
+                "Option": "UnlockRotation",
+                "Data": "{}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": []
+          },
+          "onWrong": [],
+          "onFirstWarning": {
+            "actions": []
+          },
+          "onLastWarning": {
+            "actions": []
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Great. Now let's get started with the engine installation.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Modern automotive assembly training facility with clean workbenches, overhead lighting, engine components on rolling carts, and chassis frame visible in background"
+        },
+        {
+          "name": "Install Engine Block",
+          "description": "Grab the engine block from the workbench and secure it into the chassis mount point.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "EngineBlock",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "ChassisPlacePoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "EngineBlock",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "ChassisPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":false},\"Label\":{\"setActive\":false},\"Highlighter\":{\"setActive\":false}}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Welcome to the engine bay. Your first task is to install the engine block. Look to your left—you'll see the engine block on the workbench. The chassis mount point is centered ahead of you at waist height. Grab the engine block and carefully place it into the chassis mount.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "EngineBlock",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFA500FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Engine Block\"}}"
+              },
+              {
+                "Query": "ChassisPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Chassis Mount\"}}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"AmbientWorkshop\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.3}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "ChassisPlacePoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"EngineBlockLock\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/d3008f0b-8edc-4c2d-a030-407fcef83dd2.mp3\",\"audioRange\":5,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.6,\"hapticDuration\":0.4}"
+                  },
+                  {
+                    "Query": "EngineBlock",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":4.0}}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Excellent work! The engine block is now securely mounted to the chassis. You can see the green outline confirming proper installation. Next, we'll connect the essential components.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "ChassisPlacePoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "trigger": {
+                "Query": "ChassisPlacePoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"ErrorBuzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.5}"
+                },
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the correct component. You need to place the engine block into the chassis mount. Look for the large metal engine block on your left workbench.\",\"waitForCompletion\":true}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, the engine block is the large component on your left. The chassis mount point is directly ahead of you. Try picking up the engine block and moving it toward the glowing green outline.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "EngineBlock",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFFF00FF\",\"outlineWidth\":4.5},\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              },
+              {
+                "Query": "ChassisPlacePoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let me guide you step by step. First, reach out with either hand and grab the engine block on your left. Then, lift it and move it forward to the chassis mount point. The engine block will snap into place when aligned correctly.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "EngineBlock",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"GuidanceChime\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.4}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Great job installing the engine block! This is the foundation of the engine bay assembly. Now we're ready to connect the power systems.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "StopAndSkip",
+                "Data": "{\"audioUrl\":\"https://GENERATE_THIS.com\"}"
+              },
+              {
+                "Query": "EngineBlock",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Industrial automotive workshop with engine block being lowered into vehicle chassis mount point, green holographic alignment guides visible, workbench with tools on left side, bright overhead lighting"
+        },
+        {
+          "name": "Connect Engine Components",
+          "description": "Attach power cable, coolant hose, and drive belt to their connection points on the installed engine block.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "PowerCable",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "CoolantHose",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "DriveBelt",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "CableConnectionPoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "HoseConnectionPoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "BeltConnectionPoint",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now let's connect the essential engine components. You'll need to attach the power cable, coolant hose, and drive belt to their connection points on the engine block. Each component is on the workbench to your right.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CableConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Cable Connection\"}}"
+              },
+              {
+                "Query": "HoseConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Hose Connection\"}}"
+              },
+              {
+                "Query": "BeltConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Belt Connection\"}}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "Any",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "CableConnectionPoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Power cable connected successfully. Great work!\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"CableSnap\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "CableConnectionPoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":2.0},\"Label\":{\"setActive\":false}}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "HoseConnectionPoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Coolant hose secured. Excellent!\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"HoseClip\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "HoseConnectionPoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":2.0},\"Label\":{\"setActive\":false}}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "BeltConnectionPoint",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Drive belt installed perfectly. All engine components are now connected!\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"BeltTension\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.2,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "BeltConnectionPoint",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":2.0},\"Label\":{\"setActive\":false}}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "trigger": {
+                "Query": "CableConnectionPoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That component doesn't belong at the cable connection point. Look for the power cable with the electrical connector.\",\"waitForCompletion\":true}"
+                },
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"ErrorBuzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/6fb9f9b6-6907-4289-97cb-81e354541c58.mp3\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "HoseConnectionPoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the coolant hose. The hose has flexible tubing with clamp fittings.\",\"waitForCompletion\":true}"
+                },
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"ErrorBuzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "BeltConnectionPoint",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the drive belt. You need the rubber belt with grooves that wraps around the pulleys.\",\"waitForCompletion\":true}"
+                },
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"ErrorBuzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/6697703b-a4b6-4227-b8e3-bb8331425bd8.mp3\",\"audioRange\":5,\"setVolume\":0.5,\"waitForCompletion\":false}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, each connection point is labeled. Match the component type to its corresponding connection point on the engine block.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "PowerCable",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FFFFFF\",\"outlineWidth\":2.5}}"
+              },
+              {
+                "Query": "CoolantHose",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FFFFFF\",\"outlineWidth\":2.5}}"
+              },
+              {
+                "Query": "DriveBelt",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FFFFFF\",\"outlineWidth\":2.5}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let me be specific: grab the power cable and connect it to the cable connection point, the coolant hose goes to the hose connection point, and the drive belt wraps around the belt connection point. You can connect them in any order.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CableConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "HoseConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "BeltConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Outstanding work! The engine bay is now fully assembled with all critical components connected. You're ready to move on to the body assembly phase.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "CableConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "HoseConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "BeltConnectionPoint",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"TaskComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.6,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Automotive workshop garage with installed engine block on chassis mount, three connection points highlighted in gold on engine, workbench displaying power cable with electrical connector, flexible coolant hose with clamps, and grooved rubber drive belt, industrial lighting overhead"
+        }
+      ]
+    },
+    {
+      "name": "Body Assembly",
+      "moments": [
+        {
+          "name": "Mount the Doors",
+          "description": "Attach both vehicle doors to their respective hinge points on the chassis.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "LeftDoor",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "RightDoor",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "LeftDoorHinge",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "RightDoorHinge",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "LeftDoorHinge",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0}}"
+              },
+              {
+                "Query": "RightDoorHinge",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0}}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now we'll mount the vehicle doors. You'll see the left and right doors on the floor racks beside you. Grab each door and attach it to its corresponding hinge point on the chassis at shoulder height. You can mount them in any order.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "LeftDoor",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Left\"}}"
+              },
+              {
+                "Query": "RightDoor",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false,\"GhostHand\":{\"ghostHandsState\":\"Right\"}}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "Any",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "LeftDoorHinge",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"DoorLockSound\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Left",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.3,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "LeftDoor",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "LeftDoorHinge",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "RightDoorHinge",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"DoorLockSound\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Right",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.3,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "RightDoor",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "RightDoorHinge",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "trigger": {
+                "Query": "LeftDoorHinge",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the correct door for this hinge. Try matching the left door to the left hinge point.\",\"waitForCompletion\":true}"
+                },
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"ErrorBuzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":6,\"setVolume\":0.6,\"waitForCompletion\":false}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "RightDoorHinge",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the correct door for this hinge. Try matching the right door to the right hinge point.\",\"waitForCompletion\":true}"
+                },
+                {
+                  "Query": "SFXPlayer",
+                  "Name": "SFXPlayer",
+                  "Option": "Play",
+                  "Data": "{\"audioClipName\":\"ErrorBuzz\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":6,\"setVolume\":0.6,\"waitForCompletion\":false}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Take your time. Look for the left and right doors on the floor racks beside you. Each door needs to be attached to its matching hinge point on the chassis.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "LeftDoorHinge",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Left Door Hinge\"}}"
+              },
+              {
+                "Query": "RightDoorHinge",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Right Door Hinge\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let me help you. Grab the left door with your left hand and bring it to the left hinge point at shoulder height. Then do the same with the right door. You can complete them in any order.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "LeftDoor",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              },
+              {
+                "Query": "RightDoor",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent work! Both doors are securely mounted. The door alignment is perfect and the locking mechanism has engaged properly. Let's continue with the body assembly.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"SuccessChime\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":10,\"setVolume\":0.8,\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "LeftDoor",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "RightDoor",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Automotive assembly station with vehicle chassis at center, two vehicle doors on floor racks at left and right sides, green-outlined door hinge mounting points visible at shoulder height on chassis frame"
+        },
+        {
+          "name": "Install Windshield",
+          "description": "Place windshield into frame and seal edges with tool",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Windshield",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "WindshieldFrame",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "SealingTool",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Windshield",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"FactoryAmbient\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/f6fbab42-b328-4daa-9bf0-c4ad93590290.mp3\",\"audioRange\":10,\"setVolume\":0.3}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now we'll install the windshield. First, grab the windshield from the front rack and carefully place it into the frame. Then, use the sealing tool to seal around all edges.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Windshield",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0}}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "WindshieldFrame",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"GlassClick\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/8f17bb95-3914-455f-8c55-1c0141a7bbcb.mp3\",\"audioRange\":5,\"setVolume\":0.6}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.4,\"hapticDuration\":0.2}"
+                  },
+                  {
+                    "Query": "Windshield",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Good! The windshield is in place. Now grab the sealing tool and trace around all edges to seal it properly.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SealingTool",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0}}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "SealingTool",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Grab",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Excellent. Apply the sealant around the entire perimeter of the windshield. Watch the progress indicator.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "WindshieldFrame",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFFF00FF\",\"outlineWidth\":2.5}}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "WindshieldFrame",
+                  "Name": "HandTouchTrigger",
+                  "Option": "Touch",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"SealantApply\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.5}"
+                  },
+                  {
+                    "Query": "CountDownTimer",
+                    "Name": "TimerAction",
+                    "Option": "Start",
+                    "Data": "{\"duration\":8.0,\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"SealComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/e6aaa0fc-2707-40c9-9634-ea470ea09f40.mp3\",\"audioRange\":5,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.5,\"hapticDuration\":0.3}"
+                  },
+                  {
+                    "Query": "WindshieldFrame",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SealingTool",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "Query": "VOPlayer",
+              "Name": "VoiceOver",
+              "Option": "Play",
+              "Data": "{\"text\":\"That's not quite right. Make sure you're following the correct sequence: first place the windshield, then seal the edges.\",\"waitForCompletion\":true}"
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, grab the windshield from the rack and place it into the frame first. The highlighted object shows what to interact with next.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Windshield",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFFF00FF\",\"outlineWidth\":4.0}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let me guide you step by step. First, reach for the windshield on the front rack. It's the large glass panel highlighted in yellow.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Windshield",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "Windshield",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Grab This Windshield\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Perfect! The windshield is installed and properly sealed. The vehicle is now weather-tight. Let's continue with the body assembly.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"TaskComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.8}"
+              },
+              {
+                "Query": "Haptics",
+                "Name": "HapticsAction",
+                "Option": "Both",
+                "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.6,\"hapticDuration\":0.4}"
+              }
+            ]
+          },
+          "sceneDescription": "Automotive assembly station showing a car chassis at eye level with windshield frame visible, worker hands placing large glass windshield panel into frame opening, sealing tool nearby on rack, factory lighting, professional training environment"
+        },
+        {
+          "name": "Fit Hood and Trunk",
+          "description": "Attach hood to front hinges and trunk lid to rear hinges with magnetic alignment.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "Hood",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "TrunkLid",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "FrontHinges",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "RearHinges",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "Hood",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Hood\"}}"
+              },
+              {
+                "Query": "TrunkLid",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Trunk Lid\"}}"
+              },
+              {
+                "Query": "FrontHinges",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FFFFFF\",\"outlineWidth\":2.5}}"
+              },
+              {
+                "Query": "RearHinges",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FFFFFF\",\"outlineWidth\":2.5}}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now we'll complete the body assembly by attaching the hood and trunk lid. You'll find the hood on the front table and the trunk lid on the rear table. Each panel needs to be attached to its corresponding hinges. The panels will magnetically snap into place when aligned correctly, and the outline will turn green to confirm proper attachment.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"BodyPanelReady\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.6}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "Any",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "FrontHinges",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "Hood",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":false}}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"HoodAttach\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/3f741583-bd6b-4689-adf2-3d36a2441f02.mp3\",\"audioRange\":6,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.4,\"hapticDuration\":0.3}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "RearHinges",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "TrunkLid",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":false}}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"TrunkAttach\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":6,\"setVolume\":0.7}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.4,\"hapticDuration\":0.3}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "Query": "VOPlayer",
+              "Name": "VoiceOver",
+              "Option": "Play",
+              "Data": "{\"text\":\"That panel doesn't belong there. Remember: the hood goes on the front hinges, and the trunk lid goes on the rear hinges. Look for the matching outline to guide you.\",\"waitForCompletion\":true}"
+            },
+            {
+              "Query": "SFXPlayer",
+              "Name": "SFXPlayer",
+              "Option": "Play",
+              "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"IncorrectPlacement\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.5}"
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let me help. The hood is the larger panel at the front table and needs to attach to the front hinges. The trunk lid is at the rear table and attaches to the rear hinges. The panels will snap magnetically when aligned correctly.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "FrontHinges",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "RearHinges",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Pick up the hood from the front table and bring it to the front hinges. Then pick up the trunk lid from the rear table and attach it to the rear hinges. Watch for the green outline to confirm correct placement.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Hood",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "TrunkLid",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Perfect! Both the hood and trunk lid are securely attached. The body assembly is now complete. Next, we'll move on to the final assembly phase where we'll install the wheels.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"BodyAssemblyComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":10,\"setVolume\":0.7}"
+              },
+              {
+                "Query": "Hood",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "TrunkLid",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "FrontHinges",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "RearHinges",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "Haptics",
+                "Name": "HapticsAction",
+                "Option": "Both",
+                "Data": "{\"waitForCompletion\":true,\"hapticIntensity\":0.5,\"hapticDuration\":0.4}"
+              }
+            ]
+          },
+          "sceneDescription": "VR training environment showing car body with hood and trunk lid being attached to hinges at waist height workstation"
+        }
+      ]
+    },
+    {
+      "name": "Final Inspection",
+      "moments": [
+        {
+          "name": "Install Wheels",
+          "description": "Use the wheel gun to attach all four wheels to their mounting points on the chassis.",
+          "momentIndex": 0,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "FrontLeftWheel",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "FrontRightWheel",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "RearLeftWheel",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "RearRightWheel",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "WheelGun",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "WheelMountFL",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "WheelMountFR",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "WheelMountRL",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "WheelMountRR",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now let's install the wheels. You'll find the wheel gun on the tool rack and four wheels positioned around the chassis. Grab the wheel gun, then use it to attach each wheel to its mounting point. You can install them in any order.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "WheelGun",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFA500FF\",\"outlineWidth\":3.0},\"Label\":{\"setActive\":true,\"labelText\":\"Wheel Gun\"}}"
+              },
+              {
+                "Query": "FrontLeftWheel",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":2.5}}"
+              },
+              {
+                "Query": "FrontRightWheel",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":2.5}}"
+              },
+              {
+                "Query": "RearLeftWheel",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":2.5}}"
+              },
+              {
+                "Query": "RearRightWheel",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":2.5}}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "Any",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "WheelMountFL",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"WheelRatcheting\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.5,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "FrontLeftWheel",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Front left wheel secured. Three more to go.\",\"waitForCompletion\":true}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "WheelMountFR",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"WheelRatcheting\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/e29543b9-9655-4211-bd37-dc36da91928c.mp3\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.5,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "FrontRightWheel",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Front right wheel secured. Keep going.\",\"waitForCompletion\":true}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "WheelMountRL",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"WheelRatcheting\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.5,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "RearLeftWheel",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Rear left wheel secured. One more to complete the set.\",\"waitForCompletion\":true}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "WheelMountRR",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"audioClipName\":\"WheelRatcheting\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":8,\"setVolume\":0.7,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"hapticIntensity\":0.4,\"hapticDuration\":0.5,\"waitForCompletion\":false}"
+                  },
+                  {
+                    "Query": "RearRightWheel",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Excellent! All four wheels are now securely attached to the chassis.\",\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "trigger": {
+                "Query": "WheelMountFL",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the correct wheel for the front left mount. Check the wheel size and orientation.\",\"waitForCompletion\":true}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "WheelMountFR",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the correct wheel for the front right mount. Make sure you have the right wheel.\",\"waitForCompletion\":true}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "WheelMountRL",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the correct wheel for the rear left mount. Double-check which wheel goes where.\",\"waitForCompletion\":true}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "WheelMountRR",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the correct wheel for the rear right mount. Try a different wheel.\",\"waitForCompletion\":true}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, you need to use the wheel gun to attach each wheel to its corresponding mount. The wheels are positioned around the chassis.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "WheelGun",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Pick up the wheel gun from the tool rack, then grab a wheel and bring it to the matching mount point. The ghost mesh will show you exactly where each wheel should go.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "WheelMountFL",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Front Left Mount\"}}"
+              },
+              {
+                "Query": "WheelMountFR",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Front Right Mount\"}}"
+              },
+              {
+                "Query": "WheelMountRL",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Rear Left Mount\"}}"
+              },
+              {
+                "Query": "WheelMountRR",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Rear Right Mount\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "WheelGun",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Perfect work! The vehicle is now mobile with all wheels properly installed. Let's move on to the interior installation.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "Play",
+                "Data": "{\"audioClipName\":\"TaskComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/ecea0a22-8e23-4901-af30-85dea89b0cc6.mp3\",\"audioRange\":10,\"setVolume\":0.6,\"waitForCompletion\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Workshop environment with partially assembled car chassis on hydraulic lift, four wheels positioned on ground around vehicle, industrial wheel gun mounted on nearby tool rack, bright overhead lighting illuminating the wheel mounting points"
+        },
+        {
+          "name": "Interior Setup",
+          "description": "Install the steering wheel onto the column and secure the driver seat onto the rails inside the vehicle cabin.",
+          "momentIndex": 1,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "SteeringWheel",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "DriverSeat",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "SteeringColumn",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "SeatRails",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "SteeringWheel",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "DriverSeat",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "SteeringColumn",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":true}"
+              },
+              {
+                "Query": "SeatRails",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":true}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Now let's set up the interior. Install the steering wheel onto the column, then secure the driver seat onto the rails. You can complete these in any order.\",\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "Any",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "SteeringColumn",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"SteeringWheelClick\",\"useCloudAudio\":true,\"audioUrl\":\"https://GENERATE_THIS.com\",\"audioRange\":5,\"setVolume\":0.6}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":true,\"hapticIntensity\":0.4,\"hapticDuration\":0.2}"
+                  },
+                  {
+                    "Query": "SteeringWheel",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SteeringColumn",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Steering wheel secured. Great work!\",\"waitForCompletion\":true}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "SeatRails",
+                  "Name": "PlacePointTrigger",
+                  "Option": "CorrectPlace",
+                  "Data": "{\"disableGrabOnPlace\":true,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":true}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"SeatLockTone\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/3b44b70b-724b-47fe-82a8-f4ea5048eefa.mp3\",\"audioRange\":5,\"setVolume\":0.6}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":true,\"hapticIntensity\":0.35,\"hapticDuration\":0.25}"
+                  },
+                  {
+                    "Query": "DriverSeat",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SeatRails",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Driver seat locked in place. Excellent!\",\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "trigger": {
+                "Query": "SteeringColumn",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That component doesn't belong on the steering column. Try the steering wheel instead.\",\"waitForCompletion\":true}"
+                }
+              ]
+            },
+            {
+              "trigger": {
+                "Query": "SeatRails",
+                "Name": "PlacePointTrigger",
+                "Option": "WrongPlace",
+                "Data": "{\"disableGrabOnPlace\":false,\"createGhostMesh\":true,\"deleteGhostMeshOnPlace\":false}"
+              },
+              "actions": [
+                {
+                  "Query": "VOPlayer",
+                  "Name": "VoiceOver",
+                  "Option": "Play",
+                  "Data": "{\"text\":\"That's not the driver seat. Look for the seat component to install on the rails.\",\"waitForCompletion\":true}"
+                }
+              ]
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember, you need to install both the steering wheel and the driver seat. Look for the highlighted areas inside the cabin.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SteeringWheel",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.5}}"
+              },
+              {
+                "Query": "DriverSeat",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.5}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Grab the steering wheel and align it with the steering column until it clicks. Then take the driver seat and slide it onto the seat rails until you hear the confirmation tone.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SteeringColumn",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "SteeringColumn",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Install Steering Wheel Here\"}}"
+              },
+              {
+                "Query": "SeatRails",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "SeatRails",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Label\":{\"setActive\":true,\"labelText\":\"Install Driver Seat Here\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Interior setup complete! The vehicle's cabin is now ready for the final inspection.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "SteeringWheel",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "DriverSeat",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "SteeringColumn",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              },
+              {
+                "Query": "SeatRails",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "sceneDescription": "Inside a partially assembled vehicle cabin with steering column mounted on dashboard and empty seat rails on floor, trainee installing steering wheel and driver seat with assembly tools visible nearby"
+        },
+        {
+          "name": "Final Walkthrough",
+          "description": "Use inspection tablet to verify all assembly points and sign completion form to finish vehicle assembly training.",
+          "momentIndex": 2,
+          "onAwake": {
+            "actions": [
+              {
+                "Query": "InspectionTablet",
+                "Name": "Objects",
+                "Option": "Spawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "CompletionForm",
+                "Name": "Objects",
+                "Option": "Despawn",
+                "Data": "{\"waitForCompletion\":false}"
+              },
+              {
+                "Query": "InspectionTablet",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+              }
+            ]
+          },
+          "onStart": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Excellent work! Now let's perform the final quality inspection. Grab the inspection tablet and walk around the completed vehicle to verify each assembly point. Green checkmarks will appear as you inspect each component. Once all systems are verified, you'll sign the completion form to finish your training.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "InspectionTablet",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":3.0}}"
+              },
+              {
+                "Query": "SFXPlayer",
+                "Name": "SFXPlayer",
+                "Option": "PlayLoop",
+                "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"InspectionAmbient\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/290b828b-30c6-48d8-a2a6-3e0be6485efa.mp3\",\"audioRange\":8,\"setVolume\":0.3}"
+              }
+            ]
+          },
+          "onRight": {
+            "mode": "InOrder",
+            "triggerActionSets": [
+              {
+                "trigger": {
+                  "Query": "InspectionTablet",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Grab",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Perfect! The tablet is now active. Walk around the vehicle and point the tablet at each major assembly area. The system will automatically verify your work and display checkmarks for each completed section.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "InspectionTablet",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"TabletActivate\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/aefc4f7f-ede6-4053-9594-07d412e9a793.mp3\",\"audioRange\":5,\"setVolume\":0.6}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.3,\"hapticDuration\":0.2}"
+                  },
+                  {
+                    "Query": "Player",
+                    "Name": "Player",
+                    "Option": "UnlockMovement",
+                    "Data": "{}"
+                  },
+                  {
+                    "Query": "CountDownTimer",
+                    "Name": "TimerAction",
+                    "Option": "Start",
+                    "Data": "{\"duration\":15.0,\"waitForCompletion\":true}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "CompletionForm",
+                  "Name": "HandTouchTrigger",
+                  "Option": "Touch",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"All systems verified! Green checkmarks across the board. Now sign the completion form to certify your work and complete the training.\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "CompletionForm",
+                    "Name": "Objects",
+                    "Option": "Spawn",
+                    "Data": "{\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "CompletionForm",
+                    "Name": "MetaLayerAction",
+                    "Option": "Edit",
+                    "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFD700FF\",\"outlineWidth\":3.5},\"Label\":{\"setActive\":true,\"labelText\":\"Sign Here\"}}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":false,\"audioClipName\":\"InspectionComplete\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/1e8b807c-06ba-4aa1-9763-bdd91866cc3e.mp3\",\"audioRange\":6,\"setVolume\":0.7}"
+                  }
+                ]
+              },
+              {
+                "trigger": {
+                  "Query": "CompletionForm",
+                  "Name": "GrabbableTrigger",
+                  "Option": "Used",
+                  "Data": "{\"handOption\":\"Any\"}"
+                },
+                "actions": [
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "StopAndSkip",
+                    "Data": "{\"audioUrl\":\"https://GENERATE_THIS.com\"}"
+                  },
+                  {
+                    "Query": "VOPlayer",
+                    "Name": "VoiceOver",
+                    "Option": "Play",
+                    "Data": "{\"text\":\"Congratulations! You have successfully completed the vehicle assembly training. You've mastered engine installation, cable and hose connections, body panel mounting, and wheel installation. Your certification has been recorded. Excellent work!\",\"waitForCompletion\":true}"
+                  },
+                  {
+                    "Query": "CompletionForm",
+                    "Name": "MetaLayerAction",
+                    "Option": "SetActive",
+                    "Data": "{\"Outline\":false,\"Label\":false,\"Highlighter\":false}"
+                  },
+                  {
+                    "Query": "SFXPlayer",
+                    "Name": "SFXPlayer",
+                    "Option": "Play",
+                    "Data": "{\"waitForCompletion\":true,\"audioClipName\":\"CompletionCelebration\",\"useCloudAudio\":true,\"audioUrl\":\"https://d3rispyzvykwg6.cloudfront.net/stories/car-build-story/sfx/842912ca-0bd9-4cba-ab38-ef7479a445a5.mp3\",\"audioRange\":10,\"setVolume\":0.8}"
+                  },
+                  {
+                    "Query": "Haptics",
+                    "Name": "HapticsAction",
+                    "Option": "Both",
+                    "Data": "{\"waitForCompletion\":false,\"hapticIntensity\":0.5,\"hapticDuration\":0.5}"
+                  },
+                  {
+                    "Query": "Player",
+                    "Name": "Player",
+                    "Option": "CameraFade",
+                    "Data": "{\"fadeType\":\"FadeInOut\",\"fadeDuration\":1.5,\"waitForCompletion\":true}"
+                  }
+                ]
+              }
+            ]
+          },
+          "onWrong": [
+            {
+              "Query": "VOPlayer",
+              "Name": "VoiceOver",
+              "Option": "Play",
+              "Data": "{\"text\":\"Make sure you're holding the inspection tablet and pointing it at each assembly area. The tablet will automatically scan and verify each component as you move around the vehicle.\",\"waitForCompletion\":true}"
+            },
+            {
+              "Query": "InspectionTablet",
+              "Name": "MetaLayerAction",
+              "Option": "Edit",
+              "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FFAA00FF\",\"outlineWidth\":3.0}}"
+            }
+          ],
+          "onFirstWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Remember: First grab the inspection tablet, then walk around the vehicle to scan all assembly points. Once all checkmarks are green, you can sign the completion form.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "InspectionTablet",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#00FF00FF\",\"outlineWidth\":4.0},\"Highlighter\":{\"setActive\":true,\"material\":\"Materials/_ObjectHighligherMaterial_\"}}"
+              }
+            ]
+          },
+          "onLastWarning": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Let me guide you through the final inspection. Look at the highlighted inspection tablet and grab it with either hand. Then simply walk around the vehicle - the tablet will do the rest. After all areas are scanned, you'll see the completion form appear for your signature.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "InspectionTablet",
+                "Name": "MetaLayerAction",
+                "Option": "SetActive",
+                "Data": "{\"Outline\":true,\"Label\":true,\"Highlighter\":true,\"GhostHand\":{\"ghostHandsState\":\"Both\"}}"
+              },
+              {
+                "Query": "InspectionTablet",
+                "Name": "MetaLayerAction",
+                "Option": "Edit",
+                "Data": "{\"Outline\":{\"setActive\":true,\"outlineColor\":\"#FF0000FF\",\"outlineWidth\":5.0},\"Label\":{\"setActive\":true,\"labelText\":\"Grab Tablet\"}}"
+              }
+            ]
+          },
+          "onEnd": {
+            "actions": [
+              {
+                "Query": "VOPlayer",
+                "Name": "VoiceOver",
+                "Option": "Play",
+                "Data": "{\"text\":\"Training complete. You are now certified in basic vehicle assembly procedures. Thank you for your dedication to quality and safety.\",\"waitForCompletion\":true}"
+              },
+              {
+                "Query": "Player",
+                "Name": "Player",
+                "Option": "CameraFade",
+                "Data": "{\"fadeType\":\"FadeIn\",\"fadeDuration\":2.0,\"waitForCompletion\":true}"
+              }
+            ]
+          },
+          "sceneDescription": "Professional automotive training facility with a fully assembled car in center, trainee holding glowing inspection tablet while walking around vehicle performing final quality check, completion form floating nearby, bright workshop lighting with green verification checkmarks appearing on tablet screen."
+        }
+      ]
+    }
+  ]
+}
